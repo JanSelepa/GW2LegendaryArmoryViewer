@@ -1,0 +1,90 @@
+﻿<UserControl x:Class="gw2lav.View.LegendaryTypeView"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:viewModel="clr-namespace:gw2lav.ViewModel"
+	xmlns:view="clr-namespace:gw2lav.View">
+
+	<UserControl.Resources>
+
+		<BitmapImage x:Key="DefaultItemIcon" UriSource="/Assets/default_item.png" />
+		<view:ItemCountVisibilityConverter x:Key="ItemCountVisibilityConverter" />
+
+		<DataTemplate DataType="{x:Type viewModel:LegendaryItem}">
+			
+			<Grid
+				ToolTip="{Binding Name}"
+				ToolTipService.InitialShowDelay="0">
+
+				<view:GrayableImage
+					Width="32"
+					Height="32"
+					Source="{Binding LocalIcon, TargetNullValue={StaticResource DefaultItemIcon}}">
+					<Image.Style>
+						<Style TargetType="Image">
+							<Style.Triggers>
+								<DataTrigger
+									Binding="{Binding Count}"
+									Value="0">
+									<Setter
+										Property="IsEnabled"
+										Value="False" />
+								</DataTrigger>
+							</Style.Triggers>
+						</Style>
+					</Image.Style>
+				</view:GrayableImage>
+
+				<TextBlock
+					VerticalAlignment="Center"
+					HorizontalAlignment="Center"
+					Margin="0,-2,0,0"
+					Foreground="White"
+					FontSize="24"
+					Text="{Binding Count}"
+					Visibility="{Binding Count, Converter={StaticResource ItemCountVisibilityConverter}}">
+					<TextBlock.Effect>
+						<DropShadowEffect
+							ShadowDepth="0"
+							Color="Black"
+							BlurRadius="3" />
+					</TextBlock.Effect>
+				</TextBlock>
+
+			</Grid>
+			
+		</DataTemplate>
+		
+	</UserControl.Resources>
+	
+	<StackPanel
+		HorizontalAlignment="Center"
+		Orientation="Vertical">
+
+		<StackPanel
+			Orientation="Horizontal"
+			HorizontalAlignment="Center">
+
+			<TextBlock
+				TextAlignment="Center"
+				Text="{Binding Name}" />
+
+			<TextBlock
+				Margin="5,0,0,0"
+				Text="{Binding Count}" />
+
+		</StackPanel>
+
+		<ItemsControl
+			HorizontalAlignment="Center"
+			ItemsSource="{Binding Items}">
+			<ItemsControl.ItemsPanel>
+				<ItemsPanelTemplate>
+					<StackPanel
+						Orientation="Horizontal" />
+				</ItemsPanelTemplate>
+			</ItemsControl.ItemsPanel>
+		</ItemsControl>
+
+	</StackPanel>
+	
+</UserControl>
