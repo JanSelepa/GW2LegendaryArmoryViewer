@@ -8,10 +8,12 @@ namespace gw2lav.Model {
 	public class ApiHelper : IDisposable {
 
 		private const string API_URL = "https://api.guildwars2.com";
+		private const string HEADER_SCHEMA_VERSION = "2022-08-01T00:00:00Z";
 
 		private static class ApiCommand {
 			public const string LegendaryArmory = "/v2/legendaryarmory";
 			public const string LegendaryArmoryCounts = "/v2/account/legendaryarmory";
+			public const string Characters = "/v2/characters?ids=all";
 			public const string Items = "/v2/items?ids=";
 		}
 
@@ -21,6 +23,7 @@ namespace gw2lav.Model {
 			string apiKey = RegistryHelper.getApiKey();
 
 			_HttpClient = new HttpClient();
+			_HttpClient.DefaultRequestHeaders.Add("X-Schema-Version", HEADER_SCHEMA_VERSION);
 			if (apiKey != null)
 				_HttpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", apiKey);
 		}
@@ -36,6 +39,17 @@ namespace gw2lav.Model {
 			}
 		}
 
+		public async Task<Item[]> GetItemsAsync(string ids) {
+			try {
+				string json = await RequestAsync(ApiCommand.Items + ids);
+				Item[] items = JsonConvert.DeserializeObject<Item[]>(json);
+				return items;
+			} catch (Exception) {
+				return null;
+			}
+
+		}
+
 		public async Task<Item[]> GetLegendaryItemsAsync() {
 			try {
 				// get legendary id list
@@ -44,9 +58,7 @@ namespace gw2lav.Model {
 				string legIdsCombined = string.Join(",", legIds);
 
 				// get details for each legendary id
-				json = await RequestAsync(ApiCommand.Items + legIdsCombined);
-				Item[] legendaryItems = JsonConvert.DeserializeObject<Item[]>(json);
-				return legendaryItems;
+				return await GetItemsAsync(legIdsCombined);
 			} catch (Exception) {
 				return null;
 			}
@@ -57,6 +69,16 @@ namespace gw2lav.Model {
 				string json = await RequestAsync(ApiCommand.LegendaryArmoryCounts);
 				CountItem[] legItemCounts = JsonConvert.DeserializeObject<CountItem[]>(json);
 				return legItemCounts;
+			} catch (Exception) {
+				return null;
+			}
+		}
+
+		public async Task<Character[]> GetCharactersAsync() {
+			try {
+				string json = await RequestAsync(ApiCommand.Characters);
+				Character[] characters = JsonConvert.DeserializeObject<Character[]>(json);
+				return characters;
 			} catch (Exception) {
 				return null;
 			}

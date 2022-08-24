@@ -18,11 +18,14 @@ namespace gw2lav.ViewModel {
 
 		public ObservableCollection<LegendaryItem> Items { get; set; }
 
+		public WantedInfo WantedInfo { get; set; }
+
 		public LegendaryType(ItemType type) {
 			Type = type;
 			Name = getTypeName(type);
 			Count = 0;
 			Items = new ObservableCollection<LegendaryItem>();
+			WantedInfo = new WantedInfo();
 		}
 
 		public void recountItems() {

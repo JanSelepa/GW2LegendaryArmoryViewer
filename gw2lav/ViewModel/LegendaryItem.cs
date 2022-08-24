@@ -81,7 +81,7 @@ namespace gw2lav.ViewModel {
 			LocalIcon = localFile;
 		}
 
-		private ItemType GetItemType(Item item) {
+		public static ItemType GetItemType(Item item) {
 			ItemType itemType = ItemType.Unknown;
 			switch (item.Type) {
 				// Armor
