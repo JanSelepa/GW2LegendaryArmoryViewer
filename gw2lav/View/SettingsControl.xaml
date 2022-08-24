@@ -16,6 +16,8 @@
 			Margin="0,0,0,10"
 			FontSize="20"
 			Text="{x:Static p:R.settings_apikey_title}" />
+		<TextBlock
+			Text="{x:Static p:R.settings_apikey_message}" />
 		<Grid>
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*" />

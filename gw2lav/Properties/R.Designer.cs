@@ -97,6 +97,15 @@ namespace gw2lav.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Scopes needed: account, unlocks, inventories, characters.
+        /// </summary>
+        public static string settings_apikey_message {
+            get {
+                return ResourceManager.GetString("settings_apikey_message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Guild Wars 2 Api Key.
         /// </summary>
         public static string settings_apikey_title {

@@ -129,6 +129,9 @@
   <data name="main_loading" xml:space="preserve">
     <value>Loading...</value>
   </data>
+  <data name="settings_apikey_message" xml:space="preserve">
+    <value>Scopes needed: account, unlocks, inventories, characters</value>
+  </data>
   <data name="settings_apikey_title" xml:space="preserve">
     <value>Guild Wars 2 Api Key</value>
   </data>
