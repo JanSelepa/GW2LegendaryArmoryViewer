@@ -1,6 +1,8 @@
 ﻿using gw2lav.Model;
 using gw2lav.Properties;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace gw2lav.ViewModel {
@@ -99,6 +101,43 @@ namespace gw2lav.ViewModel {
 						}
 					}
 
+					// get info about items replacable by legendaries
+					Character[] characters = await apiHelper.GetCharactersAsync();
+					if (characters != null) {
+						// get items that can be replaced by legendaries
+						Dictionary<int, WantedInfo> potentials = new Dictionary<int, WantedInfo>();
+						foreach (Character ch in characters) {
+							if (ch.Level != 80) continue;
+							foreach (EquipmentTab et in ch.EquipmentTabs) {
+								foreach (Equipment eq in et.Equipment) {
+									// skip aquatic helm
+									if (eq.Slot == Equipment.SlotType.HelmAquatic)
+										continue;
+									// skip items that are already legendary
+									if (eq.Location == Equipment.LocationType.LegendaryArmory || eq.Location == Equipment.LocationType.EquippedFromLegendaryArmory)
+										continue;
+									// add item to potentially wanted items
+									WantedInfo wanted = null;
+									try {
+										wanted = potentials[eq.Id];
+									} catch (KeyNotFoundException) {
+										wanted = new WantedInfo();
+										potentials.Add(eq.Id, wanted);
+
+									}
+									wanted.Add(ch.Name, et.Name, et.Tab);
+								}
+							}
+						}
+						// get item info about items replacable by legendaries to get the proper item type
+						Item[] replacableItems = await apiHelper.GetItemsAsync(string.Join(",", potentials.Keys.ToArray()));
+						foreach (Item item in replacableItems) {
+							LegendaryItem.ItemType itemType = LegendaryItem.GetItemType(item);
+							if (itemType == LegendaryItem.ItemType.Unknown)
+								continue;
+							result[(int)itemType].WantedInfo.Add(potentials[item.Id]);
+						}
+					}
 				}
 
 				return result;
