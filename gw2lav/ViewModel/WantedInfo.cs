@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace gw2lav.ViewModel {
 
@@ -54,7 +56,7 @@ namespace gw2lav.ViewModel {
 						}
 					}
 					if (!tabFound) {
-						ch.Tabs.Add(new Tab(tabName, tabId));
+						Application.Current.Dispatcher.Invoke(new Action(() => ch.Tabs.Add(new Tab(tabName, tabId))));
 					}
 					break;
 				}
@@ -63,41 +65,9 @@ namespace gw2lav.ViewModel {
 				Character newChar = new Character(characterName);
 				newChar.Count++;
 				newChar.Tabs.Add(new Tab(tabName, tabId));
-				Characters.Add(newChar);
+				Application.Current.Dispatcher.Invoke(new Action(() => Characters.Add(newChar)));
 			}
 			Count++;
-		}
-
-		public void Add(WantedInfo wanted) {
-			foreach (Character newChar in wanted.Characters) {
-				bool newCharFound = false;
-				foreach (Character oldChar in Characters) {
-					if (newChar.Name == oldChar.Name) {
-						newCharFound = true;
-						oldChar.Count += newChar.Count;
-
-						foreach (Tab newTab in newChar.Tabs) {
-							bool newTabFound = false;
-							foreach (Tab oldTab in oldChar.Tabs) {
-								if (newTab.Id == oldTab.Id) {
-									newTabFound = true;
-									oldTab.Count += newTab.Count;
-									break;
-								}
-							}
-							if (!newTabFound) {
-								oldChar.Tabs.Add(newTab);
-							}
-						}
-
-						break;
-					}
-				}
-				if (!newCharFound) {
-					Characters.Add(newChar);
-				}
-			}
-			Count += wanted.Count;
 		}
 
 	}
