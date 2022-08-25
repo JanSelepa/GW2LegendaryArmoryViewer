@@ -14,11 +14,11 @@
 			<Grid
 				ToolTip="{Binding Name}"
 				ToolTipService.InitialShowDelay="0">
-
-				<view:GrayableImage
+				
+				<Image
 					Width="32"
 					Height="32"
-					Source="{Binding LocalIcon, TargetNullValue={StaticResource DefaultItemIcon}}">
+					Source="{Binding LocalIcon, TargetNullValue={StaticResource DefaultItemIcon}, IsAsync=True}">
 					<Image.Style>
 						<Style TargetType="Image">
 							<Style.Triggers>
@@ -26,13 +26,13 @@
 									Binding="{Binding Count}"
 									Value="0">
 									<Setter
-										Property="IsEnabled"
-										Value="False" />
+										Property="Opacity"
+										Value="0.4" />
 								</DataTrigger>
 							</Style.Triggers>
 						</Style>
 					</Image.Style>
-				</view:GrayableImage>
+				</Image>
 
 				<TextBlock
 					VerticalAlignment="Center"
@@ -137,6 +137,7 @@
 		</StackPanel>
 
 		<ItemsControl
+			Height="32"
 			HorizontalAlignment="Center"
 			ItemsSource="{Binding Items}">
 			<ItemsControl.ItemsPanel>

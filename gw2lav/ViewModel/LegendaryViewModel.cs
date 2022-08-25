@@ -4,10 +4,24 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace gw2lav.ViewModel {
 
 	class LegendaryViewModel : BindableBase {
+
+		private class ItemInfo {
+			public int ItemId;
+			public string CharName;
+			public string TabName;
+			public int TabId;
+			public ItemInfo(int itemId, string charName, string tabName, int tabId) {
+				ItemId = itemId;
+				CharName = charName;
+				TabName = tabName;
+				TabId = tabId;
+			}
+		}
 
 		private LegendaryType[] _LegendaryTypes;
 		public LegendaryType[] LegendaryTypes {
@@ -50,42 +64,41 @@ namespace gw2lav.ViewModel {
 		}
 
 		public async Task LoadDataAsync() {
-			// show loading
-			ShowContent = false;
+			// loading started
+			ShowContent = true;
 			IsLoading = true;
 			Error = null;
 
 			// load data
-			LegendaryType[] types = null;
-			try { types = await GetLegendaryTypesAsync(); } catch (Exception) { }
-			if (types != null) {
-				LegendaryTypes = types;
-			} else {
+			try {
+				await LoadLegendaryTypesAsync();
+			} catch (Exception) {
 				// show error
+				ShowContent = false;
 				IsLoading = false;
 				Error = R.main_error;
 				return;
 			}
 
-			// show content
+			// loading finished
 			IsLoading = false;
-			ShowContent = true;
 		}
 
-		private async Task<LegendaryType[]> GetLegendaryTypesAsync() {
-			return await Task.Run(async() => {
+		private async Task LoadLegendaryTypesAsync() {
+			await Task.Run(async () => {
 
 				int size = Enum.GetNames(typeof(LegendaryItem.ItemType)).Length - 1;    // "-1" for ItemType.Unknown
-				LegendaryType[] result = new LegendaryType[size];
+				LegendaryType[] types = new LegendaryType[size];
 				for (int i = 0; i < size; i++)
-					result[i] = new LegendaryType((LegendaryItem.ItemType)i);
+					types[i] = new LegendaryType((LegendaryItem.ItemType)i);
+				LegendaryTypes = types;
 
 				using (ApiHelper apiHelper = new ApiHelper()) {
 
 					// load legendary item list
 					Item[] items = await apiHelper.GetLegendaryItemsAsync();
 					if (items == null)
-						return null;
+						throw new Exception();
 
 					// load legendary item counts from account
 					CountItem[] countItems = await apiHelper.GetLegendaryItemCountsAsync();
@@ -96,8 +109,8 @@ namespace gw2lav.ViewModel {
 						CountItem countItem = Array.Find(countItems, ci => ci.Id == item.Id);
 						LegendaryItem legendaryItem = new LegendaryItem(item, countItem != null ? countItem.Count : 0);
 						if (legendaryItem.Type != LegendaryItem.ItemType.Unknown) {
-							result[(int)legendaryItem.Type].Items.Add(legendaryItem);
-							result[(int)legendaryItem.Type].recountItems();
+							await Application.Current.Dispatcher.BeginInvoke(new Action(() => LegendaryTypes[(int)legendaryItem.Type].Items.Add(legendaryItem)));
+							LegendaryTypes[(int)legendaryItem.Type].recountItems();
 						}
 					}
 
@@ -105,7 +118,7 @@ namespace gw2lav.ViewModel {
 					Character[] characters = await apiHelper.GetCharactersAsync();
 					if (characters != null) {
 						// get items that can be replaced by legendaries
-						Dictionary<int, WantedInfo> potentials = new Dictionary<int, WantedInfo>();
+						List<ItemInfo> potentials = new List<ItemInfo>();
 						foreach (Character ch in characters) {
 							if (ch.Level != 80) continue;
 							foreach (EquipmentTab et in ch.EquipmentTabs) {
@@ -117,30 +130,28 @@ namespace gw2lav.ViewModel {
 									if (eq.Location == Equipment.LocationType.LegendaryArmory || eq.Location == Equipment.LocationType.EquippedFromLegendaryArmory)
 										continue;
 									// add item to potentially wanted items
-									WantedInfo wanted = null;
-									try {
-										wanted = potentials[eq.Id];
-									} catch (KeyNotFoundException) {
-										wanted = new WantedInfo();
-										potentials.Add(eq.Id, wanted);
-
-									}
-									wanted.Add(ch.Name, et.Name, et.Tab);
+									potentials.Add(new ItemInfo(eq.Id, ch.Name, et.Name, et.Tab));
 								}
 							}
 						}
-						// get item info about items replacable by legendaries to get the proper item type
-						Item[] replacableItems = await apiHelper.GetItemsAsync(string.Join(",", potentials.Keys.ToArray()));
-						foreach (Item item in replacableItems) {
-							LegendaryItem.ItemType itemType = LegendaryItem.GetItemType(item);
-							if (itemType == LegendaryItem.ItemType.Unknown)
-								continue;
-							result[(int)itemType].WantedInfo.Add(potentials[item.Id]);
+						if (potentials.Count > 0) {
+							// get unique item ids to check for item type
+							string ids = string.Join(",", potentials.Select(p => p.ItemId).Distinct());
+							// get item info about items replacable by legendaries to get the proper item type
+							Item[] replacableItems = await apiHelper.GetItemsAsync(ids);
+							foreach (Item item in replacableItems) {
+								LegendaryItem.ItemType itemType = LegendaryItem.GetItemType(item);
+								if (itemType == LegendaryItem.ItemType.Unknown)
+									continue;
+								// count all items from a type
+								List<ItemInfo> potentialsWithSameId = potentials.FindAll(p => p.ItemId == item.Id);
+								foreach (ItemInfo p in potentialsWithSameId) {
+									LegendaryTypes[(int)itemType].WantedInfo.Add(p.CharName, p.TabName, p.TabId);
+								}
+							}
 						}
 					}
 				}
-
-				return result;
 
 			});
 		}

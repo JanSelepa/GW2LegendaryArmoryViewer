@@ -347,12 +347,12 @@
 			-->
 
 			<Grid
-				VerticalAlignment="Center"
+				VerticalAlignment="Top"
 				HorizontalAlignment="Center"
 				Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}">
 
 				<TextBlock
-					FontSize="24"
+					FontSize="20"
 					Text="{x:Static p:R.main_loading}" />
 
 			</Grid>
