@@ -123,6 +123,16 @@ namespace gw2lav.ViewModel {
 							if (ch.Level != 80) continue;
 							foreach (EquipmentTab et in ch.EquipmentTabs) {
 								foreach (Equipment eq in et.Equipment) {
+									// check upgrade component
+									if ((
+											eq.Slot == Equipment.SlotType.HelmAquatic || eq.Slot == Equipment.SlotType.WeaponAquaticA || eq.Slot == Equipment.SlotType.WeaponAquaticB
+											|| eq.Slot == Equipment.SlotType.Helm || eq.Slot == Equipment.SlotType.Shoulders || eq.Slot == Equipment.SlotType.Gloves || eq.Slot == Equipment.SlotType.Coat || eq.Slot == Equipment.SlotType.Leggings || eq.Slot == Equipment.SlotType.Boots
+											|| eq.Slot == Equipment.SlotType.WeaponA1 || eq.Slot == Equipment.SlotType.WeaponA2 || eq.Slot == Equipment.SlotType.WeaponB1 || eq.Slot == Equipment.SlotType.WeaponB2
+										) && eq.Upgrades != null) {
+										foreach (int upgradeId in eq.Upgrades) {
+											potentials.Add(new ItemInfo(upgradeId, ch.Name, et.Name, et.Tab));
+										}
+									}
 									// skip aquatic helm
 									if (eq.Slot == Equipment.SlotType.HelmAquatic)
 										continue;
@@ -139,14 +149,20 @@ namespace gw2lav.ViewModel {
 							string ids = string.Join(",", potentials.Select(p => p.ItemId).Distinct());
 							// get item info about items replacable by legendaries to get the proper item type
 							Item[] replacableItems = await apiHelper.GetItemsAsync(ids);
-							foreach (Item item in replacableItems) {
-								LegendaryItem.ItemType itemType = LegendaryItem.GetItemType(item);
-								if (itemType == LegendaryItem.ItemType.Unknown)
-									continue;
-								// count all items from a type
-								List<ItemInfo> potentialsWithSameId = potentials.FindAll(p => p.ItemId == item.Id);
-								foreach (ItemInfo p in potentialsWithSameId) {
-									LegendaryTypes[(int)itemType].WantedInfo.Add(p.CharName, p.TabName, p.TabId);
+							if (replacableItems != null) {
+								foreach (Item item in replacableItems) {
+									// skip legendary items (mostly used for upgrades)
+									if (item.Rarity == Item.ItemRarity.Legendary)
+										continue;
+									// skip unknown types
+									LegendaryItem.ItemType itemType = LegendaryItem.GetItemType(item);
+									if (itemType == LegendaryItem.ItemType.Unknown)
+										continue;
+									// count all items from a type
+									List<ItemInfo> potentialsWithSameId = potentials.FindAll(p => p.ItemId == item.Id);
+									foreach (ItemInfo p in potentialsWithSameId) {
+										LegendaryTypes[(int)itemType].WantedInfo.Add(p.CharName, p.TabName, p.TabId);
+									}
 								}
 							}
 						}
