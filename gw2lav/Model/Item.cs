@@ -27,9 +27,10 @@ namespace gw2lav.Model {
 
 		[JsonConverter(typeof(StringEnumConverter))]
 		public enum ItemSubType {
+			HelmAquatic,
 			Boots, Coat, Gloves, Helm, Leggings, Shoulders,
 			Accessory, Amulet, Ring,
-			Rune, Sigil,
+			Default, Gem, Rune, Sigil,
 			Axe, Dagger, Mace, Pistol, Scepter, Sword, Focus, Shield, Torch, Warhorn,
 			Greatsword, Hammer, LongBow, Rifle, ShortBow, Staff, Harpoon, Speargun, Trident
 		}
@@ -37,6 +38,11 @@ namespace gw2lav.Model {
 		[JsonConverter(typeof(StringEnumConverter))]
 		public enum ItemWeightClass {
 			Light, Medium, Heavy
+		}
+
+		[JsonConverter(typeof(StringEnumConverter))]
+		public enum ItemRarity {
+			Junk, Basic, Fine, Masterwork, Rare, Exotic, Ascended, Legendary
 		}
 
 		public class ItemDetails {
@@ -61,6 +67,9 @@ namespace gw2lav.Model {
 
 		[JsonProperty("icon")]
 		public string Icon;
+
+		[JsonProperty("rarity")]
+		public ItemRarity Rarity;
 
 		[JsonProperty("details")]
 		public ItemDetails Details;

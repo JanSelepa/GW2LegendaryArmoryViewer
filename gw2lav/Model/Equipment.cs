@@ -27,6 +27,9 @@ namespace gw2lav.Model {
 		[JsonProperty("location")]
 		public LocationType Location;
 
+		[JsonProperty("upgrades")]
+		public int[] Upgrades;
+
 	}
 
 }
