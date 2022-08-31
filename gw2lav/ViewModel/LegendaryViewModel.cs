@@ -3,6 +3,7 @@ using gw2lav.Properties;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -26,6 +27,7 @@ namespace gw2lav.ViewModel {
 		}
 
 		private DialogService _DialogService;
+		private CancellationTokenSource _CancellationTokenSource = null;
 
 		private LegendaryType[] _LegendaryTypes;
 		public LegendaryType[] LegendaryTypes {
@@ -76,27 +78,41 @@ namespace gw2lav.ViewModel {
 		}
 
 		public async Task LoadDataAsync() {
+			if (_CancellationTokenSource != null) {
+				_CancellationTokenSource.Cancel();
+				return;
+			}
+
 			// loading started
 			ShowContent = true;
 			IsLoading = true;
 			Error = null;
 
 			// load data
+			_CancellationTokenSource = new CancellationTokenSource();
+			bool runAgain = false;
 			try {
-				await LoadLegendaryTypesAsync();
+				await LoadLegendaryTypesAsync(_CancellationTokenSource.Token);
+			} catch (OperationCanceledException) {
+				runAgain = true;
 			} catch (Exception) {
 				// show error
 				ShowContent = false;
 				IsLoading = false;
 				Error = R.main_error;
 				return;
+			} finally {
+				_CancellationTokenSource.Dispose();
+				_CancellationTokenSource = null;
 			}
 
 			// loading finished
 			IsLoading = false;
+
+			if (runAgain) await LoadDataAsync();
 		}
 
-		private async Task LoadLegendaryTypesAsync() {
+		private async Task LoadLegendaryTypesAsync(CancellationToken cancelToken) {
 			await Task.Run(async () => {
 
 				int size = Enum.GetNames(typeof(LegendaryItem.ItemType)).Length - 1;    // "-1" for ItemType.Unknown
@@ -105,15 +121,17 @@ namespace gw2lav.ViewModel {
 					types[i] = new LegendaryType((LegendaryItem.ItemType)i);
 				LegendaryTypes = types;
 
-				using (ApiHelper apiHelper = new ApiHelper()) {
+				using (ApiHelper apiHelper = new ApiHelper(cancelToken)) {
 
 					// load legendary item list
 					Item[] items = await apiHelper.GetLegendaryItemsAsync();
+					cancelToken.ThrowIfCancellationRequested();
 					if (items == null)
 						throw new Exception();
 
 					// load legendary item counts from account
 					CountItem[] countItems = await apiHelper.GetLegendaryItemCountsAsync();
+					cancelToken.ThrowIfCancellationRequested();
 					if (countItems == null) countItems = Array.Empty<CountItem>();
 
 					// sort items to groups
@@ -129,8 +147,11 @@ namespace gw2lav.ViewModel {
 						}
 					}
 
+					cancelToken.ThrowIfCancellationRequested();
+
 					// get info about items replacable by legendaries
 					Character[] characters = await apiHelper.GetCharactersAsync();
+					cancelToken.ThrowIfCancellationRequested();
 					if (characters != null) {
 						// get items that can be replaced by legendaries
 						List<ItemInfo> potentials = new List<ItemInfo>();
@@ -158,6 +179,7 @@ namespace gw2lav.ViewModel {
 								}
 							}
 						}
+						cancelToken.ThrowIfCancellationRequested();
 						if (potentials.Count > 0) {
 							// get unique item ids to check for item type
 							string ids = string.Join(",", potentials.Select(p => p.ItemId).Distinct());
@@ -183,7 +205,7 @@ namespace gw2lav.ViewModel {
 					}
 				}
 
-			});
+			}, cancelToken);
 		}
 
 		private async void OnReloadAsync() {
@@ -200,7 +222,7 @@ namespace gw2lav.ViewModel {
 			if (result.HasValue && result.Value) {
 				// reload data when Api Key changed
 				if (settingsVM.ApiKey != null && settingsVM.ApiKeyChanged) {
-					// TODO reload
+					LoadDataAsync();
 				}
 				// other settings
 				NoWater = settingsVM.NoWater;

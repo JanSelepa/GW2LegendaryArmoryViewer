@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace gw2lav.Model {
@@ -18,19 +19,22 @@ namespace gw2lav.Model {
 		}
 
 		private HttpClient _HttpClient;
+		private CancellationToken _CancelToken;
 
-		public ApiHelper() {
+		public ApiHelper(CancellationToken cancelToken) {
 			string apiKey = RegistryHelper.GetApiKey();
 
 			_HttpClient = new HttpClient();
 			_HttpClient.DefaultRequestHeaders.Add("X-Schema-Version", HEADER_SCHEMA_VERSION);
 			if (apiKey != null)
 				_HttpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", apiKey);
+
+			_CancelToken = cancelToken;
 		}
 
 		private async Task<string> RequestAsync(string command) {
 			Uri uri = new Uri(API_URL + command);
-			using (var resp = await _HttpClient.GetAsync(API_URL + command)) {
+			using (var resp = await _HttpClient.GetAsync(API_URL + command, _CancelToken)) {
 				if (resp.IsSuccessStatusCode) {
 					return await resp.Content.ReadAsStringAsync();
 				} else {
