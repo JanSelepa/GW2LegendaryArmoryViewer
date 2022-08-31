@@ -15,13 +15,17 @@ namespace gw2lav.ViewModel {
 			public string CharName;
 			public string TabName;
 			public int TabId;
-			public ItemInfo(int itemId, string charName, string tabName, int tabId) {
+			public bool IsTerrestrial;
+			public ItemInfo(int itemId, string charName, string tabName, int tabId, bool isTerrestrial) {
 				ItemId = itemId;
 				CharName = charName;
 				TabName = tabName;
 				TabId = tabId;
+				IsTerrestrial = isTerrestrial;
 			}
 		}
+
+		private DialogService _DialogService;
 
 		private LegendaryType[] _LegendaryTypes;
 		public LegendaryType[] LegendaryTypes {
@@ -51,16 +55,24 @@ namespace gw2lav.ViewModel {
 			set { SetProperty(ref _Error, value); }
 		}
 
-		public LAVCommand ReloadCommand { get; set; }
+		private bool _NoWater;
+		public bool NoWater {
+			get { return _NoWater; }
+			set { SetProperty(ref _NoWater, value); }
+		}
 
-		public LAVCommand SettingsCommand { get; set; }
+		public RelayCommand ReloadCommand { get; set; }
 
-		public LegendaryViewModel() {
+		public RelayCommand SettingsCommand { get; set; }
+
+		public LegendaryViewModel(DialogService dialogService) {
+			_DialogService = dialogService;
 			ShowContent = false;
 			IsLoading = false;
 			Error = null;
-			ReloadCommand = new LAVCommand(OnReloadAsync, CanReload);
-			SettingsCommand = new LAVCommand(OnSettings, null);
+			NoWater = RegistryHelper.GetNoWater();
+			ReloadCommand = new RelayCommand(OnReloadAsync, CanReload);
+			SettingsCommand = new RelayCommand(OnSettings, null);
 		}
 
 		public async Task LoadDataAsync() {
@@ -109,7 +121,10 @@ namespace gw2lav.ViewModel {
 						CountItem countItem = Array.Find(countItems, ci => ci.Id == item.Id);
 						LegendaryItem legendaryItem = new LegendaryItem(item, countItem != null ? countItem.Count : 0);
 						if (legendaryItem.Type != LegendaryItem.ItemType.Unknown) {
-							await Application.Current.Dispatcher.BeginInvoke(new Action(() => LegendaryTypes[(int)legendaryItem.Type].Items.Add(legendaryItem)));
+							await Application.Current.Dispatcher.BeginInvoke(new Action(() => {
+								LegendaryTypes[(int)legendaryItem.Type].Items.Add(legendaryItem);
+								LegendaryTypes[(int)legendaryItem.Type].Items.Sort(i => i.Id, true);
+							}));
 							LegendaryTypes[(int)legendaryItem.Type].recountItems();
 						}
 					}
@@ -124,13 +139,12 @@ namespace gw2lav.ViewModel {
 							foreach (EquipmentTab et in ch.EquipmentTabs) {
 								foreach (Equipment eq in et.Equipment) {
 									// check upgrade component
-									if ((
-											eq.Slot == Equipment.SlotType.HelmAquatic || eq.Slot == Equipment.SlotType.WeaponAquaticA || eq.Slot == Equipment.SlotType.WeaponAquaticB
-											|| eq.Slot == Equipment.SlotType.Helm || eq.Slot == Equipment.SlotType.Shoulders || eq.Slot == Equipment.SlotType.Gloves || eq.Slot == Equipment.SlotType.Coat || eq.Slot == Equipment.SlotType.Leggings || eq.Slot == Equipment.SlotType.Boots
-											|| eq.Slot == Equipment.SlotType.WeaponA1 || eq.Slot == Equipment.SlotType.WeaponA2 || eq.Slot == Equipment.SlotType.WeaponB1 || eq.Slot == Equipment.SlotType.WeaponB2
-										) && eq.Upgrades != null) {
+									bool isAquatic = eq.Slot == Equipment.SlotType.HelmAquatic || eq.Slot == Equipment.SlotType.WeaponAquaticA || eq.Slot == Equipment.SlotType.WeaponAquaticB;
+									bool isArmor = eq.Slot == Equipment.SlotType.Helm || eq.Slot == Equipment.SlotType.Shoulders || eq.Slot == Equipment.SlotType.Gloves || eq.Slot == Equipment.SlotType.Coat || eq.Slot == Equipment.SlotType.Leggings || eq.Slot == Equipment.SlotType.Boots;
+									bool isWeapon = eq.Slot == Equipment.SlotType.WeaponA1 || eq.Slot == Equipment.SlotType.WeaponA2 || eq.Slot == Equipment.SlotType.WeaponB1 || eq.Slot == Equipment.SlotType.WeaponB2;
+									if ((isAquatic || isArmor || isWeapon) && eq.Upgrades != null) {
 										foreach (int upgradeId in eq.Upgrades) {
-											potentials.Add(new ItemInfo(upgradeId, ch.Name, et.Name, et.Tab));
+											potentials.Add(new ItemInfo(upgradeId, ch.Name, et.Name, et.Tab, !isAquatic));
 										}
 									}
 									// skip aquatic helm
@@ -140,7 +154,7 @@ namespace gw2lav.ViewModel {
 									if (eq.Location == Equipment.LocationType.LegendaryArmory || eq.Location == Equipment.LocationType.EquippedFromLegendaryArmory)
 										continue;
 									// add item to potentially wanted items
-									potentials.Add(new ItemInfo(eq.Id, ch.Name, et.Name, et.Tab));
+									potentials.Add(new ItemInfo(eq.Id, ch.Name, et.Name, et.Tab, !isAquatic));
 								}
 							}
 						}
@@ -161,7 +175,7 @@ namespace gw2lav.ViewModel {
 									// count all items from a type
 									List<ItemInfo> potentialsWithSameId = potentials.FindAll(p => p.ItemId == item.Id);
 									foreach (ItemInfo p in potentialsWithSameId) {
-										LegendaryTypes[(int)itemType].WantedInfo.Add(p.CharName, p.TabName, p.TabId);
+										LegendaryTypes[(int)itemType].WantedInfo.Add(p.CharName, p.TabName, p.TabId, p.IsTerrestrial);
 									}
 								}
 							}
@@ -181,7 +195,17 @@ namespace gw2lav.ViewModel {
 		}
 
 		private void OnSettings() {
-			DialogService.ShowSettings();
+			SettingsViewModel settingsVM = new SettingsViewModel();
+			bool? result = _DialogService.ShowDialog(settingsVM);
+			if (result.HasValue && result.Value) {
+				// reload data when Api Key changed
+				if (settingsVM.ApiKey != null && settingsVM.ApiKeyChanged) {
+					// TODO reload
+				}
+				// other settings
+				NoWater = settingsVM.NoWater;
+			}
+
 		}
 
 	}

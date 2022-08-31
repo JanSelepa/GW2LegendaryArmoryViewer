@@ -15,6 +15,7 @@ namespace gw2lav.ViewModel {
 		}
 
 		public ItemType Type { get; set; }
+		public bool ShowSections { get; set; }
 
 		public ObservableCollection<LegendaryItem> Items { get; set; }
 
@@ -23,6 +24,7 @@ namespace gw2lav.ViewModel {
 		public LegendaryType(ItemType type) {
 			Type = type;
 			Name = getTypeName(type);
+			ShowSections = type == ItemType.Sigil || type == ItemType.Rune;
 			Count = 0;
 			Items = new ObservableCollection<LegendaryItem>();
 			WantedInfo = new WantedInfo();

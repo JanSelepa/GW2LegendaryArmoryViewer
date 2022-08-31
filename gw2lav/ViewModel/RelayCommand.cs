@@ -3,15 +3,15 @@ using System.Windows.Input;
 
 namespace gw2lav.ViewModel {
 
-	public class LAVCommand : ICommand {
+	public class RelayCommand : ICommand {
 		Action _TargetExecuteMethod;
 		Func<bool> _TargetCanExecuteMethod;
 
-		public LAVCommand(Action executeMethod) {
+		public RelayCommand(Action executeMethod) {
 			_TargetExecuteMethod = executeMethod;
 		}
 
-		public LAVCommand(Action executeMethod, Func<bool> canExecuteMethod) {
+		public RelayCommand(Action executeMethod, Func<bool> canExecuteMethod) {
 			_TargetExecuteMethod = executeMethod;
 			_TargetCanExecuteMethod = canExecuteMethod;
 		}

@@ -25,6 +25,7 @@ namespace gw2lav.ViewModel {
 			Harpoon, Speargun, Trident
 		}
 
+		public int Id;
 		public ItemType Type;
 
 		public string Name { get; set; }
@@ -51,6 +52,7 @@ namespace gw2lav.ViewModel {
 		}
 
 		public LegendaryItem(Item item, int count) {
+			Id = item.Id;
 			Name = item.Name;
 			IconUrl = item.Icon;
 			Count = count;

@@ -1,6 +1,7 @@
 ﻿<UserControl x:Class="gw2lav.View.LegendaryTypeView"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:p="clr-namespace:gw2lav.Properties"
 	xmlns:viewModel="clr-namespace:gw2lav.ViewModel"
 	xmlns:view="clr-namespace:gw2lav.View">
 
@@ -99,7 +100,7 @@
 					ItemsSource="{Binding Tabs}" />
 			</Grid>
 		</DataTemplate>
-		
+
 	</UserControl.Resources>
 	
 	<StackPanel
@@ -124,13 +125,111 @@
 
 			<TextBlock
 				Margin="5,0,0,0"
-				Text="{Binding WantedInfo.Count}"
 				ToolTipService.InitialShowDelay="0"
-				ToolTipService.ShowDuration="999999999">
+				ToolTipService.ShowDuration="999999999"
+				Tag="{Binding RelativeSource={RelativeSource AncestorType={x:Type view:MainWindow}}}">
+				<TextBlock.Style>
+					<Style TargetType="TextBlock">
+						<Setter Property="Text" Value="{Binding WantedInfo.TotalCount}" />
+						<Style.Triggers>
+							<DataTrigger
+								Binding="{Binding Tag.DataContext.NoWater, RelativeSource={RelativeSource Self}}"
+								Value="True">
+								<Setter
+									Property="Text"
+									Value="{Binding WantedInfo.TerrestrialCount}" />
+							</DataTrigger>
+						</Style.Triggers>
+					</Style>
+				</TextBlock.Style>
 				<TextBlock.ToolTip>
-					<ItemsControl
-						ItemTemplate="{StaticResource WantedCharacterTemplate}"
-						ItemsSource="{Binding WantedInfo.Characters}" />
+					<ToolTip>
+						<StackPanel
+							Orientation="Vertical">
+							<TextBlock
+								FontSize="17"
+								Text="{x:Static p:R.type_terrestrial}">
+								<TextBlock.Style>
+									<Style TargetType="TextBlock">
+										<Style.Triggers>
+											<DataTrigger
+												Binding="{Binding ShowSections}"
+												Value="False">
+												<Setter
+													Property="Visibility"
+													Value="Collapsed" />
+											</DataTrigger>
+											<DataTrigger
+												Binding="{Binding PlacementTarget.Tag.DataContext.NoWater, RelativeSource={RelativeSource AncestorType={x:Type ToolTip}}}"
+												Value="True">
+												<Setter
+													Property="Visibility"
+													Value="Collapsed" />
+											</DataTrigger>
+											<DataTrigger
+												Binding="{Binding WantedInfo.TerrestrialCount}"
+												Value="0">
+												<Setter
+													Property="Visibility"
+													Value="Collapsed" />
+											</DataTrigger>
+										</Style.Triggers>
+									</Style>
+								</TextBlock.Style>
+							</TextBlock>
+							<ItemsControl
+								ItemTemplate="{StaticResource WantedCharacterTemplate}"
+								ItemsSource="{Binding WantedInfo.TerrestrialCharacters}" />
+							<TextBlock
+								FontSize="17"
+								Text="{x:Static p:R.type_aquatic}">
+								<TextBlock.Style>
+									<Style TargetType="TextBlock">
+										<Style.Triggers>
+											<DataTrigger
+												Binding="{Binding ShowSections}"
+												Value="False">
+												<Setter
+													Property="Visibility"
+													Value="Collapsed" />
+											</DataTrigger>
+											<DataTrigger
+												Binding="{Binding WantedInfo.AquaticCount}"
+												Value="0">
+												<Setter
+													Property="Visibility"
+													Value="Collapsed" />
+											</DataTrigger>
+											<DataTrigger
+												Binding="{Binding PlacementTarget.Tag.DataContext.NoWater, RelativeSource={RelativeSource AncestorType={x:Type ToolTip}}}"
+												Value="True">
+												<Setter
+													Property="Visibility"
+													Value="Collapsed" />
+											</DataTrigger>
+										</Style.Triggers>
+									</Style>
+								</TextBlock.Style>
+							</TextBlock>
+							<ItemsControl
+								ItemTemplate="{StaticResource WantedCharacterTemplate}"
+								ItemsSource="{Binding WantedInfo.AquaticCharacters}">
+								<ItemsControl.Style>
+									<Style TargetType="ItemsControl">
+										<Style.Triggers>
+											<DataTrigger
+												Binding="{Binding PlacementTarget.Tag.DataContext.NoWater, RelativeSource={RelativeSource AncestorType={x:Type ToolTip}}}"
+												Value="True">
+												<Setter
+													Property="Visibility"
+													Value="Collapsed" />
+											</DataTrigger>
+										</Style.Triggers>
+									</Style>
+								</ItemsControl.Style>
+							</ItemsControl>
+						</StackPanel>
+					</ToolTip>
 				</TextBlock.ToolTip>
 			</TextBlock>
 
