@@ -6,14 +6,15 @@ namespace gw2lav {
 	public class RegistryHelper {
 
 		private const string KEY_API_KEY = "api_key";
+		private const string KEY_NO_WATER = "no_water";
 
 		private const string REG_PATH = "Software\\GW2LegendaryArmoryViewer\\";
 
-		private static RegistryKey mHKCU = Registry.CurrentUser;
+		private static RegistryKey _HKCU = Registry.CurrentUser;
 
-		private static object getValue(string keyName) {
+		private static object GetValue(string keyName) {
 			try {
-				RegistryKey rk = mHKCU.OpenSubKey(REG_PATH);
+				RegistryKey rk = _HKCU.OpenSubKey(REG_PATH);
 				if (rk == null) return null;
 				return rk.GetValue(keyName);
 			} catch (Exception) {
@@ -21,9 +22,9 @@ namespace gw2lav {
 			}
 		}
 
-		private static bool setValue(string keyName, object keyValue) {
+		private static bool SetValue(string keyName, object keyValue) {
 			try {
-				RegistryKey rk = mHKCU.CreateSubKey(REG_PATH);
+				RegistryKey rk = _HKCU.CreateSubKey(REG_PATH);
 				if (rk == null) return false;
 				rk.SetValue(keyName, keyValue);
 				return true;
@@ -32,12 +33,28 @@ namespace gw2lav {
 			}
 		}
 
-		public static string getApiKey() {
-			return (string)getValue(KEY_API_KEY);
+		// Api Key
+
+		public static string GetApiKey() {
+			return (string)GetValue(KEY_API_KEY);
 		}
 
-		public static bool setApiKey(string apiKey) {
-			return setValue(KEY_API_KEY, apiKey);
+		public static bool SetApiKey(string apiKey) {
+			return SetValue(KEY_API_KEY, apiKey);
+		}
+
+		// No Water
+
+		public static bool GetNoWater() {
+			int? noWater = (int?)GetValue(KEY_NO_WATER);
+			if (noWater.HasValue)
+				return noWater.Value != 0;
+			else
+				return false;
+		}
+
+		public static bool SetNoWater(bool noWater) {
+			return SetValue(KEY_NO_WATER, noWater ? 1 : 0);
 		}
 
 	}

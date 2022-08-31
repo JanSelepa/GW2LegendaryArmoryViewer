@@ -28,22 +28,38 @@ namespace gw2lav.ViewModel {
 			}
 		}
 
-		public ObservableCollection<Character> Characters { get; set; }
+		public ObservableCollection<Character> TerrestrialCharacters { get; set; }
+		public ObservableCollection<Character> AquaticCharacters { get; set; }
 
-		private int _Count;
-		public int Count {
-			get { return _Count; }
-			set { SetProperty(ref _Count, value); }
+		private int _TotalCount;
+		public int TotalCount {
+			get { return _TotalCount; }
+			set { SetProperty(ref _TotalCount, value); }
+		}
+
+		private int _TerrestrialCount;
+		public int TerrestrialCount {
+			get { return _TerrestrialCount; }
+			set { SetProperty(ref _TerrestrialCount, value); }
+		}
+
+		private int _AquaticCount;
+		public int AquaticCount {
+			get { return _AquaticCount; }
+			set { SetProperty(ref _AquaticCount, value); }
 		}
 
 		public WantedInfo() {
-			Characters = new ObservableCollection<Character>();
-			Count = 0;
+			TerrestrialCharacters = new ObservableCollection<Character>();
+			AquaticCharacters = new ObservableCollection<Character>();
+			TerrestrialCount = 0;
+			AquaticCount = 0;
+			TotalCount = 0;
 		}
 
-		public void Add(string characterName, string tabName, int tabId) {
+		public void Add(string characterName, string tabName, int tabId, bool isTerrestrial) {
 			bool charFound = false;
-			foreach (Character ch in Characters) {
+			foreach (Character ch in isTerrestrial ? TerrestrialCharacters : AquaticCharacters) {
 				if (characterName == ch.Name) {
 					charFound = true;
 					ch.Count++;
@@ -65,9 +81,18 @@ namespace gw2lav.ViewModel {
 				Character newChar = new Character(characterName);
 				newChar.Count++;
 				newChar.Tabs.Add(new Tab(tabName, tabId));
-				Application.Current.Dispatcher.Invoke(new Action(() => Characters.Add(newChar)));
+				Application.Current.Dispatcher.Invoke(new Action(() => {
+					if (isTerrestrial)
+						TerrestrialCharacters.Add(newChar);
+					else
+						AquaticCharacters.Add(newChar);
+				}));
 			}
-			Count++;
+			if (isTerrestrial)
+				TerrestrialCount++;
+			else
+				AquaticCount++;
+			TotalCount++;
 		}
 
 	}

@@ -10,6 +10,7 @@
 
 	<Window.Resources>
 		<BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+		<view:InvBooleanToVisibilityConverter x:Key="InvBooleanToVisibilityConverter" />
 		<view:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
 	</Window.Resources>
 
@@ -25,29 +26,25 @@
 				<Grid.RowDefinitions>
 					<RowDefinition Height="*" />
 					<RowDefinition Height="Auto" />
-					<RowDefinition Height="*" MinHeight="20" />
 					<RowDefinition Height="Auto" />
-					<RowDefinition Height="*" MinHeight="20" />
 					<RowDefinition Height="Auto" />
 					<RowDefinition Height="*" />
 				</Grid.RowDefinitions>
 				
 				<Grid
-					Grid.Row="1">
+					Grid.Row="1"
+					Margin="0,10"
+					HorizontalAlignment="Center">
 					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="*" />
 						<ColumnDefinition Width="Auto" />
-						<ColumnDefinition Width="*" />
 						<ColumnDefinition Width="Auto" />
-						<ColumnDefinition Width="*" />
 						<ColumnDefinition Width="Auto" />
-						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>
 					<!--
 						Light Armor
 					-->
 					<StackPanel
-						Grid.Column="1"
+						Grid.Column="0"
 						Margin="10,0"
 						Orientation="Vertical">
 						<TextBlock
@@ -71,7 +68,7 @@
 						Medium Armor
 					-->
 					<StackPanel
-						Grid.Column="3"
+						Grid.Column="1"
 						Margin="10,0"
 						Orientation="Vertical">
 						<TextBlock
@@ -95,7 +92,7 @@
 						Heavy Armor
 					-->
 					<StackPanel
-						Grid.Column="5"
+						Grid.Column="2"
 						Margin="10,0"
 						Orientation="Vertical">
 						<TextBlock
@@ -118,19 +115,19 @@
 				</Grid>
 
 				<Grid
-					Grid.Row="3">
+					Grid.Row="2"
+					Margin="0,10"
+					HorizontalAlignment="Center">
 					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="*" />
 						<ColumnDefinition Width="Auto" />
-						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="50" />
 						<ColumnDefinition Width="Auto" />
-						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>
 					<!--
 						Runes & Sigils
 					-->
 					<Grid
-						Grid.Column="1"
+						Grid.Column="0"
 						Margin="10,0"
 						HorizontalAlignment="Center">
 						<Grid.ColumnDefinitions>
@@ -149,7 +146,7 @@
 						Back & Trinkets
 					-->
 					<Grid
-						Grid.Column="3"
+						Grid.Column="2"
 						Margin="10,0"
 						HorizontalAlignment="Center">
 						<Grid.ColumnDefinitions>
@@ -177,24 +174,21 @@
 				</Grid>
 
 				<Grid
-					Grid.Row="5"
+					Grid.Row="3"
+					Margin="0,10"
+					HorizontalAlignment="Center"
 					Grid.IsSharedSizeScope="True">
 					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="*" />
 						<ColumnDefinition Width="Auto" />
-						<ColumnDefinition Width="*" />
 						<ColumnDefinition Width="Auto" />
-						<ColumnDefinition Width="*" />
 						<ColumnDefinition Width="Auto" />
-						<ColumnDefinition Width="*" />
 						<ColumnDefinition Width="Auto" />
-						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>
 					<!--
 						One-handed each hand weapons
 					-->
 					<Grid
-						Grid.Column="1"
+						Grid.Column="0"
 						Margin="10,0">
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="Auto" />
@@ -233,7 +227,7 @@
 						One-handed single hand weapons
 					-->
 					<Grid
-						Grid.Column="3"
+						Grid.Column="1"
 						Margin="10,0">
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="Auto" />
@@ -272,7 +266,7 @@
 						Two-handed weapons
 					-->
 					<Grid
-						Grid.Column="5"
+						Grid.Column="2"
 						Margin="10,0">
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="Auto" />
@@ -314,8 +308,9 @@
 						Underwater weapons
 					-->
 					<Grid
-						Grid.Column="7"
-						Margin="10,0">
+						Grid.Column="3"
+						Margin="10,0"
+						Visibility="{Binding NoWater, Converter={StaticResource InvBooleanToVisibilityConverter}}">
 						<Grid.RowDefinitions>
 							<RowDefinition Height="Auto" SharedSizeGroup="NameGroup" />
 							<RowDefinition Height="Auto" />

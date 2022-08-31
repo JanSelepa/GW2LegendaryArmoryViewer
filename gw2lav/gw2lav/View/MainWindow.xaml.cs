@@ -8,7 +8,10 @@ namespace gw2lav.View {
 	public partial class MainWindow : Window {
 
 		public MainWindow() {
-			DataContext = new LegendaryViewModel();
+			DialogService dialogService = new DialogService(this);
+			dialogService.Register<SettingsViewModel, SettingsWindow>();
+
+			DataContext = new LegendaryViewModel(dialogService);
 			InitializeComponent();
 		}
 

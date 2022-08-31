@@ -79,6 +79,15 @@ namespace gw2lav.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string btn_cancel {
+            get {
+                return ResourceManager.GetString("btn_cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to load Legendary Armory data.
         /// </summary>
         public static string main_error {
@@ -115,6 +124,24 @@ namespace gw2lav.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Don&apos;t show aquatic information.
+        /// </summary>
+        public static string settings_nowater_message {
+            get {
+                return ResourceManager.GetString("settings_nowater_message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Other.
+        /// </summary>
+        public static string settings_other {
+            get {
+                return ResourceManager.GetString("settings_other", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Settings.
         /// </summary>
         public static string settings_title {
@@ -138,6 +165,15 @@ namespace gw2lav.Properties {
         public static string type_amulet {
             get {
                 return ResourceManager.GetString("type_amulet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aquatic.
+        /// </summary>
+        public static string type_aquatic {
+            get {
+                return ResourceManager.GetString("type_aquatic", resourceCulture);
             }
         }
         
@@ -255,6 +291,15 @@ namespace gw2lav.Properties {
         public static string type_sigil {
             get {
                 return ResourceManager.GetString("type_sigil", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Terrestrial.
+        /// </summary>
+        public static string type_terrestrial {
+            get {
+                return ResourceManager.GetString("type_terrestrial", resourceCulture);
             }
         }
         

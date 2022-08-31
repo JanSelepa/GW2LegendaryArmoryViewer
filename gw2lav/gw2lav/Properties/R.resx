@@ -123,6 +123,9 @@
   <data name="btn_apply" xml:space="preserve">
     <value>Apply</value>
   </data>
+  <data name="btn_cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
   <data name="main_error" xml:space="preserve">
     <value>Failed to load Legendary Armory data</value>
   </data>
@@ -135,6 +138,12 @@
   <data name="settings_apikey_title" xml:space="preserve">
     <value>Guild Wars 2 Api Key</value>
   </data>
+  <data name="settings_nowater_message" xml:space="preserve">
+    <value>Don't show aquatic information</value>
+  </data>
+  <data name="settings_other" xml:space="preserve">
+    <value>Other</value>
+  </data>
   <data name="settings_title" xml:space="preserve">
     <value>Settings</value>
   </data>
@@ -143,6 +152,9 @@
   </data>
   <data name="type_amulet" xml:space="preserve">
     <value>Amulet</value>
+  </data>
+  <data name="type_aquatic" xml:space="preserve">
+    <value>Aquatic</value>
   </data>
   <data name="type_armor_body" xml:space="preserve">
     <value>Body</value>
@@ -182,6 +194,9 @@
   </data>
   <data name="type_sigil" xml:space="preserve">
     <value>Sigil</value>
+  </data>
+  <data name="type_terrestrial" xml:space="preserve">
+    <value>Terrestrial</value>
   </data>
   <data name="type_unknown" xml:space="preserve">
     <value>Unknown</value>

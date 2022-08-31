@@ -20,7 +20,7 @@ namespace gw2lav.Model {
 		private HttpClient _HttpClient;
 
 		public ApiHelper() {
-			string apiKey = RegistryHelper.getApiKey();
+			string apiKey = RegistryHelper.GetApiKey();
 
 			_HttpClient = new HttpClient();
 			_HttpClient.DefaultRequestHeaders.Add("X-Schema-Version", HEADER_SCHEMA_VERSION);
