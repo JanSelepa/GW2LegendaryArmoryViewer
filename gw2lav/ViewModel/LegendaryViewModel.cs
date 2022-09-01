@@ -129,6 +129,8 @@ namespace gw2lav.ViewModel {
 					if (items == null)
 						throw new Exception();
 
+					Array.Sort(items, (i1, i2) => { return i1.Id.CompareTo(i2.Id); });
+
 					// load legendary item counts from account
 					CountItem[] countItems = await apiHelper.GetLegendaryItemCountsAsync();
 					cancelToken.ThrowIfCancellationRequested();
@@ -141,7 +143,6 @@ namespace gw2lav.ViewModel {
 						if (legendaryItem.Type != LegendaryItem.ItemType.Unknown) {
 							await Application.Current.Dispatcher.BeginInvoke(new Action(() => {
 								LegendaryTypes[(int)legendaryItem.Type].Items.Add(legendaryItem);
-								LegendaryTypes[(int)legendaryItem.Type].Items.Sort(i => i.Id, true);
 							}));
 							LegendaryTypes[(int)legendaryItem.Type].recountItems();
 						}
