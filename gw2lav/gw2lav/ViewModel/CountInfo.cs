@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 
 namespace gw2lav.ViewModel {
 
-	class WantedInfo : BindableBase {
+	class CountInfo : BindableBase {
 
 		public class Tab : BindableBase {
 			public string Name { get; set; }
@@ -49,7 +50,7 @@ namespace gw2lav.ViewModel {
 			set { SetProperty(ref _AquaticCount, value); }
 		}
 
-		public WantedInfo() {
+		public CountInfo() {
 			TerrestrialCharacters = new ObservableCollection<Character>();
 			AquaticCharacters = new ObservableCollection<Character>();
 			TerrestrialCount = 0;
@@ -93,6 +94,18 @@ namespace gw2lav.ViewModel {
 			else
 				AquaticCount++;
 			TotalCount++;
+		}
+
+		public int GetCountFromTab(string charName, int tabId, bool isTerrestrial) {
+			Character character = isTerrestrial ? TerrestrialCharacters.SingleOrDefault(c => c.Name == charName) : AquaticCharacters.SingleOrDefault(c => c.Name == charName);
+			if (character == null)
+				return 0;
+
+			Tab tab = character.Tabs.SingleOrDefault(t => t.Id == tabId);
+			if (tab == null)
+				return 0;
+
+			return tab.Count;
 		}
 
 	}

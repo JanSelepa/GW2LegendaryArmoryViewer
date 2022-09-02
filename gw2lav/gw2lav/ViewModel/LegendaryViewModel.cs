@@ -172,9 +172,6 @@ namespace gw2lav.ViewModel {
 									// skip aquatic helm
 									if (eq.Slot == Equipment.SlotType.HelmAquatic)
 										continue;
-									// skip items that are already legendary
-									if (eq.Location == Equipment.LocationType.LegendaryArmory || eq.Location == Equipment.LocationType.EquippedFromLegendaryArmory)
-										continue;
 									// add item to potentially wanted items
 									potentials.Add(new ItemInfo(eq.Id, ch.Name, et.Name, et.Tab, !isAquatic));
 								}
@@ -187,18 +184,42 @@ namespace gw2lav.ViewModel {
 							// get item info about items replacable by legendaries to get the proper item type
 							Item[] replacableItems = await apiHelper.GetItemsAsync(ids);
 							if (replacableItems != null) {
+								// count used legendary items
 								foreach (Item item in replacableItems) {
-									// skip legendary items (mostly used for upgrades)
+									if (item.Rarity != Item.ItemRarity.Legendary)
+										continue;
+									// skip unknown types
+									LegendaryItem.ItemType itemType = LegendaryItem.GetItemType(item);
+									if (itemType == LegendaryItem.ItemType.Unknown)
+										continue;
+									// get all potentials with the same Id
+									List<ItemInfo> potentialsWithSameId = potentials.FindAll(p => p.ItemId == item.Id);
+									// add legendary items to used info
+									foreach (ItemInfo p in potentialsWithSameId) {
+										LegendaryTypes[(int)itemType].UsedInfo.Add(p.CharName, p.TabName, p.TabId, p.IsTerrestrial);
+									}
+								}
+								// count other items as upgradable
+								foreach (Item item in replacableItems) {
 									if (item.Rarity == Item.ItemRarity.Legendary)
 										continue;
 									// skip unknown types
 									LegendaryItem.ItemType itemType = LegendaryItem.GetItemType(item);
 									if (itemType == LegendaryItem.ItemType.Unknown)
 										continue;
-									// count all items from a type
+									// get all potentials with the same Id
 									List<ItemInfo> potentialsWithSameId = potentials.FindAll(p => p.ItemId == item.Id);
+									// add legendary items to used info
 									foreach (ItemInfo p in potentialsWithSameId) {
-										LegendaryTypes[(int)itemType].WantedInfo.Add(p.CharName, p.TabName, p.TabId, p.IsTerrestrial);
+										// get number of legendary items of this type used in the same template
+										// TODO maybe it doesn't matter if it's aquatic or not I can't think right now
+										int used = LegendaryTypes[(int)itemType].UsedInfo.GetCountFromTab(p.CharName, p.TabId, p.IsTerrestrial);
+										int usable = LegendaryTypes[(int)itemType].UsableInfo.GetCountFromTab(p.CharName, p.TabId, p.IsTerrestrial);
+										// add to usable or needed items
+										if (used + usable < LegendaryTypes[(int)itemType].Count)
+											LegendaryTypes[(int)itemType].UsableInfo.Add(p.CharName, p.TabName, p.TabId, p.IsTerrestrial);
+										else
+											LegendaryTypes[(int)itemType].NeededInfo.Add(p.CharName, p.TabName, p.TabId, p.IsTerrestrial);
 									}
 								}
 							}

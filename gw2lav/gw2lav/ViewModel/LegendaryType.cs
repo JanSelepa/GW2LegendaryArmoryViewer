@@ -19,7 +19,9 @@ namespace gw2lav.ViewModel {
 
 		public ObservableCollection<LegendaryItem> Items { get; set; }
 
-		public WantedInfo WantedInfo { get; set; }
+		public CountInfo UsedInfo { get; set; }
+		public CountInfo UsableInfo { get; set; }
+		public CountInfo NeededInfo { get; set; }
 
 		public LegendaryType(ItemType type) {
 			Type = type;
@@ -27,7 +29,9 @@ namespace gw2lav.ViewModel {
 			ShowSections = type == ItemType.Sigil || type == ItemType.Rune;
 			Count = 0;
 			Items = new ObservableCollection<LegendaryItem>();
-			WantedInfo = new WantedInfo();
+			UsedInfo = new CountInfo();
+			UsableInfo = new CountInfo();
+			NeededInfo = new CountInfo();
 		}
 
 		public void recountItems() {
