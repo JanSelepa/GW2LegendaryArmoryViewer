@@ -13,6 +13,9 @@
   <ItemGroup>
     <None Remove="Assets\default_item.jpg" />
     <None Remove="Assets\default_item.png" />
+    <None Remove="Assets\item_needed.png" />
+    <None Remove="Assets\item_usable.png" />
+    <None Remove="Assets\item_used.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,6 +24,9 @@
 
   <ItemGroup>
     <Resource Include="Assets\default_item.png" />
+    <Resource Include="Assets\item_needed.png" />
+    <Resource Include="Assets\item_usable.png" />
+    <Resource Include="Assets\item_used.png" />
   </ItemGroup>
 
   <ItemGroup>

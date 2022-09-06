@@ -4,7 +4,7 @@
 	xmlns:p="clr-namespace:gw2lav.Properties"
 	xmlns:view="clr-namespace:gw2lav.View"
 	Title="{x:Static p:R.app_title}"
-	Width="900" MinWidth="900"
+	Width="1100" MinWidth="1100"
 	Height="700" MinHeight="700"
 	Loaded="OnLoaded">
 
@@ -14,376 +14,405 @@
 		<view:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
 	</Window.Resources>
 
-	<ScrollViewer
-		VerticalScrollBarVisibility="Auto"
-		HorizontalScrollBarVisibility="Auto">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
+		
+		<!--
+			Action buttons
+		-->
 
-		<Grid>
+		<StackPanel
+			Grid.Row="0"
+			HorizontalAlignment="Right"
+			Orientation="Horizontal">
+			<Button
+				Width="45"
+				Margin="0,0,1,0"
+				FontFamily="Segoe MDL2 Assets"
+				Content="&#xE72C;"
+				Command="{Binding ReloadCommand}" />
+			<Button
+				Width="45"
+				FontFamily="Segoe MDL2 Assets"
+				Content="&#xE713;"
+				Command="{Binding SettingsCommand}" />
+		</StackPanel>
+		
+		<!--
+			Loading indicator
+		-->
 
+		<TextBlock
+			Grid.Row="0"
+			HorizontalAlignment="Center"
+			FontSize="17"
+			Text="{x:Static p:R.main_loading}"
+			Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}" />
+		
+		<!--
+			Content
+		-->
+
+<!--		<ScrollViewer
+			Grid.Row="1"
+			VerticalScrollBarVisibility="Auto"
+			HorizontalScrollBarVisibility="Auto">
+-->
 			<Grid
-				Margin="10"
-				Visibility="{Binding ShowContent, Converter={StaticResource BooleanToVisibilityConverter}}" >
-				<Grid.RowDefinitions>
-					<RowDefinition Height="*" />
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="*" />
-				</Grid.RowDefinitions>
-				
+				Grid.Row="1">
+
 				<Grid
-					Grid.Row="1"
-					Margin="0,10"
-					HorizontalAlignment="Center">
+					Margin="0"
+					Visibility="{Binding ShowContent, Converter={StaticResource BooleanToVisibilityConverter}}" >
 					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="Auto" />
-						<ColumnDefinition Width="Auto" />
-						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="220" />
 					</Grid.ColumnDefinitions>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="*" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="*" />
+					</Grid.RowDefinitions>
+
+					<Grid
+						Grid.Row="1"
+						Margin="0,0,0,10"
+						HorizontalAlignment="Center">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="Auto" />
+						</Grid.ColumnDefinitions>
+						<!--
+							Light Armor
+						-->
+						<StackPanel
+							Grid.Column="0"
+							Margin="10,0"
+							Orientation="Vertical">
+							<TextBlock
+								HorizontalAlignment="Center"
+								FontSize="17"
+								Text="{x:Static p:R.type_armor_light}" />
+							<view:LegendaryTypeView
+								DataContext="{Binding LegendaryTypes[0]}" />
+							<view:LegendaryTypeView
+								DataContext="{Binding LegendaryTypes[1]}" />
+							<view:LegendaryTypeView
+								DataContext="{Binding LegendaryTypes[2]}" />
+							<view:LegendaryTypeView
+								DataContext="{Binding LegendaryTypes[3]}" />
+							<view:LegendaryTypeView
+								DataContext="{Binding LegendaryTypes[4]}" />
+							<view:LegendaryTypeView
+								DataContext="{Binding LegendaryTypes[5]}" />
+						</StackPanel>
+						<!--
+							Medium Armor
+						-->
+						<StackPanel
+							Grid.Column="1"
+							Margin="10,0"
+							Orientation="Vertical">
+							<TextBlock
+								HorizontalAlignment="Center"
+								FontSize="17"
+								Text="{x:Static p:R.type_armor_medium}" />
+							<view:LegendaryTypeView
+								DataContext="{Binding LegendaryTypes[6]}" />
+							<view:LegendaryTypeView
+								DataContext="{Binding LegendaryTypes[7]}" />
+							<view:LegendaryTypeView
+								DataContext="{Binding LegendaryTypes[8]}" />
+							<view:LegendaryTypeView
+								DataContext="{Binding LegendaryTypes[9]}" />
+							<view:LegendaryTypeView
+								DataContext="{Binding LegendaryTypes[10]}" />
+							<view:LegendaryTypeView
+								DataContext="{Binding LegendaryTypes[11]}" />
+						</StackPanel>
+						<!--
+							Heavy Armor
+						-->
+						<StackPanel
+							Grid.Column="2"
+							Margin="10,0"
+							Orientation="Vertical">
+							<TextBlock
+								HorizontalAlignment="Center"
+								FontSize="17"
+								Text="{x:Static p:R.type_armor_heavy}" />
+							<view:LegendaryTypeView
+								DataContext="{Binding LegendaryTypes[12]}" />
+							<view:LegendaryTypeView
+								DataContext="{Binding LegendaryTypes[13]}" />
+							<view:LegendaryTypeView
+								DataContext="{Binding LegendaryTypes[14]}" />
+							<view:LegendaryTypeView
+								DataContext="{Binding LegendaryTypes[15]}" />
+							<view:LegendaryTypeView
+								DataContext="{Binding LegendaryTypes[16]}" />
+							<view:LegendaryTypeView
+								DataContext="{Binding LegendaryTypes[17]}" />
+						</StackPanel>
+					</Grid>
+
+					<Grid
+						Grid.Row="2"
+						Margin="0,10"
+						HorizontalAlignment="Center">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="50" />
+							<ColumnDefinition Width="Auto" />
+						</Grid.ColumnDefinitions>
+						<!--
+							Runes & Sigils
+						-->
+						<Grid
+							Grid.Column="0"
+							Margin="10,0"
+							HorizontalAlignment="Center">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto" />
+								<ColumnDefinition Width="10" />
+								<ColumnDefinition Width="Auto" />
+							</Grid.ColumnDefinitions>
+							<view:LegendaryTypeView
+								Grid.Column="0"
+								DataContext="{Binding LegendaryTypes[18]}" />
+							<view:LegendaryTypeView
+								Grid.Column="2"
+								DataContext="{Binding LegendaryTypes[19]}" />
+						</Grid>
+						<!--
+							Back & Trinkets
+						-->
+						<Grid
+							Grid.Column="2"
+							Margin="10,0"
+							HorizontalAlignment="Center">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto" />
+								<ColumnDefinition Width="10" />
+								<ColumnDefinition Width="Auto" />
+								<ColumnDefinition Width="10" />
+								<ColumnDefinition Width="Auto" />
+								<ColumnDefinition Width="10" />
+								<ColumnDefinition Width="Auto" />
+							</Grid.ColumnDefinitions>
+							<view:LegendaryTypeView
+								Grid.Column="0"
+								DataContext="{Binding LegendaryTypes[20]}" />
+							<view:LegendaryTypeView
+								Grid.Column="2"
+								DataContext="{Binding LegendaryTypes[21]}" />
+							<view:LegendaryTypeView
+								Grid.Column="4"
+								DataContext="{Binding LegendaryTypes[22]}" />
+							<view:LegendaryTypeView
+								Grid.Column="6"
+								DataContext="{Binding LegendaryTypes[23]}" />
+						</Grid>
+					</Grid>
+
+					<Grid
+						Grid.Row="3"
+						Margin="0,10"
+						HorizontalAlignment="Center"
+						Grid.IsSharedSizeScope="True">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="Auto" />
+						</Grid.ColumnDefinitions>
+						<!--
+							One-handed each hand weapons
+						-->
+						<Grid
+							Grid.Column="0"
+							Margin="10,0">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto" />
+								<ColumnDefinition Width="10" />
+								<ColumnDefinition Width="Auto" />
+							</Grid.ColumnDefinitions>
+							<Grid.RowDefinitions>
+								<RowDefinition Height="Auto" SharedSizeGroup="NameGroup" />
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="Auto" />
+							</Grid.RowDefinitions>
+							<TextBlock
+								Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0"
+								HorizontalAlignment="Center"
+								TextAlignment="Center"
+								FontSize="17"
+								Text="{x:Static p:R.type_weapon_onehand_each}" />
+							<view:LegendaryTypeView
+								Grid.Column="0" Grid.Row="1"
+								DataContext="{Binding LegendaryTypes[24]}" />
+							<view:LegendaryTypeView
+								Grid.Column="2" Grid.Row="1"
+								DataContext="{Binding LegendaryTypes[25]}" />
+							<view:LegendaryTypeView
+								Grid.Column="0" Grid.Row="2"
+								DataContext="{Binding LegendaryTypes[26]}" />
+							<view:LegendaryTypeView
+								Grid.Column="2" Grid.Row="2"
+								DataContext="{Binding LegendaryTypes[27]}" />
+							<view:LegendaryTypeView
+								Grid.Column="0" Grid.Row="3"
+								DataContext="{Binding LegendaryTypes[28]}" />
+						</Grid>
+						<!--
+							One-handed single hand weapons
+						-->
+						<Grid
+							Grid.Column="1"
+							Margin="10,0">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto" />
+								<ColumnDefinition Width="10" />
+								<ColumnDefinition Width="Auto" />
+							</Grid.ColumnDefinitions>
+							<Grid.RowDefinitions>
+								<RowDefinition Height="Auto" SharedSizeGroup="NameGroup" />
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="Auto" />
+							</Grid.RowDefinitions>
+							<TextBlock
+								Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0"
+								HorizontalAlignment="Center"
+								TextAlignment="Center"
+								FontSize="17"
+								Text="{x:Static p:R.type_weapon_onehand_single}" />
+							<view:LegendaryTypeView
+								Grid.Column="0" Grid.Row="1"
+								DataContext="{Binding LegendaryTypes[29]}" />
+							<view:LegendaryTypeView
+								Grid.Column="0" Grid.Row="2"
+								DataContext="{Binding LegendaryTypes[30]}" />
+							<view:LegendaryTypeView
+								Grid.Column="2" Grid.Row="2"
+								DataContext="{Binding LegendaryTypes[31]}" />
+							<view:LegendaryTypeView
+								Grid.Column="0" Grid.Row="3"
+								DataContext="{Binding LegendaryTypes[32]}" />
+							<view:LegendaryTypeView
+								Grid.Column="2" Grid.Row="3"
+								DataContext="{Binding LegendaryTypes[33]}" />
+						</Grid>
+						<!--
+							Two-handed weapons
+						-->
+						<Grid
+							Grid.Column="2"
+							Margin="10,0">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto" />
+								<ColumnDefinition Width="10" />
+								<ColumnDefinition Width="Auto" />
+							</Grid.ColumnDefinitions>
+							<Grid.RowDefinitions>
+								<RowDefinition Height="Auto" SharedSizeGroup="NameGroup" />
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="Auto" />
+							</Grid.RowDefinitions>
+							<TextBlock
+								Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0"
+								HorizontalAlignment="Center"
+								TextAlignment="Center"
+								FontSize="17"
+								Text="{x:Static p:R.type_weapon_twohand}" />
+							<view:LegendaryTypeView
+								Grid.Column="0" Grid.Row="1"
+								DataContext="{Binding LegendaryTypes[34]}" />
+							<view:LegendaryTypeView
+								Grid.Column="2" Grid.Row="1"
+								DataContext="{Binding LegendaryTypes[35]}" />
+							<view:LegendaryTypeView
+								Grid.Column="0" Grid.Row="2"
+								DataContext="{Binding LegendaryTypes[36]}" />
+							<view:LegendaryTypeView
+								Grid.Column="2" Grid.Row="2"
+								DataContext="{Binding LegendaryTypes[37]}" />
+							<view:LegendaryTypeView
+								Grid.Column="0" Grid.Row="3"
+								DataContext="{Binding LegendaryTypes[38]}" />
+							<view:LegendaryTypeView
+								Grid.Column="2" Grid.Row="3"
+								DataContext="{Binding LegendaryTypes[39]}" />
+						</Grid>
+						<!--
+							Underwater weapons
+						-->
+						<Grid
+							Grid.Column="3"
+							Margin="10,0"
+							Visibility="{Binding NoWater, Converter={StaticResource InvBooleanToVisibilityConverter}}">
+							<Grid.RowDefinitions>
+								<RowDefinition Height="Auto" SharedSizeGroup="NameGroup" />
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="Auto" />
+							</Grid.RowDefinitions>
+							<TextBlock
+								Grid.Row="0"
+								HorizontalAlignment="Center"
+								TextAlignment="Center"
+								FontSize="17"
+								Text="{x:Static p:R.type_weapon_aquatic}" />
+							<view:LegendaryTypeView
+								Grid.Row="1"
+								DataContext="{Binding LegendaryTypes[40]}" />
+							<view:LegendaryTypeView
+								Grid.Row="2"
+								DataContext="{Binding LegendaryTypes[41]}" />
+							<view:LegendaryTypeView
+								Grid.Row="3"
+								DataContext="{Binding LegendaryTypes[42]}" />
+						</Grid>
+					</Grid>
+					
 					<!--
-						Light Armor
+						Detail
 					-->
-					<StackPanel
-						Grid.Column="0"
-						Margin="10,0"
-						Orientation="Vertical">
-						<TextBlock
-							HorizontalAlignment="Center"
-							FontSize="20"
-							Text="{x:Static p:R.type_armor_light}" />
-						<view:LegendaryTypeView
-							DataContext="{Binding LegendaryTypes[0]}" />
-						<view:LegendaryTypeView
-							DataContext="{Binding LegendaryTypes[1]}" />
-						<view:LegendaryTypeView
-							DataContext="{Binding LegendaryTypes[2]}" />
-						<view:LegendaryTypeView
-							DataContext="{Binding LegendaryTypes[3]}" />
-						<view:LegendaryTypeView
-							DataContext="{Binding LegendaryTypes[4]}" />
-						<view:LegendaryTypeView
-							DataContext="{Binding LegendaryTypes[5]}" />
-					</StackPanel>
-					<!--
-						Medium Armor
-					-->
-					<StackPanel
+
+					<view:LegendaryTypeDetailView
 						Grid.Column="1"
-						Margin="10,0"
-						Orientation="Vertical">
-						<TextBlock
-							HorizontalAlignment="Center"
-							FontSize="20"
-							Text="{x:Static p:R.type_armor_medium}" />
-						<view:LegendaryTypeView
-							DataContext="{Binding LegendaryTypes[6]}" />
-						<view:LegendaryTypeView
-							DataContext="{Binding LegendaryTypes[7]}" />
-						<view:LegendaryTypeView
-							DataContext="{Binding LegendaryTypes[8]}" />
-						<view:LegendaryTypeView
-							DataContext="{Binding LegendaryTypes[9]}" />
-						<view:LegendaryTypeView
-							DataContext="{Binding LegendaryTypes[10]}" />
-						<view:LegendaryTypeView
-							DataContext="{Binding LegendaryTypes[11]}" />
-					</StackPanel>
-					<!--
-						Heavy Armor
-					-->
-					<StackPanel
-						Grid.Column="2"
-						Margin="10,0"
-						Orientation="Vertical">
-						<TextBlock
-							HorizontalAlignment="Center"
-							FontSize="20"
-							Text="{x:Static p:R.type_armor_heavy}" />
-						<view:LegendaryTypeView
-							DataContext="{Binding LegendaryTypes[12]}" />
-						<view:LegendaryTypeView
-							DataContext="{Binding LegendaryTypes[13]}" />
-						<view:LegendaryTypeView
-							DataContext="{Binding LegendaryTypes[14]}" />
-						<view:LegendaryTypeView
-							DataContext="{Binding LegendaryTypes[15]}" />
-						<view:LegendaryTypeView
-							DataContext="{Binding LegendaryTypes[16]}" />
-						<view:LegendaryTypeView
-							DataContext="{Binding LegendaryTypes[17]}" />
-					</StackPanel>
+						Grid.Row="0" Grid.RowSpan="5"
+						DataContext="{Binding Detail}"/>
+
 				</Grid>
 
-				<Grid
-					Grid.Row="2"
-					Margin="0,10"
-					HorizontalAlignment="Center">
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="Auto" />
-						<ColumnDefinition Width="50" />
-						<ColumnDefinition Width="Auto" />
-					</Grid.ColumnDefinitions>
-					<!--
-						Runes & Sigils
-					-->
-					<Grid
-						Grid.Column="0"
-						Margin="10,0"
-						HorizontalAlignment="Center">
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="Auto" />
-							<ColumnDefinition Width="10" />
-							<ColumnDefinition Width="Auto" />
-						</Grid.ColumnDefinitions>
-						<view:LegendaryTypeView
-							Grid.Column="0"
-							DataContext="{Binding LegendaryTypes[18]}" />
-						<view:LegendaryTypeView
-							Grid.Column="2"
-							DataContext="{Binding LegendaryTypes[19]}" />
-					</Grid>
-					<!--
-						Back & Trinkets
-					-->
-					<Grid
-						Grid.Column="2"
-						Margin="10,0"
-						HorizontalAlignment="Center">
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="Auto" />
-							<ColumnDefinition Width="10" />
-							<ColumnDefinition Width="Auto" />
-							<ColumnDefinition Width="10" />
-							<ColumnDefinition Width="Auto" />
-							<ColumnDefinition Width="10" />
-							<ColumnDefinition Width="Auto" />
-						</Grid.ColumnDefinitions>
-						<view:LegendaryTypeView
-							Grid.Column="0"
-							DataContext="{Binding LegendaryTypes[20]}" />
-						<view:LegendaryTypeView
-							Grid.Column="2"
-							DataContext="{Binding LegendaryTypes[21]}" />
-						<view:LegendaryTypeView
-							Grid.Column="4"
-							DataContext="{Binding LegendaryTypes[22]}" />
-						<view:LegendaryTypeView
-							Grid.Column="6"
-							DataContext="{Binding LegendaryTypes[23]}" />
-					</Grid>
-				</Grid>
+				<!--
+					Error section
+				-->
 
 				<Grid
-					Grid.Row="3"
-					Margin="0,10"
+					VerticalAlignment="Center"
 					HorizontalAlignment="Center"
-					Grid.IsSharedSizeScope="True">
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="Auto" />
-						<ColumnDefinition Width="Auto" />
-						<ColumnDefinition Width="Auto" />
-						<ColumnDefinition Width="Auto" />
-					</Grid.ColumnDefinitions>
-					<!--
-						One-handed each hand weapons
-					-->
-					<Grid
-						Grid.Column="0"
-						Margin="10,0">
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="Auto" />
-							<ColumnDefinition Width="10" />
-							<ColumnDefinition Width="Auto" />
-						</Grid.ColumnDefinitions>
-						<Grid.RowDefinitions>
-							<RowDefinition Height="Auto" SharedSizeGroup="NameGroup" />
-							<RowDefinition Height="Auto" />
-							<RowDefinition Height="Auto" />
-							<RowDefinition Height="Auto" />
-						</Grid.RowDefinitions>
-						<TextBlock
-							Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0"
-							HorizontalAlignment="Center"
-							TextAlignment="Center"
-							FontSize="20"
-							Text="{x:Static p:R.type_weapon_onehand_each}" />
-						<view:LegendaryTypeView
-							Grid.Column="0" Grid.Row="1"
-							DataContext="{Binding LegendaryTypes[24]}" />
-						<view:LegendaryTypeView
-							Grid.Column="2" Grid.Row="1"
-							DataContext="{Binding LegendaryTypes[25]}" />
-						<view:LegendaryTypeView
-							Grid.Column="0" Grid.Row="2"
-							DataContext="{Binding LegendaryTypes[26]}" />
-						<view:LegendaryTypeView
-							Grid.Column="2" Grid.Row="2"
-							DataContext="{Binding LegendaryTypes[27]}" />
-						<view:LegendaryTypeView
-							Grid.Column="0" Grid.Row="3"
-							DataContext="{Binding LegendaryTypes[28]}" />
-					</Grid>
-					<!--
-						One-handed single hand weapons
-					-->
-					<Grid
-						Grid.Column="1"
-						Margin="10,0">
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="Auto" />
-							<ColumnDefinition Width="10" />
-							<ColumnDefinition Width="Auto" />
-						</Grid.ColumnDefinitions>
-						<Grid.RowDefinitions>
-							<RowDefinition Height="Auto" SharedSizeGroup="NameGroup" />
-							<RowDefinition Height="Auto" />
-							<RowDefinition Height="Auto" />
-							<RowDefinition Height="Auto" />
-						</Grid.RowDefinitions>
-						<TextBlock
-							Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0"
-							HorizontalAlignment="Center"
-							TextAlignment="Center"
-							FontSize="20"
-							Text="{x:Static p:R.type_weapon_onehand_single}" />
-						<view:LegendaryTypeView
-							Grid.Column="0" Grid.Row="1"
-							DataContext="{Binding LegendaryTypes[29]}" />
-						<view:LegendaryTypeView
-							Grid.Column="0" Grid.Row="2"
-							DataContext="{Binding LegendaryTypes[30]}" />
-						<view:LegendaryTypeView
-							Grid.Column="2" Grid.Row="2"
-							DataContext="{Binding LegendaryTypes[31]}" />
-						<view:LegendaryTypeView
-							Grid.Column="0" Grid.Row="3"
-							DataContext="{Binding LegendaryTypes[32]}" />
-						<view:LegendaryTypeView
-							Grid.Column="2" Grid.Row="3"
-							DataContext="{Binding LegendaryTypes[33]}" />
-					</Grid>
-					<!--
-						Two-handed weapons
-					-->
-					<Grid
-						Grid.Column="2"
-						Margin="10,0">
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="Auto" />
-							<ColumnDefinition Width="10" />
-							<ColumnDefinition Width="Auto" />
-						</Grid.ColumnDefinitions>
-						<Grid.RowDefinitions>
-							<RowDefinition Height="Auto" SharedSizeGroup="NameGroup" />
-							<RowDefinition Height="Auto" />
-							<RowDefinition Height="Auto" />
-							<RowDefinition Height="Auto" />
-						</Grid.RowDefinitions>
-						<TextBlock
-							Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0"
-							HorizontalAlignment="Center"
-							TextAlignment="Center"
-							FontSize="20"
-							Text="{x:Static p:R.type_weapon_twohand}" />
-						<view:LegendaryTypeView
-							Grid.Column="0" Grid.Row="1"
-							DataContext="{Binding LegendaryTypes[34]}" />
-						<view:LegendaryTypeView
-							Grid.Column="2" Grid.Row="1"
-							DataContext="{Binding LegendaryTypes[35]}" />
-						<view:LegendaryTypeView
-							Grid.Column="0" Grid.Row="2"
-							DataContext="{Binding LegendaryTypes[36]}" />
-						<view:LegendaryTypeView
-							Grid.Column="2" Grid.Row="2"
-							DataContext="{Binding LegendaryTypes[37]}" />
-						<view:LegendaryTypeView
-							Grid.Column="0" Grid.Row="3"
-							DataContext="{Binding LegendaryTypes[38]}" />
-						<view:LegendaryTypeView
-							Grid.Column="2" Grid.Row="3"
-							DataContext="{Binding LegendaryTypes[39]}" />
-					</Grid>
-					<!--
-						Underwater weapons
-					-->
-					<Grid
-						Grid.Column="3"
-						Margin="10,0"
-						Visibility="{Binding NoWater, Converter={StaticResource InvBooleanToVisibilityConverter}}">
-						<Grid.RowDefinitions>
-							<RowDefinition Height="Auto" SharedSizeGroup="NameGroup" />
-							<RowDefinition Height="Auto" />
-							<RowDefinition Height="Auto" />
-							<RowDefinition Height="Auto" />
-						</Grid.RowDefinitions>
-						<TextBlock
-							Grid.Row="0"
-							HorizontalAlignment="Center"
-							TextAlignment="Center"
-							FontSize="20"
-							Text="{x:Static p:R.type_weapon_aquatic}" />
-						<view:LegendaryTypeView
-							Grid.Row="1"
-							DataContext="{Binding LegendaryTypes[40]}" />
-						<view:LegendaryTypeView
-							Grid.Row="2"
-							DataContext="{Binding LegendaryTypes[41]}" />
-						<view:LegendaryTypeView
-							Grid.Row="3"
-							DataContext="{Binding LegendaryTypes[42]}" />
-					</Grid>
+					Visibility="{Binding Error, Converter={StaticResource NullToVisibilityConverter}}">
+
+					<TextBlock
+						FontSize="17"
+						Text="{Binding Error}" />
+
 				</Grid>
 
 			</Grid>
-			
-			<!--
-				Loading and Error section
-			-->
 
-			<Grid
-				VerticalAlignment="Top"
-				HorizontalAlignment="Center"
-				Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}">
+<!--		</ScrollViewer>-->
 
-				<TextBlock
-					FontSize="20"
-					Text="{x:Static p:R.main_loading}" />
-
-			</Grid>
-
-			<Grid
-				VerticalAlignment="Center"
-				HorizontalAlignment="Center"
-				Visibility="{Binding Error, Converter={StaticResource NullToVisibilityConverter}}">
-
-				<TextBlock
-					FontSize="20"
-					Text="{Binding Error}" />
-
-			</Grid>
-
-			<!--
-				Buttons
-			-->
-			
-			<StackPanel
-				HorizontalAlignment="Right"
-				VerticalAlignment="Top"
-				Orientation="Horizontal">
-				<Button
-					Margin="0,0,1,0"
-					FontFamily="Segoe MDL2 Assets"
-					Content="&#xE72C;"
-					Command="{Binding ReloadCommand}" />
-				<Button
-					FontFamily="Segoe MDL2 Assets"
-					Content="&#xE713;"
-					Command="{Binding SettingsCommand}" />
-			</StackPanel>
-
-		</Grid>
-
-	</ScrollViewer>
+	</Grid>
 
 </Window>
