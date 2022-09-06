@@ -11,6 +11,12 @@
 		<BitmapImage x:Key="DefaultItemIcon" UriSource="/Assets/default_item.png" />
 		<view:ItemCountVisibilityConverter x:Key="ItemCountVisibilityConverter" />
 
+		<Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+			<Setter Property="Height" Value="Auto" />
+			<Setter Property="Padding" Value="0" />
+			<Setter Property="FontSize" Value="13" />
+		</Style>
+
 		<DataTemplate DataType="{x:Type viewModel:LegendaryItem}">
 			
 			<Grid
@@ -56,213 +62,164 @@
 			
 		</DataTemplate>
 
-		<DataTemplate x:Key="WantedTabTemplate">
+	</UserControl.Resources>
+
+	<Button
+		Command="{Binding DataContext.TypeSelectedCommand, RelativeSource={RelativeSource AncestorType={x:Type view:MainWindow}}}"
+		CommandParameter="{Binding}">
+		<StackPanel
+			HorizontalAlignment="Center"
+			Orientation="Vertical">
+
 			<Grid>
 				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="Auto" />
 					<ColumnDefinition Width="*" />
 					<ColumnDefinition Width="Auto" />
 				</Grid.ColumnDefinitions>
+
 				<TextBlock
 					Grid.Column="0"
-					Margin="10,0,0,0"
-					HorizontalAlignment="Right"
-					Text="{Binding Id, StringFormat=({0})}" />
-				<TextBlock
-					Grid.Column="1"
 					Margin="5,0,0,0"
 					Text="{Binding Name}" />
-				<TextBlock
-					Grid.Column="2"
-					HorizontalAlignment="Right"
-					Margin="10,0,0,0"
-					Text="{Binding Count}" />
-			</Grid>
-		</DataTemplate>
 
-		<DataTemplate x:Key="WantedCharacterTemplate">
-			<Grid
-				Margin="10">
-				<Grid.Resources>
-					<CollectionViewSource
-						x:Key="TabsViewSource"
-						Source="{Binding Tabs}">
-						<CollectionViewSource.SortDescriptions>
-							<scm:SortDescription PropertyName="Id" />
-						</CollectionViewSource.SortDescriptions>
-					</CollectionViewSource>
-				</Grid.Resources>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="*" />
-					<ColumnDefinition Width="Auto" />
-				</Grid.ColumnDefinitions>
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="Auto" />
-				</Grid.RowDefinitions>
-				<TextBlock
-					Grid.Column="0" Grid.Row="0"
-					FontWeight="Bold"
-					Text="{Binding Name}" />
-				<TextBlock
-					Grid.Column="1" Grid.Row="0"
-					HorizontalAlignment="Right"
-					Margin="10,0,0,0"
-					FontWeight="Bold"
-					Text="{Binding Count}" />
-				<ItemsControl
-					Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1"
-					ItemTemplate="{StaticResource WantedTabTemplate}"
-					ItemsSource="{Binding Source={StaticResource TabsViewSource}}"/>
-			</Grid>
-		</DataTemplate>
-
-	</UserControl.Resources>
-	
-	<StackPanel
-		HorizontalAlignment="Center"
-		Orientation="Vertical">
-
-		<StackPanel
-			Orientation="Horizontal"
-			HorizontalAlignment="Center">
-
-			<TextBlock
-				TextAlignment="Center"
-				Text="{Binding Name}" />
-
-			<TextBlock
-				Margin="5,0,0,0"
-				Text="{Binding Count}" />
-
-			<TextBlock
-				Margin="5,0,0,0"
-				Text="-" />
-
-			<TextBlock
-				Margin="5,0,0,0"
-				ToolTipService.InitialShowDelay="0"
-				ToolTipService.ShowDuration="999999999"
-				Tag="{Binding RelativeSource={RelativeSource AncestorType={x:Type view:MainWindow}}}">
-				<TextBlock.Style>
-					<Style TargetType="TextBlock">
-						<Setter Property="Text" Value="{Binding WantedInfo.TotalCount}" />
-						<Style.Triggers>
-							<DataTrigger
-								Binding="{Binding Tag.DataContext.NoWater, RelativeSource={RelativeSource Self}}"
-								Value="True">
+				<StackPanel
+					Grid.Column="1"
+					Margin="5,0"
+					Orientation="Horizontal">
+					<Image
+						Height="15"
+						Source="/Assets/item_usable.png">
+						<Image.Style>
+							<Style TargetType="Image">
+								<Style.Triggers>
+									<MultiDataTrigger>
+										<MultiDataTrigger.Conditions>
+											<Condition
+												Binding="{Binding DataContext.NoWater, RelativeSource={RelativeSource AncestorType={x:Type view:MainWindow}}}"
+												Value="False" />
+											<Condition
+												Binding="{Binding UsableInfo.TotalCount}"
+												Value="0" />
+										</MultiDataTrigger.Conditions>
+										<Setter
+											Property="Visibility"
+											Value="Collapsed" />
+									</MultiDataTrigger>
+									<MultiDataTrigger>
+										<MultiDataTrigger.Conditions>
+											<Condition
+												Binding="{Binding DataContext.NoWater, RelativeSource={RelativeSource AncestorType={x:Type view:MainWindow}}}"
+												Value="True" />
+											<Condition
+												Binding="{Binding UsableInfo.TerrestrialCount}"
+												Value="0" />
+										</MultiDataTrigger.Conditions>
+										<Setter
+											Property="Visibility"
+											Value="Collapsed" />
+									</MultiDataTrigger>
+								</Style.Triggers>
+							</Style>
+						</Image.Style>
+					</Image>
+					<Image
+						Height="15"
+						Source="/Assets/item_needed.png">
+						<Image.Style>
+							<Style TargetType="Image">
+								<Style.Triggers>
+									<MultiDataTrigger>
+										<MultiDataTrigger.Conditions>
+											<Condition
+												Binding="{Binding DataContext.NoWater, RelativeSource={RelativeSource AncestorType={x:Type view:MainWindow}}}"
+												Value="False" />
+											<Condition
+												Binding="{Binding NeededInfo.TotalCount}"
+												Value="0" />
+										</MultiDataTrigger.Conditions>
+										<Setter
+											Property="Visibility"
+											Value="Collapsed" />
+									</MultiDataTrigger>
+									<MultiDataTrigger>
+										<MultiDataTrigger.Conditions>
+											<Condition
+												Binding="{Binding DataContext.NoWater, RelativeSource={RelativeSource AncestorType={x:Type view:MainWindow}}}"
+												Value="True" />
+											<Condition
+												Binding="{Binding NeededInfo.TerrestrialCount}"
+												Value="0" />
+										</MultiDataTrigger.Conditions>
+										<Setter
+											Property="Visibility"
+											Value="Collapsed" />
+									</MultiDataTrigger>
+								</Style.Triggers>
+							</Style>
+						</Image.Style>
+					</Image>
+					<Image
+						Height="15"
+						Source="/Assets/item_used.png">
+						<Image.Style>
+							<Style TargetType="Image">
 								<Setter
-									Property="Text"
-									Value="{Binding WantedInfo.TerrestrialCount}" />
-							</DataTrigger>
-						</Style.Triggers>
-					</Style>
-				</TextBlock.Style>
-				<TextBlock.ToolTip>
-					<ToolTip>
+									Property="Visibility"
+									Value="Collapsed" />
+								<Style.Triggers>
+									<MultiDataTrigger>
+										<MultiDataTrigger.Conditions>
+											<Condition
+												Binding="{Binding DataContext.NoWater, RelativeSource={RelativeSource AncestorType={x:Type view:MainWindow}}}"
+												Value="False" />
+											<Condition
+												Binding="{Binding UsableInfo.TotalCount}"
+												Value="0" />
+											<Condition
+												Binding="{Binding NeededInfo.TotalCount}"
+												Value="0" />
+										</MultiDataTrigger.Conditions>
+										<Setter
+											Property="Visibility"
+											Value="Visible" />
+									</MultiDataTrigger>
+									<MultiDataTrigger>
+										<MultiDataTrigger.Conditions>
+											<Condition
+												Binding="{Binding DataContext.NoWater, RelativeSource={RelativeSource AncestorType={x:Type view:MainWindow}}}"
+												Value="True" />
+											<Condition
+												Binding="{Binding UsableInfo.TerrestrialCount}"
+												Value="0" />
+											<Condition
+												Binding="{Binding NeededInfo.TerrestrialCount}"
+												Value="0" />
+										</MultiDataTrigger.Conditions>
+										<Setter
+											Property="Visibility"
+											Value="Visible" />
+									</MultiDataTrigger>
+								</Style.Triggers>
+							</Style>
+						</Image.Style>
+					</Image>
+				</StackPanel>
+
+			</Grid>
+
+			<ItemsControl
+				Height="32"
+				HorizontalAlignment="Center"
+				ItemsSource="{Binding Items}">
+				<ItemsControl.ItemsPanel>
+					<ItemsPanelTemplate>
 						<StackPanel
-							Orientation="Vertical">
-							<TextBlock
-								FontSize="17"
-								Text="{x:Static p:R.type_terrestrial}">
-								<TextBlock.Style>
-									<Style TargetType="TextBlock">
-										<Style.Triggers>
-											<DataTrigger
-												Binding="{Binding ShowSections}"
-												Value="False">
-												<Setter
-													Property="Visibility"
-													Value="Collapsed" />
-											</DataTrigger>
-											<DataTrigger
-												Binding="{Binding PlacementTarget.Tag.DataContext.NoWater, RelativeSource={RelativeSource AncestorType={x:Type ToolTip}}}"
-												Value="True">
-												<Setter
-													Property="Visibility"
-													Value="Collapsed" />
-											</DataTrigger>
-											<DataTrigger
-												Binding="{Binding WantedInfo.TerrestrialCount}"
-												Value="0">
-												<Setter
-													Property="Visibility"
-													Value="Collapsed" />
-											</DataTrigger>
-										</Style.Triggers>
-									</Style>
-								</TextBlock.Style>
-							</TextBlock>
-							<ItemsControl
-								ItemTemplate="{StaticResource WantedCharacterTemplate}"
-								ItemsSource="{Binding WantedInfo.TerrestrialCharacters}" />
-							<TextBlock
-								FontSize="17"
-								Text="{x:Static p:R.type_aquatic}">
-								<TextBlock.Style>
-									<Style TargetType="TextBlock">
-										<Style.Triggers>
-											<DataTrigger
-												Binding="{Binding ShowSections}"
-												Value="False">
-												<Setter
-													Property="Visibility"
-													Value="Collapsed" />
-											</DataTrigger>
-											<DataTrigger
-												Binding="{Binding WantedInfo.AquaticCount}"
-												Value="0">
-												<Setter
-													Property="Visibility"
-													Value="Collapsed" />
-											</DataTrigger>
-											<DataTrigger
-												Binding="{Binding PlacementTarget.Tag.DataContext.NoWater, RelativeSource={RelativeSource AncestorType={x:Type ToolTip}}}"
-												Value="True">
-												<Setter
-													Property="Visibility"
-													Value="Collapsed" />
-											</DataTrigger>
-										</Style.Triggers>
-									</Style>
-								</TextBlock.Style>
-							</TextBlock>
-							<ItemsControl
-								ItemTemplate="{StaticResource WantedCharacterTemplate}"
-								ItemsSource="{Binding WantedInfo.AquaticCharacters}">
-								<ItemsControl.Style>
-									<Style TargetType="ItemsControl">
-										<Style.Triggers>
-											<DataTrigger
-												Binding="{Binding PlacementTarget.Tag.DataContext.NoWater, RelativeSource={RelativeSource AncestorType={x:Type ToolTip}}}"
-												Value="True">
-												<Setter
-													Property="Visibility"
-													Value="Collapsed" />
-											</DataTrigger>
-										</Style.Triggers>
-									</Style>
-								</ItemsControl.Style>
-							</ItemsControl>
-						</StackPanel>
-					</ToolTip>
-				</TextBlock.ToolTip>
-			</TextBlock>
+							Orientation="Horizontal" />
+					</ItemsPanelTemplate>
+				</ItemsControl.ItemsPanel>
+			</ItemsControl>
 
 		</StackPanel>
+	</Button>
 
-		<ItemsControl
-			Height="32"
-			HorizontalAlignment="Center"
-			ItemsSource="{Binding Items}">
-			<ItemsControl.ItemsPanel>
-				<ItemsPanelTemplate>
-					<StackPanel
-						Orientation="Horizontal" />
-				</ItemsPanelTemplate>
-			</ItemsControl.ItemsPanel>
-		</ItemsControl>
-
-	</StackPanel>
-	
 </UserControl>

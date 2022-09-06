@@ -88,6 +88,42 @@ namespace gw2lav.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select any Legendary item to view details here.
+        /// </summary>
+        public static string detail_message {
+            get {
+                return ResourceManager.GetString("detail_message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Acquire for.
+        /// </summary>
+        public static string detail_needed {
+            get {
+                return ResourceManager.GetString("detail_needed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Available for.
+        /// </summary>
+        public static string detail_usable {
+            get {
+                return ResourceManager.GetString("detail_usable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Used on.
+        /// </summary>
+        public static string detail_used {
+            get {
+                return ResourceManager.GetString("detail_used", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to load Legendary Armory data.
         /// </summary>
         public static string main_error {

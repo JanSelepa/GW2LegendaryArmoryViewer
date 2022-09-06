@@ -10,7 +10,11 @@ namespace gw2lav.ViewModel {
 		public class Tab : BindableBase {
 			public string Name { get; set; }
 			public int Id { get; set; }
-			public int Count { get; set; }
+			private int _Count;
+			public int Count {
+				get { return _Count; }
+				set { SetProperty(ref _Count, value); }
+			}
 			public Tab(string name, int id) {
 				Name = name;
 				Id = id;
@@ -20,7 +24,11 @@ namespace gw2lav.ViewModel {
 
 		public class Character : BindableBase {
 			public string Name { get; set; }
-			public int Count { get; set; }
+			private int _Count;
+			public int Count {
+				get { return _Count; }
+				set { SetProperty(ref _Count, value); }
+			}
 			public ObservableCollection<Tab> Tabs { get; set; }
 			public Character(string name) {
 				Name = name;
@@ -96,16 +104,28 @@ namespace gw2lav.ViewModel {
 			TotalCount++;
 		}
 
-		public int GetCountFromTab(string charName, int tabId, bool isTerrestrial) {
-			Character character = isTerrestrial ? TerrestrialCharacters.SingleOrDefault(c => c.Name == charName) : AquaticCharacters.SingleOrDefault(c => c.Name == charName);
-			if (character == null)
-				return 0;
+		public int GetCountFromTab(string charName, int tabId, bool? isTerrestrial = null) {
+			int count = 0;
 
-			Tab tab = character.Tabs.SingleOrDefault(t => t.Id == tabId);
-			if (tab == null)
-				return 0;
+			if (!isTerrestrial.HasValue || isTerrestrial.Value) {
+				Character character = TerrestrialCharacters.SingleOrDefault(c => c.Name == charName);
+				if (character != null) {
+					Tab tab = character.Tabs.SingleOrDefault(t => t.Id == tabId);
+					if (tab != null)
+						count += tab.Count;
+				}
+			}
 
-			return tab.Count;
+			if (!isTerrestrial.HasValue || !isTerrestrial.Value) {
+				Character character = AquaticCharacters.SingleOrDefault(c => c.Name == charName);
+				if (character != null) {
+					Tab tab = character.Tabs.SingleOrDefault(t => t.Id == tabId);
+					if (tab != null)
+						count += tab.Count;
+				}
+			}
+
+			return count;
 		}
 
 	}

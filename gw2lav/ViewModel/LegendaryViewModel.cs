@@ -35,6 +35,12 @@ namespace gw2lav.ViewModel {
 			set { SetProperty(ref _LegendaryTypes, value); }
 		}
 
+		private LegendaryType _Detail;
+		public LegendaryType Detail {
+			get { return _Detail; }
+			set { SetProperty(ref _Detail, value); }
+		}
+
 		private bool _ShowContent;
 		public bool ShowContent {
 			get { return _ShowContent; }
@@ -67,6 +73,8 @@ namespace gw2lav.ViewModel {
 
 		public RelayCommand SettingsCommand { get; set; }
 
+		public RelayCommand<LegendaryType> TypeSelectedCommand { get; set; }
+
 		public LegendaryViewModel(DialogService dialogService) {
 			_DialogService = dialogService;
 			ShowContent = false;
@@ -75,6 +83,7 @@ namespace gw2lav.ViewModel {
 			NoWater = RegistryHelper.GetNoWater();
 			ReloadCommand = new RelayCommand(OnReloadAsync, CanReload);
 			SettingsCommand = new RelayCommand(OnSettings, null);
+			TypeSelectedCommand = new RelayCommand<LegendaryType>(OnTypeSelected, null);
 		}
 
 		public async Task LoadDataAsync() {
@@ -114,6 +123,8 @@ namespace gw2lav.ViewModel {
 
 		private async Task LoadLegendaryTypesAsync(CancellationToken cancelToken) {
 			await Task.Run(async () => {
+
+				Detail = null;
 
 				int size = Enum.GetNames(typeof(LegendaryItem.ItemType)).Length - 1;    // "-1" for ItemType.Unknown
 				LegendaryType[] types = new LegendaryType[size];
@@ -182,10 +193,10 @@ namespace gw2lav.ViewModel {
 							// get unique item ids to check for item type
 							string ids = string.Join(",", potentials.Select(p => p.ItemId).Distinct());
 							// get item info about items replacable by legendaries to get the proper item type
-							Item[] replacableItems = await apiHelper.GetItemsAsync(ids);
-							if (replacableItems != null) {
+							Item[] equippedItems = await apiHelper.GetItemsAsync(ids);
+							if (equippedItems != null) {
 								// count used legendary items
-								foreach (Item item in replacableItems) {
+								foreach (Item item in equippedItems) {
 									if (item.Rarity != Item.ItemRarity.Legendary)
 										continue;
 									// skip unknown types
@@ -199,27 +210,38 @@ namespace gw2lav.ViewModel {
 										LegendaryTypes[(int)itemType].UsedInfo.Add(p.CharName, p.TabName, p.TabId, p.IsTerrestrial);
 									}
 								}
-								// count other items as upgradable
-								foreach (Item item in replacableItems) {
+								// sort replacable items according to ItemType
+								Dictionary<LegendaryItem.ItemType, List<ItemInfo>> replacableItems = new Dictionary<LegendaryItem.ItemType, List<ItemInfo>>();
+								foreach (Item item in equippedItems) {
 									if (item.Rarity == Item.ItemRarity.Legendary)
 										continue;
 									// skip unknown types
 									LegendaryItem.ItemType itemType = LegendaryItem.GetItemType(item);
 									if (itemType == LegendaryItem.ItemType.Unknown)
 										continue;
-									// get all potentials with the same Id
-									List<ItemInfo> potentialsWithSameId = potentials.FindAll(p => p.ItemId == item.Id);
-									// add legendary items to used info
-									foreach (ItemInfo p in potentialsWithSameId) {
+									// get item list for the ItemType and add to it
+									List<ItemInfo> itemList;
+									if (!replacableItems.TryGetValue(itemType, out itemList)) {
+										itemList = new List<ItemInfo>();
+										replacableItems.Add(itemType, itemList);
+									}
+									itemList.AddRange(potentials.FindAll(p => p.ItemId == item.Id));
+								}
+								// count replacable items
+								foreach (LegendaryItem.ItemType itemType in replacableItems.Keys) {
+									List<ItemInfo> list = replacableItems[itemType];
+									// sort items so that terrestrial items are first
+									list.Sort((i1, i2) => { return i2.IsTerrestrial.CompareTo(i1.IsTerrestrial); });
+									// split items to Usable and Needed lists
+									foreach (ItemInfo ri in list) {
 										// get number of legendary items of this type used in the same template
-										// TODO maybe it doesn't matter if it's aquatic or not I can't think right now
-										int used = LegendaryTypes[(int)itemType].UsedInfo.GetCountFromTab(p.CharName, p.TabId, p.IsTerrestrial);
-										int usable = LegendaryTypes[(int)itemType].UsableInfo.GetCountFromTab(p.CharName, p.TabId, p.IsTerrestrial);
+										int used = LegendaryTypes[(int)itemType].UsedInfo.GetCountFromTab(ri.CharName, ri.TabId);
+										int usable = LegendaryTypes[(int)itemType].UsableInfo.GetCountFromTab(ri.CharName, ri.TabId);
 										// add to usable or needed items
 										if (used + usable < LegendaryTypes[(int)itemType].Count)
-											LegendaryTypes[(int)itemType].UsableInfo.Add(p.CharName, p.TabName, p.TabId, p.IsTerrestrial);
+											LegendaryTypes[(int)itemType].UsableInfo.Add(ri.CharName, ri.TabName, ri.TabId, ri.IsTerrestrial);
 										else
-											LegendaryTypes[(int)itemType].NeededInfo.Add(p.CharName, p.TabName, p.TabId, p.IsTerrestrial);
+											LegendaryTypes[(int)itemType].NeededInfo.Add(ri.CharName, ri.TabName, ri.TabId, ri.IsTerrestrial);
 									}
 								}
 							}
@@ -250,6 +272,10 @@ namespace gw2lav.ViewModel {
 				NoWater = settingsVM.NoWater;
 			}
 
+		}
+
+		private void OnTypeSelected(LegendaryType type) {
+			Detail = type;
 		}
 
 	}
