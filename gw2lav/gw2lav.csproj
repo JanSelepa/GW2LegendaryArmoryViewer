@@ -91,11 +91,21 @@
     <Compile Include="ViewModel\RelayCommand.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="View\Converters.cs" />
-    <Compile Include="View\DialogWindow.xaml.cs" />
-    <Compile Include="View\LegendaryTypeDetailView.xaml.cs" />
-    <Compile Include="View\LegendaryTypeView.xaml.cs" />
-    <Compile Include="View\MainWindow.xaml.cs" />
-    <Compile Include="View\SettingsWindow.xaml.cs" />
+    <Compile Include="View\DialogWindow.xaml.cs">
+      <DependentUpon>DialogWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\LegendaryTypeDetailView.xaml.cs">
+      <DependentUpon>LegendaryTypeDetailView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\LegendaryTypeView.xaml.cs">
+      <DependentUpon>LegendaryTypeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SettingsWindow.xaml.cs">
+      <DependentUpon>SettingsWindow.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\ApiHelper.cs" />

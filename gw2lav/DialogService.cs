@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Windows;
 
-namespace gw2lav.ViewModel {
+namespace gw2lav {
 
 	public interface IDialogWindow {
 		Window Owner { get; set; }
