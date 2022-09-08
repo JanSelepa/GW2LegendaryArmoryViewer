@@ -340,11 +340,29 @@ namespace gw2lav.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Trinkets.
+        /// </summary>
+        public static string type_trinkets {
+            get {
+                return ResourceManager.GetString("type_trinkets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unknown.
         /// </summary>
         public static string type_unknown {
             get {
                 return ResourceManager.GetString("type_unknown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upgrades.
+        /// </summary>
+        public static string type_upgrades {
+            get {
+                return ResourceManager.GetString("type_upgrades", resourceCulture);
             }
         }
         
