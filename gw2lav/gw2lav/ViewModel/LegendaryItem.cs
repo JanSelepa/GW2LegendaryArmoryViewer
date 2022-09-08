@@ -69,9 +69,12 @@ namespace gw2lav.ViewModel {
 					Directory.CreateDirectory(CACHE_PATH);
 
 				using (WebClient webClient = new WebClient()) {
-					Task downloadTask = webClient.DownloadFileTaskAsync(uri, localFile);
-					await downloadTask;
-					if (!downloadTask.IsCompletedSuccessfully) {
+					try {
+						Task downloadTask = webClient.DownloadFileTaskAsync(uri, localFile);
+						await downloadTask;
+						if (downloadTask.Status != TaskStatus.RanToCompletion)
+							throw new Exception();
+					} catch (Exception) {
 						if (File.Exists(localFile))
 							File.Delete(localFile);
 						return;
