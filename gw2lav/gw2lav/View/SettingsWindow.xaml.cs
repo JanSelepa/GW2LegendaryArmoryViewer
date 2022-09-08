@@ -1,5 +1,4 @@
-﻿using gw2lav.ViewModel;
-using System.Windows;
+﻿using System.Windows;
 
 namespace gw2lav.View {
 
