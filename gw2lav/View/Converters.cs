@@ -7,7 +7,7 @@ namespace gw2lav.View {
 
 	class ItemCountVisibilityConverter : IValueConverter {
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
-			if (value is not int)
+			if (!(value is int))
 				return Visibility.Visible;
 
 			return (int)value < 2 ? Visibility.Collapsed : Visibility.Visible;
