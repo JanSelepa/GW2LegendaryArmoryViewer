@@ -133,15 +133,6 @@ namespace gw2lav.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Loading....
-        /// </summary>
-        public static string main_loading {
-            get {
-                return ResourceManager.GetString("main_loading", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Scopes needed: account, unlocks, inventories, characters.
         /// </summary>
         public static string settings_apikey_message {
