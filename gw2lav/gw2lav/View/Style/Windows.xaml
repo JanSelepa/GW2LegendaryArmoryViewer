@@ -98,7 +98,7 @@
 		<Setter Property="Background" Value="{StaticResource CloseBtnHoverBgBrush}" />
 	</Style>
 
-	<Style TargetType="Window" x:Key="DialogWindow">
+	<Style TargetType="Window" x:Key="DialogWindow" BasedOn="{StaticResource {x:Type Window}}">
 		<Setter Property="ShowInTaskbar" Value="False" />
 		<Setter Property="ResizeMode" Value="NoResize" />
 		<Setter Property="SizeToContent" Value="Height" />
