@@ -31,7 +31,7 @@
 
 		<Grid
 			Grid.Row="0"
-			Background="#4527A0">
+			Background="#4A148C">
 			
 			<!--
 				Action buttons
@@ -84,15 +84,17 @@
 			<!--
 				Loading indicator
 			-->
-
-			<TextBlock
+			
+			<ProgressBar
 				Grid.Row="0"
-				HorizontalAlignment="Center"
+				HorizontalAlignment="Stretch"
 				VerticalAlignment="Bottom"
-				Margin="10"
-				FontSize="15"
-				Foreground="White"
-				Text="{x:Static p:R.main_loading}"
+				Height="3"
+				Margin="0,0,0,-3"
+				Background="Transparent"
+				BorderThickness="0"
+				Foreground="#4A148C"
+				IsIndeterminate="True"
 				Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
 		</Grid>
@@ -430,7 +432,7 @@
 				<Border
 					Grid.Column="1"
 					Grid.Row="0" Grid.RowSpan="5"
-					BorderBrush="#4527A0"
+					BorderBrush="#4A148C"
 					BorderThickness="1,0,0,0" />
 
 				<view:LegendaryTypeDetailView

@@ -141,9 +141,6 @@
   <data name="main_error" xml:space="preserve">
     <value>Failed to load Legendary Armory data</value>
   </data>
-  <data name="main_loading" xml:space="preserve">
-    <value>Loading...</value>
-  </data>
   <data name="settings_apikey_message" xml:space="preserve">
     <value>Scopes needed: account, unlocks, inventories, characters</value>
   </data>
