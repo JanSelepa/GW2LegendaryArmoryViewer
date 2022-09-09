@@ -58,13 +58,13 @@
 				</Grid.RowDefinitions>
 				<TextBlock
 					Grid.Column="0" Grid.Row="0"
-					FontWeight="Bold"
+					FontFamily="{StaticResource BoldFontFamily}"
 					Text="{Binding Name}" />
 				<TextBlock
 					Grid.Column="1" Grid.Row="0"
 					HorizontalAlignment="Right"
 					Margin="10,0,0,0"
-					FontWeight="Bold"
+					FontFamily="{StaticResource BoldFontFamily}"
 					Text="{Binding Count}" />
 				<ItemsControl
 					Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1"
@@ -112,12 +112,12 @@
 					<TextBlock
 						Grid.Column="0"
 						FontSize="14"
-						FontStyle="Italic"
+						FontFamily="{StaticResource ItalicFontFamily}"
 						Text="{x:Static p:R.type_terrestrial}" />
 					<TextBlock
 						Grid.Column="1"
 						FontSize="14"
-						FontStyle="Italic"
+						FontFamily="{StaticResource ItalicFontFamily}"
 						Text="{Binding TerrestrialCount}" />
 				</Grid>
 				
@@ -160,12 +160,12 @@
 					<TextBlock
 						Grid.Column="0"
 						FontSize="14"
-						FontStyle="Italic"
+						FontFamily="{StaticResource ItalicFontFamily}"
 						Text="{x:Static p:R.type_aquatic}" />
 					<TextBlock
 						Grid.Column="1"
 						FontSize="14"
-						FontStyle="Italic"
+						FontFamily="{StaticResource ItalicFontFamily}"
 						Text="{Binding AquaticCount}" />
 				</Grid>
 				<ItemsControl
