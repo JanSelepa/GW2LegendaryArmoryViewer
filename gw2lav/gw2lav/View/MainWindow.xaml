@@ -6,6 +6,8 @@
 	Title="{x:Static p:R.app_title}"
 	Width="1200" MinWidth="1200"
 	Height="770" MinHeight="770"
+	WindowStartupLocation="CenterScreen"
+	Style="{StaticResource MainWindow}"
 	Loaded="OnLoaded">
 
 	<Window.Resources>
@@ -21,44 +23,80 @@
 		</Style>
 	</Window.Resources>
 
-	<Grid>
+	<Grid Name="root">
 		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto" />
+			<RowDefinition Height="60" />
 			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
-		
-		<!--
-			Action buttons
-		-->
 
-		<StackPanel
+		<Grid
 			Grid.Row="0"
-			HorizontalAlignment="Right"
-			Orientation="Horizontal">
-			<Button
-				Width="45"
-				Margin="0,0,1,0"
-				FontFamily="Segoe MDL2 Assets"
-				Content="&#xE72C;"
-				Command="{Binding ReloadCommand}" />
-			<Button
-				Width="45"
-				FontFamily="Segoe MDL2 Assets"
-				Content="&#xE713;"
-				Command="{Binding SettingsCommand}" />
-		</StackPanel>
-		
-		<!--
-			Loading indicator
-		-->
+			Background="#4527A0">
+			
+			<!--
+				Action buttons
+			-->
 
-		<TextBlock
-			Grid.Row="0"
-			HorizontalAlignment="Center"
-			FontSize="17"
-			Text="{x:Static p:R.main_loading}"
-			Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}" />
+			<Grid
+				Grid.Row="0"
+				HorizontalAlignment="Right"
+				VerticalAlignment="Top"
+				WindowChrome.IsHitTestVisibleInChrome="True">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="Auto" />
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+				</Grid.RowDefinitions>
+				<Button
+					Grid.Column="0" Grid.Row="0"
+					Style="{StaticResource MinimizeWindowButton}"
+					Click="onMinimizeClick" />
+				<Button
+					Grid.Column="1" Grid.Row="0"
+					Style="{StaticResource MaximizeWindowButton}"
+					Click="onMaximizeClick" />
+				<Button
+					Grid.Column="1" Grid.Row="0"
+					Style="{StaticResource RestoreWindowButton}"
+					Click="onRestoreClick" />
+				<Button
+					Grid.Column="2" Grid.Row="0"
+					Style="{StaticResource CloseWindowButton}"
+					Click="onCloseClick" />
+				<Button
+					Grid.Column="1" Grid.Row="1"
+					Style="{StaticResource WindowButton}"
+					FontSize="15"
+					Content="&#xE72C;"
+					Command="{Binding ReloadCommand}" />
+				<Button
+					Grid.Column="2" Grid.Row="1"
+					Style="{StaticResource WindowButton}"
+					FontSize="15"
+					Content="&#xE713;"
+					Command="{Binding SettingsCommand}" />
+			</Grid>
 		
+			<!--
+				Loading indicator
+			-->
+
+			<TextBlock
+				Grid.Row="0"
+				HorizontalAlignment="Center"
+				VerticalAlignment="Bottom"
+				Margin="10"
+				FontSize="15"
+				Foreground="White"
+				Text="{x:Static p:R.main_loading}"
+				Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+		</Grid>
+
 		<!--
 			Content
 		-->
@@ -71,6 +109,7 @@
 				Visibility="{Binding ShowContent, Converter={StaticResource BooleanToVisibilityConverter}}" >
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="Auto" />
 					<ColumnDefinition Width="220" />
 				</Grid.ColumnDefinitions>
 				<Grid.RowDefinitions>
@@ -388,8 +427,14 @@
 					Detail
 				-->
 
-				<view:LegendaryTypeDetailView
+				<Border
 					Grid.Column="1"
+					Grid.Row="0" Grid.RowSpan="5"
+					BorderBrush="#4527A0"
+					BorderThickness="1,0,0,0" />
+
+				<view:LegendaryTypeDetailView
+					Grid.Column="2"
 					Grid.Row="0" Grid.RowSpan="5"
 					DataContext="{Binding Detail}"/>
 

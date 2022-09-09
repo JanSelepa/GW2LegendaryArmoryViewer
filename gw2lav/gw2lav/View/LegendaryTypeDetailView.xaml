@@ -190,230 +190,225 @@
 
 	</UserControl.Resources>
 
-	<Border
-		BorderThickness="1,0,0,0"
-		BorderBrush="#55000000">
-		<Grid>
+	<Grid>
 			
-			<!--
-				Null view
-			-->
+		<!--
+			Null view
+		-->
+
+		<TextBlock
+			HorizontalAlignment="Center"
+			VerticalAlignment="Center"
+			Margin="20"
+			Text="{x:Static p:R.detail_message}"
+			FontSize="15"
+			TextAlignment="Center"
+			TextWrapping="Wrap">
+			<TextBlock.Style>
+				<Style TargetType="TextBlock">
+					<Setter
+						Property="Visibility"
+						Value="Collapsed" />
+					<Style.Triggers>
+						<DataTrigger
+							Binding="{Binding}"
+							Value="{x:Null}">
+							<Setter
+								Property="Visibility"
+								Value="Visible" />
+						</DataTrigger>
+					</Style.Triggers>
+				</Style>
+			</TextBlock.Style>
+		</TextBlock>
+			
+		<!--
+			Content
+		-->
+
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="*" />
+			</Grid.RowDefinitions>
+			<Grid.Style>
+				<Style TargetType="Grid">
+					<Style.Triggers>
+						<DataTrigger
+							Binding="{Binding}"
+							Value="{x:Null}">
+							<Setter
+								Property="Visibility"
+								Value="Collapsed" />
+						</DataTrigger>
+					</Style.Triggers>
+				</Style>
+			</Grid.Style>
 
 			<TextBlock
+				Grid.Row="0"
 				HorizontalAlignment="Center"
-				VerticalAlignment="Center"
-				Margin="20"
-				Text="{x:Static p:R.detail_message}"
-				FontSize="15"
-				TextAlignment="Center"
-				TextWrapping="Wrap">
-				<TextBlock.Style>
-					<Style TargetType="TextBlock">
-						<Setter
-							Property="Visibility"
-							Value="Collapsed" />
-						<Style.Triggers>
-							<DataTrigger
-								Binding="{Binding}"
-								Value="{x:Null}">
-								<Setter
-									Property="Visibility"
-									Value="Visible" />
-							</DataTrigger>
-						</Style.Triggers>
-					</Style>
-				</TextBlock.Style>
-			</TextBlock>
-			
-			<!--
-				Content
-			-->
+				Margin="10"
+				FontSize="17"
+				Text="{Binding Name}" />
 
-			<Grid>
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="*" />
-				</Grid.RowDefinitions>
-				<Grid.Style>
-					<Style TargetType="Grid">
-						<Style.Triggers>
-							<DataTrigger
-								Binding="{Binding}"
-								Value="{x:Null}">
-								<Setter
-									Property="Visibility"
-									Value="Collapsed" />
-							</DataTrigger>
-						</Style.Triggers>
-					</Style>
-				</Grid.Style>
-
-				<TextBlock
-					Grid.Row="0"
-					HorizontalAlignment="Center"
-					Margin="10"
-					FontSize="17"
-					Text="{Binding Name}" />
-
-				<ScrollViewer
-					Grid.Row="1"
-					VerticalScrollBarVisibility="Auto"
-					HorizontalScrollBarVisibility="Disabled"
-					Padding="10,0">
-					<StackPanel
-						Orientation="Vertical">
+			<ScrollViewer
+				Grid.Row="1"
+				VerticalScrollBarVisibility="Auto"
+				HorizontalScrollBarVisibility="Disabled"
+				Padding="10,0">
+				<StackPanel
+					Orientation="Vertical">
 						
-						<!--
-							Usable info
-						-->
+					<!--
+						Usable info
+					-->
 
-						<Grid
-							Margin="0,0,0,5">
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="Auto" />
-								<ColumnDefinition Width="*" />
-								<ColumnDefinition Width="Auto" />
-							</Grid.ColumnDefinitions>
-							<Image
-								Grid.Column="0"
-								Height="20"
-								Margin="0,0,5,0"
-								Source="/Assets/item_usable.png" />
-							<TextBlock
-								Grid.Column="1"
-								VerticalAlignment="Center"
-								FontSize="15"
-								Text="{x:Static p:R.detail_usable}" />
-							<TextBlock
-								Grid.Column="2"
-								HorizontalAlignment="Right"
-								VerticalAlignment="Center"
-								FontSize="15">
-								<TextBlock.Style>
-									<Style TargetType="TextBlock">
-										<Setter
-											Property="Text"
-											Value="{Binding UsableInfo.TotalCount}" />
-										<Style.Triggers>
-											<DataTrigger
-												Binding="{Binding DataContext.NoWater, RelativeSource={RelativeSource AncestorType={x:Type view:MainWindow}}}"
-												Value="True">
-												<Setter
-													Property="Text"
-													Value="{Binding UsableInfo.TerrestrialCount}" />
-											</DataTrigger>
-										</Style.Triggers>
-									</Style>
-								</TextBlock.Style>
-							</TextBlock>
-						</Grid>
+					<Grid
+						Margin="0,0,0,5">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="*" />
+							<ColumnDefinition Width="Auto" />
+						</Grid.ColumnDefinitions>
+						<Image
+							Grid.Column="0"
+							Height="20"
+							Margin="0,0,5,0"
+							Source="/Assets/item_usable.png" />
+						<TextBlock
+							Grid.Column="1"
+							VerticalAlignment="Center"
+							FontSize="15"
+							Text="{x:Static p:R.detail_usable}" />
+						<TextBlock
+							Grid.Column="2"
+							HorizontalAlignment="Right"
+							VerticalAlignment="Center"
+							FontSize="15">
+							<TextBlock.Style>
+								<Style TargetType="TextBlock">
+									<Setter
+										Property="Text"
+										Value="{Binding UsableInfo.TotalCount}" />
+									<Style.Triggers>
+										<DataTrigger
+											Binding="{Binding DataContext.NoWater, RelativeSource={RelativeSource AncestorType={x:Type view:MainWindow}}}"
+											Value="True">
+											<Setter
+												Property="Text"
+												Value="{Binding UsableInfo.TerrestrialCount}" />
+										</DataTrigger>
+									</Style.Triggers>
+								</Style>
+							</TextBlock.Style>
+						</TextBlock>
+					</Grid>
 
-						<ContentControl
-							Content="{Binding UsableInfo}" />
+					<ContentControl
+						Content="{Binding UsableInfo}" />
 						
-						<!--
-							Needed info
-						-->
+					<!--
+						Needed info
+					-->
 
-						<Grid
-							Margin="0,15,0,5">
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="Auto" />
-								<ColumnDefinition Width="*" />
-								<ColumnDefinition Width="Auto" />
-							</Grid.ColumnDefinitions>
-							<Image
-								Grid.Column="0"
-								Height="20"
-								Margin="0,0,5,0"
-								Source="/Assets/item_needed.png" />
-							<TextBlock
-								Grid.Column="1"
-								VerticalAlignment="Center"
-								FontSize="15"
-								Text="{x:Static p:R.detail_needed}" />
-							<TextBlock
-								Grid.Column="2"
-								HorizontalAlignment="Right"
-								VerticalAlignment="Center"
-								FontSize="15">
-								<TextBlock.Style>
-									<Style TargetType="TextBlock">
-										<Setter
-											Property="Text"
-											Value="{Binding NeededInfo.TotalCount}" />
-										<Style.Triggers>
-											<DataTrigger
-												Binding="{Binding DataContext.NoWater, RelativeSource={RelativeSource AncestorType={x:Type view:MainWindow}}}"
-												Value="True">
-												<Setter
-													Property="Text"
-													Value="{Binding NeededInfo.TerrestrialCount}" />
-											</DataTrigger>
-										</Style.Triggers>
-									</Style>
-								</TextBlock.Style>
-							</TextBlock>
-						</Grid>
+					<Grid
+						Margin="0,15,0,5">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="*" />
+							<ColumnDefinition Width="Auto" />
+						</Grid.ColumnDefinitions>
+						<Image
+							Grid.Column="0"
+							Height="20"
+							Margin="0,0,5,0"
+							Source="/Assets/item_needed.png" />
+						<TextBlock
+							Grid.Column="1"
+							VerticalAlignment="Center"
+							FontSize="15"
+							Text="{x:Static p:R.detail_needed}" />
+						<TextBlock
+							Grid.Column="2"
+							HorizontalAlignment="Right"
+							VerticalAlignment="Center"
+							FontSize="15">
+							<TextBlock.Style>
+								<Style TargetType="TextBlock">
+									<Setter
+										Property="Text"
+										Value="{Binding NeededInfo.TotalCount}" />
+									<Style.Triggers>
+										<DataTrigger
+											Binding="{Binding DataContext.NoWater, RelativeSource={RelativeSource AncestorType={x:Type view:MainWindow}}}"
+											Value="True">
+											<Setter
+												Property="Text"
+												Value="{Binding NeededInfo.TerrestrialCount}" />
+										</DataTrigger>
+									</Style.Triggers>
+								</Style>
+							</TextBlock.Style>
+						</TextBlock>
+					</Grid>
 
-						<ContentControl
-							Content="{Binding NeededInfo}"/>
+					<ContentControl
+						Content="{Binding NeededInfo}"/>
 						
-						<!--
-							Used info
-						-->
+					<!--
+						Used info
+					-->
 
-						<Grid
-							Margin="0,15,0,5">
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="Auto" />
-								<ColumnDefinition Width="*" />
-								<ColumnDefinition Width="Auto" />
-							</Grid.ColumnDefinitions>
-							<Image
-								Grid.Column="0"
-								Height="20"
-								Margin="0,0,5,0"
-								Source="/Assets/item_used.png" />
-							<TextBlock
-								Grid.Column="1"
-								VerticalAlignment="Center"
-								FontSize="15"
-								Text="{x:Static p:R.detail_used}" />
-							<TextBlock
-								Grid.Column="2"
-								HorizontalAlignment="Right"
-								VerticalAlignment="Center"
-								FontSize="15">
-								<TextBlock.Style>
-									<Style TargetType="TextBlock">
-										<Setter
-											Property="Text"
-											Value="{Binding UsedInfo.TotalCount}" />
-										<Style.Triggers>
-											<DataTrigger
-												Binding="{Binding DataContext.NoWater, RelativeSource={RelativeSource AncestorType={x:Type view:MainWindow}}}"
-												Value="True">
-												<Setter
-													Property="Text"
-													Value="{Binding UsedInfo.TerrestrialCount}" />
-											</DataTrigger>
-										</Style.Triggers>
-									</Style>
-								</TextBlock.Style>
-							</TextBlock>
-						</Grid>
+					<Grid
+						Margin="0,15,0,5">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="*" />
+							<ColumnDefinition Width="Auto" />
+						</Grid.ColumnDefinitions>
+						<Image
+							Grid.Column="0"
+							Height="20"
+							Margin="0,0,5,0"
+							Source="/Assets/item_used.png" />
+						<TextBlock
+							Grid.Column="1"
+							VerticalAlignment="Center"
+							FontSize="15"
+							Text="{x:Static p:R.detail_used}" />
+						<TextBlock
+							Grid.Column="2"
+							HorizontalAlignment="Right"
+							VerticalAlignment="Center"
+							FontSize="15">
+							<TextBlock.Style>
+								<Style TargetType="TextBlock">
+									<Setter
+										Property="Text"
+										Value="{Binding UsedInfo.TotalCount}" />
+									<Style.Triggers>
+										<DataTrigger
+											Binding="{Binding DataContext.NoWater, RelativeSource={RelativeSource AncestorType={x:Type view:MainWindow}}}"
+											Value="True">
+											<Setter
+												Property="Text"
+												Value="{Binding UsedInfo.TerrestrialCount}" />
+										</DataTrigger>
+									</Style.Triggers>
+								</Style>
+							</TextBlock.Style>
+						</TextBlock>
+					</Grid>
 
-						<ContentControl
-							Content="{Binding UsedInfo}" />
+					<ContentControl
+						Content="{Binding UsedInfo}" />
 
-					</StackPanel>
-				</ScrollViewer>
-
-			</Grid>
+				</StackPanel>
+			</ScrollViewer>
 
 		</Grid>
 
-	</Border>
+	</Grid>
 
 </UserControl>
