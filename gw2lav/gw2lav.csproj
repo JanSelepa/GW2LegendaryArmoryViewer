@@ -81,10 +81,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DialogService.cs" />
     <Compile Include="RegistryHelper.cs" />
     <Compile Include="ViewModel\BindableBase.cs" />
     <Compile Include="ViewModel\CountInfo.cs" />
-    <Compile Include="ViewModel\DialogService.cs" />
     <Compile Include="ViewModel\LegendaryItem.cs" />
     <Compile Include="ViewModel\LegendaryType.cs" />
     <Compile Include="ViewModel\LegendaryViewModel.cs" />
