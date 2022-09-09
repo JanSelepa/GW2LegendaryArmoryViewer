@@ -131,6 +131,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>R.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Resource Include="Assets\Fonts\PTSerif-Bold.ttf" />
+    <Resource Include="Assets\Fonts\PTSerif-BoldItalic.ttf" />
+    <Resource Include="Assets\Fonts\PTSerif-Italic.ttf" />
+    <Resource Include="Assets\Fonts\PTSerif-Regular.ttf" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -182,6 +186,10 @@
     <Page Include="View\Style\Buttons.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Style\Fonts.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Style\Windows.xaml">
       <Generator>MSBuild:Compile</Generator>

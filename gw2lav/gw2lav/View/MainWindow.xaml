@@ -18,7 +18,7 @@
 			<Setter Property="HorizontalAlignment" Value="Center" />
 			<Setter Property="TextAlignment" Value="Center" />
 			<Setter Property="FontSize" Value="15" />
-			<Setter Property="FontWeight" Value="Bold" />
+			<Setter Property="FontFamily" Value="{StaticResource BoldFontFamily}" />
 			<Setter Property="Margin" Value="0,0,0,5" />
 		</Style>
 	</Window.Resources>

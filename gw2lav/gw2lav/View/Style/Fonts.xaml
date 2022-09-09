@@ -1,0 +1,10 @@
+﻿<ResourceDictionary
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+	<FontFamily x:Key="RegularFontFamily">../../Assets/Fonts/#PT Serif Regular</FontFamily>
+	<FontFamily x:Key="BoldFontFamily">../../Assets/Fonts/#PT Serif Bold</FontFamily>
+	<FontFamily x:Key="ItalicFontFamily">../../Assets/Fonts/#PT Serif Italic</FontFamily>
+	<FontFamily x:Key="BoldItalicFontFamily">../../Assets/Fonts/#PT Serif Bold Italic</FontFamily>
+
+</ResourceDictionary>

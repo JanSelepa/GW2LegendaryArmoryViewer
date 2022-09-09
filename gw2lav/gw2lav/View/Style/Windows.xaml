@@ -5,7 +5,11 @@
 
 	<sys:Double x:Key="WindowTitleHeight">60</sys:Double>
 
-	<Style TargetType="Window" x:Key="MainWindow">
+	<Style TargetType="Window">
+		<Setter Property="FontFamily" Value="{StaticResource RegularFontFamily}" />
+	</Style>
+
+	<Style TargetType="Window" x:Key="MainWindow" BasedOn="{StaticResource {x:Type Window}}">
 		<Setter Property="WindowChrome.WindowChrome">
 			<Setter.Value>
 				<WindowChrome
