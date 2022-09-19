@@ -88,6 +88,7 @@
     <Compile Include="RegistryHelper.cs" />
     <Compile Include="ViewModel\BindableBase.cs" />
     <Compile Include="ViewModel\CountInfo.cs" />
+    <Compile Include="ViewModel\InfoViewModel.cs" />
     <Compile Include="ViewModel\LegendaryItem.cs" />
     <Compile Include="ViewModel\LegendaryType.cs" />
     <Compile Include="ViewModel\LegendaryViewModel.cs" />
@@ -96,6 +97,9 @@
     <Compile Include="View\Converters.cs" />
     <Compile Include="View\DialogWindow.xaml.cs">
       <DependentUpon>DialogWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\InfoWindow.xaml.cs">
+      <DependentUpon>InfoWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\LegendaryTypeDetailView.xaml.cs">
       <DependentUpon>LegendaryTypeDetailView.xaml</DependentUpon>
@@ -169,6 +173,10 @@
     <Page Include="View\DialogWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\InfoWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\LegendaryTypeDetailView.xaml">
       <Generator>MSBuild:Compile</Generator>

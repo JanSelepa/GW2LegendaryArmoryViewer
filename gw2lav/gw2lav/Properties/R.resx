@@ -138,11 +138,23 @@
   <data name="detail_used" xml:space="preserve">
     <value>Used on</value>
   </data>
+  <data name="info_legal" xml:space="preserve">
+    <value>Legal notice</value>
+  </data>
+  <data name="info_legal_ncsoft" xml:space="preserve">
+    <value>NCSOFT, ArenaNet, the interlocking NC logo, Guild Wars, Guild Wars 2: Heart of Thorns, Guild Wars 2: Path of Fire, and all associated logos, designs, and composite marks are trademarks or registered trademarks of NCSOFT Corporation. All other trademarks are the property of their respective owners.</value>
+  </data>
+  <data name="info_title" xml:space="preserve">
+    <value>Info</value>
+  </data>
+  <data name="info_version" xml:space="preserve">
+    <value>Application version</value>
+  </data>
   <data name="main_error" xml:space="preserve">
     <value>Failed to load Legendary Armory data</value>
   </data>
   <data name="settings_apikey_message" xml:space="preserve">
-    <value>Scopes needed: account, unlocks, inventories, characters</value>
+    <value>Permissions needed: account, unlocks, inventories, characters</value>
   </data>
   <data name="settings_apikey_title" xml:space="preserve">
     <value>Guild Wars 2 Api Key</value>

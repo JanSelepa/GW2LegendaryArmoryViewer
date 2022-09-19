@@ -11,6 +11,7 @@ namespace gw2lav.View {
 		public MainWindow() {
 			DialogService dialogService = new DialogService(this);
 			dialogService.Register<SettingsViewModel, SettingsWindow>();
+			dialogService.Register<InfoViewModel, InfoWindow>();
 
 			StateChanged += onStateChangedWindow;
 

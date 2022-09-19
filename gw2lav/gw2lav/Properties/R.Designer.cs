@@ -124,6 +124,42 @@ namespace gw2lav.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Legal notice.
+        /// </summary>
+        public static string info_legal {
+            get {
+                return ResourceManager.GetString("info_legal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NCSOFT, ArenaNet, the interlocking NC logo, Guild Wars, Guild Wars 2: Heart of Thorns, Guild Wars 2: Path of Fire, and all associated logos, designs, and composite marks are trademarks or registered trademarks of NCSOFT Corporation. All other trademarks are the property of their respective owners..
+        /// </summary>
+        public static string info_legal_ncsoft {
+            get {
+                return ResourceManager.GetString("info_legal_ncsoft", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Info.
+        /// </summary>
+        public static string info_title {
+            get {
+                return ResourceManager.GetString("info_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Application version.
+        /// </summary>
+        public static string info_version {
+            get {
+                return ResourceManager.GetString("info_version", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to load Legendary Armory data.
         /// </summary>
         public static string main_error {
@@ -133,7 +169,7 @@ namespace gw2lav.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Scopes needed: account, unlocks, inventories, characters.
+        ///   Looks up a localized string similar to Permissions needed: account, unlocks, inventories, characters.
         /// </summary>
         public static string settings_apikey_message {
             get {
