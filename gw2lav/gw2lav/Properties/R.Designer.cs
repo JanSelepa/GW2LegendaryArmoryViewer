@@ -241,7 +241,7 @@ namespace gw2lav.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Body.
+        ///   Looks up a localized string similar to Coat.
         /// </summary>
         public static string type_armor_body {
             get {
@@ -250,7 +250,34 @@ namespace gw2lav.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Feet.
+        ///   Looks up a localized string similar to Heavy Coat.
+        /// </summary>
+        public static string type_armor_body_heavy {
+            get {
+                return ResourceManager.GetString("type_armor_body_heavy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Light Coat.
+        /// </summary>
+        public static string type_armor_body_light {
+            get {
+                return ResourceManager.GetString("type_armor_body_light", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Medium Coat.
+        /// </summary>
+        public static string type_armor_body_medium {
+            get {
+                return ResourceManager.GetString("type_armor_body_medium", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Boots.
         /// </summary>
         public static string type_armor_feet {
             get {
@@ -259,7 +286,34 @@ namespace gw2lav.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hands.
+        ///   Looks up a localized string similar to Heavy Boots.
+        /// </summary>
+        public static string type_armor_feet_heavy {
+            get {
+                return ResourceManager.GetString("type_armor_feet_heavy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Light Boots.
+        /// </summary>
+        public static string type_armor_feet_light {
+            get {
+                return ResourceManager.GetString("type_armor_feet_light", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Medium Boots.
+        /// </summary>
+        public static string type_armor_feet_medium {
+            get {
+                return ResourceManager.GetString("type_armor_feet_medium", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gloves.
         /// </summary>
         public static string type_armor_hands {
             get {
@@ -268,11 +322,65 @@ namespace gw2lav.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Head.
+        ///   Looks up a localized string similar to Heavy Gloves.
+        /// </summary>
+        public static string type_armor_hands_heavy {
+            get {
+                return ResourceManager.GetString("type_armor_hands_heavy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Light Gloves.
+        /// </summary>
+        public static string type_armor_hands_light {
+            get {
+                return ResourceManager.GetString("type_armor_hands_light", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Medium Gloves.
+        /// </summary>
+        public static string type_armor_hands_medium {
+            get {
+                return ResourceManager.GetString("type_armor_hands_medium", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Helm.
         /// </summary>
         public static string type_armor_head {
             get {
                 return ResourceManager.GetString("type_armor_head", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Heavy Helm.
+        /// </summary>
+        public static string type_armor_head_heavy {
+            get {
+                return ResourceManager.GetString("type_armor_head_heavy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Light Helm.
+        /// </summary>
+        public static string type_armor_head_light {
+            get {
+                return ResourceManager.GetString("type_armor_head_light", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Medium Helm.
+        /// </summary>
+        public static string type_armor_head_medium {
+            get {
+                return ResourceManager.GetString("type_armor_head_medium", resourceCulture);
             }
         }
         
@@ -286,11 +394,38 @@ namespace gw2lav.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Legs.
+        ///   Looks up a localized string similar to Leggings.
         /// </summary>
         public static string type_armor_legs {
             get {
                 return ResourceManager.GetString("type_armor_legs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Heavy Leggings.
+        /// </summary>
+        public static string type_armor_legs_heavy {
+            get {
+                return ResourceManager.GetString("type_armor_legs_heavy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Light Leggings.
+        /// </summary>
+        public static string type_armor_legs_light {
+            get {
+                return ResourceManager.GetString("type_armor_legs_light", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Medium Leggings.
+        /// </summary>
+        public static string type_armor_legs_medium {
+            get {
+                return ResourceManager.GetString("type_armor_legs_medium", resourceCulture);
             }
         }
         
@@ -318,6 +453,33 @@ namespace gw2lav.Properties {
         public static string type_armor_shoulders {
             get {
                 return ResourceManager.GetString("type_armor_shoulders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Heavy Shoulders.
+        /// </summary>
+        public static string type_armor_shoulders_heavy {
+            get {
+                return ResourceManager.GetString("type_armor_shoulders_heavy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Light Shoulders.
+        /// </summary>
+        public static string type_armor_shoulders_light {
+            get {
+                return ResourceManager.GetString("type_armor_shoulders_light", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Medium Shoulders.
+        /// </summary>
+        public static string type_armor_shoulders_medium {
+            get {
+                return ResourceManager.GetString("type_armor_shoulders_medium", resourceCulture);
             }
         }
         
