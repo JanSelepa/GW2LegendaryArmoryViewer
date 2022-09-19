@@ -56,7 +56,6 @@
 				Margin="80,20,0,0"
 				HorizontalAlignment="Left"
 				VerticalAlignment="Top"
-				FontFamily="{StaticResource BoldFontFamily}"
 				FontSize="25"
 				Foreground="#f5f5f5"
 				TextOptions.TextFormattingMode="Ideal"
@@ -97,17 +96,23 @@
 					Style="{StaticResource CloseWindowButton}"
 					Click="onCloseClick" />
 				<Button
-					Grid.Column="1" Grid.Row="1"
+					Grid.Column="0" Grid.Row="1"
 					Style="{StaticResource WindowButton}"
 					FontSize="15"
 					Content="&#xE72C;"
 					Command="{Binding ReloadCommand}" />
 				<Button
-					Grid.Column="2" Grid.Row="1"
+					Grid.Column="1" Grid.Row="1"
 					Style="{StaticResource WindowButton}"
 					FontSize="15"
 					Content="&#xE713;"
 					Command="{Binding SettingsCommand}" />
+				<Button
+					Grid.Column="2" Grid.Row="1"
+					Style="{StaticResource WindowButton}"
+					FontSize="17"
+					Content="&#xE946;"
+					Command="{Binding InfoCommand}" />
 			</Grid>
 		
 			<!--

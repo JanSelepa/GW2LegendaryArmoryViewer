@@ -1,0 +1,38 @@
+﻿<Window x:Class="gw2lav.View.InfoWindow"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:p="clr-namespace:gw2lav.Properties"
+	WindowStartupLocation="CenterOwner"
+	Title="{x:Static p:R.info_title}"
+	FontSize="14"
+	Style="{StaticResource DialogWindow}">
+	
+	
+	
+	<StackPanel
+		Orientation="Vertical"
+		Margin="20,10,20,20">
+
+		<TextBlock
+			Margin="0,0,0,5"
+			FontSize="17"
+			FontFamily="{StaticResource BoldFontFamily}"
+			Text="{x:Static p:R.info_version}" />
+
+		<TextBlock
+			Text="{Binding Version}" />
+		
+		<TextBlock
+			Margin="0,20,0,5"
+			FontSize="17"
+			FontFamily="{StaticResource BoldFontFamily}"
+			Text="{x:Static p:R.info_legal}" />
+		
+		<TextBlock
+			TextWrapping="Wrap"
+			TextAlignment="Justify"
+			Text="{x:Static p:R.info_legal_ncsoft}" />
+
+	</StackPanel>
+	
+</Window>

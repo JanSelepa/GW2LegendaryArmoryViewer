@@ -70,8 +70,8 @@ namespace gw2lav.ViewModel {
 		}
 
 		public RelayCommand ReloadCommand { get; set; }
-
 		public RelayCommand SettingsCommand { get; set; }
+		public RelayCommand InfoCommand { get; set; }
 
 		public RelayCommand<LegendaryType> TypeSelectedCommand { get; set; }
 
@@ -83,6 +83,7 @@ namespace gw2lav.ViewModel {
 			NoWater = RegistryHelper.GetNoWater();
 			ReloadCommand = new RelayCommand(OnReloadAsync, CanReload);
 			SettingsCommand = new RelayCommand(OnSettings, null);
+			InfoCommand = new RelayCommand(OnInfo, null);
 			TypeSelectedCommand = new RelayCommand<LegendaryType>(OnTypeSelected, null);
 		}
 
@@ -272,6 +273,11 @@ namespace gw2lav.ViewModel {
 				NoWater = settingsVM.NoWater;
 			}
 
+		}
+
+		private void OnInfo() {
+			InfoViewModel infoVM = new InfoViewModel();
+			_DialogService.ShowDialog(infoVM);
 		}
 
 		private void OnTypeSelected(LegendaryType type) {
