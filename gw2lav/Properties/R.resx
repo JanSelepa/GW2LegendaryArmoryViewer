@@ -178,22 +178,67 @@
     <value>Aquatic</value>
   </data>
   <data name="type_armor_body" xml:space="preserve">
-    <value>Body</value>
+    <value>Coat</value>
+  </data>
+  <data name="type_armor_body_heavy" xml:space="preserve">
+    <value>Heavy Coat</value>
+  </data>
+  <data name="type_armor_body_light" xml:space="preserve">
+    <value>Light Coat</value>
+  </data>
+  <data name="type_armor_body_medium" xml:space="preserve">
+    <value>Medium Coat</value>
   </data>
   <data name="type_armor_feet" xml:space="preserve">
-    <value>Feet</value>
+    <value>Boots</value>
+  </data>
+  <data name="type_armor_feet_heavy" xml:space="preserve">
+    <value>Heavy Boots</value>
+  </data>
+  <data name="type_armor_feet_light" xml:space="preserve">
+    <value>Light Boots</value>
+  </data>
+  <data name="type_armor_feet_medium" xml:space="preserve">
+    <value>Medium Boots</value>
   </data>
   <data name="type_armor_hands" xml:space="preserve">
-    <value>Hands</value>
+    <value>Gloves</value>
+  </data>
+  <data name="type_armor_hands_heavy" xml:space="preserve">
+    <value>Heavy Gloves</value>
+  </data>
+  <data name="type_armor_hands_light" xml:space="preserve">
+    <value>Light Gloves</value>
+  </data>
+  <data name="type_armor_hands_medium" xml:space="preserve">
+    <value>Medium Gloves</value>
   </data>
   <data name="type_armor_head" xml:space="preserve">
-    <value>Head</value>
+    <value>Helm</value>
+  </data>
+  <data name="type_armor_head_heavy" xml:space="preserve">
+    <value>Heavy Helm</value>
+  </data>
+  <data name="type_armor_head_light" xml:space="preserve">
+    <value>Light Helm</value>
+  </data>
+  <data name="type_armor_head_medium" xml:space="preserve">
+    <value>Medium Helm</value>
   </data>
   <data name="type_armor_heavy" xml:space="preserve">
     <value>Heavy Armor</value>
   </data>
   <data name="type_armor_legs" xml:space="preserve">
-    <value>Legs</value>
+    <value>Leggings</value>
+  </data>
+  <data name="type_armor_legs_heavy" xml:space="preserve">
+    <value>Heavy Leggings</value>
+  </data>
+  <data name="type_armor_legs_light" xml:space="preserve">
+    <value>Light Leggings</value>
+  </data>
+  <data name="type_armor_legs_medium" xml:space="preserve">
+    <value>Medium Leggings</value>
   </data>
   <data name="type_armor_light" xml:space="preserve">
     <value>Light Armor</value>
@@ -203,6 +248,15 @@
   </data>
   <data name="type_armor_shoulders" xml:space="preserve">
     <value>Shoulders</value>
+  </data>
+  <data name="type_armor_shoulders_heavy" xml:space="preserve">
+    <value>Heavy Shoulders</value>
+  </data>
+  <data name="type_armor_shoulders_light" xml:space="preserve">
+    <value>Light Shoulders</value>
+  </data>
+  <data name="type_armor_shoulders_medium" xml:space="preserve">
+    <value>Medium Shoulders</value>
   </data>
   <data name="type_back" xml:space="preserve">
     <value>Back Item</value>
