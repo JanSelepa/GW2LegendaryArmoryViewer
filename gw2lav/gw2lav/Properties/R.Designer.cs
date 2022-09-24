@@ -133,7 +133,7 @@ namespace gw2lav.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to NCSOFT, ArenaNet, the interlocking NC logo, Guild Wars, Guild Wars 2: Heart of Thorns, Guild Wars 2: Path of Fire, and all associated logos, designs, and composite marks are trademarks or registered trademarks of NCSOFT Corporation. All other trademarks are the property of their respective owners..
+        ///   Looks up a localized string similar to © 2021 NCSOFT Corporation. All rights reserved. NCSOFT, ArenaNet, the interlocking NC logo, Guild Wars, Guild Wars 2: Heart of Thorns, Guild Wars 2: Path of Fire, and all associated logos, designs, and composite marks are trademarks or registered trademarks of NCSOFT Corporation. All other trademarks are the property of their respective owners..
         /// </summary>
         public static string info_legal_ncsoft {
             get {
