@@ -69,6 +69,12 @@ namespace gw2lav.ViewModel {
 			set { SetProperty(ref _NoWater, value); }
 		}
 
+		private bool _IsDetailLoaded;
+		public bool IsDetailLoaded {
+			get { return _IsDetailLoaded; }
+			set { SetProperty(ref _IsDetailLoaded, value); }
+		}
+
 		public RelayCommand ReloadCommand { get; set; }
 		public RelayCommand SettingsCommand { get; set; }
 		public RelayCommand InfoCommand { get; set; }
@@ -81,6 +87,7 @@ namespace gw2lav.ViewModel {
 			IsLoading = false;
 			Error = null;
 			NoWater = RegistryHelper.GetNoWater();
+			IsDetailLoaded = false;
 			ReloadCommand = new RelayCommand(OnReloadAsync, CanReload);
 			SettingsCommand = new RelayCommand(OnSettings, null);
 			InfoCommand = new RelayCommand(OnInfo, null);
@@ -94,9 +101,11 @@ namespace gw2lav.ViewModel {
 			}
 
 			// loading started
+			Detail = null;
 			ShowContent = true;
 			IsLoading = true;
 			Error = null;
+			IsDetailLoaded = false;
 
 			// load data
 			_CancellationTokenSource = new CancellationTokenSource();
@@ -124,8 +133,6 @@ namespace gw2lav.ViewModel {
 
 		private async Task LoadLegendaryTypesAsync(CancellationToken cancelToken) {
 			await Task.Run(async () => {
-
-				Detail = null;
 
 				int size = Enum.GetNames(typeof(LegendaryItem.ItemType)).Length - 1;    // "-1" for ItemType.Unknown
 				LegendaryType[] types = new LegendaryType[size];
@@ -245,6 +252,7 @@ namespace gw2lav.ViewModel {
 											LegendaryTypes[(int)itemType].NeededInfo.Add(ri.CharName, ri.TabName, ri.TabId, ri.IsTerrestrial);
 									}
 								}
+								IsDetailLoaded = true;
 							}
 						}
 					}

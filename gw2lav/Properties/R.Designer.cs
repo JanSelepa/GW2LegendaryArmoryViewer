@@ -88,6 +88,15 @@ namespace gw2lav.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to load detail information. This probably means that your Guild Wars 2 Api Key is not set or that it has insufficient permissions. Please check Settings..
+        /// </summary>
+        public static string detail_error {
+            get {
+                return ResourceManager.GetString("detail_error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select any Legendary item to view details here.
         /// </summary>
         public static string detail_message {
@@ -156,6 +165,15 @@ namespace gw2lav.Properties {
         public static string info_version {
             get {
                 return ResourceManager.GetString("info_version", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading....
+        /// </summary>
+        public static string loading {
+            get {
+                return ResourceManager.GetString("loading", resourceCulture);
             }
         }
         

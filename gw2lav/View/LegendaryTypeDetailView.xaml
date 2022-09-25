@@ -253,11 +253,75 @@
 				FontFamily="{StaticResource BoldFontFamily}"
 				Text="{Binding FullName}" />
 
+			<TextBlock
+				Grid.Row="1"
+				HorizontalAlignment="Center"
+				Margin="10"
+				FontSize="15"
+				TextWrapping="Wrap"
+				TextAlignment="Center">
+				<TextBlock.Style>
+					<Style TargetType="TextBlock">
+						<Setter
+							Property="Visibility"
+							Value="Collapsed" />
+						<Style.Triggers>
+							<DataTrigger
+								Binding="{Binding DataContext.IsLoading, RelativeSource={RelativeSource AncestorType={x:Type view:MainWindow}}}"
+								Value="True">
+								<Setter
+									Property="Visibility"
+									Value="Visible" />
+								<Setter
+									Property="Text"
+									Value="{x:Static p:R.loading}" />
+							</DataTrigger>
+							<MultiDataTrigger>
+								<MultiDataTrigger.Conditions>
+									<Condition
+										Binding="{Binding DataContext.IsLoading, RelativeSource={RelativeSource AncestorType={x:Type view:MainWindow}}}"
+										Value="False" />
+									<Condition
+										Binding="{Binding DataContext.IsDetailLoaded, RelativeSource={RelativeSource AncestorType={x:Type view:MainWindow}}}"
+										Value="False" />
+								</MultiDataTrigger.Conditions>
+								<Setter
+									Property="Visibility"
+									Value="Visible" />
+								<Setter
+									Property="Text"
+									Value="{x:Static p:R.detail_error}" />
+							</MultiDataTrigger>
+						</Style.Triggers>
+					</Style>
+				</TextBlock.Style>
+			</TextBlock>
+
 			<ScrollViewer
 				Grid.Row="1"
 				VerticalScrollBarVisibility="Auto"
 				HorizontalScrollBarVisibility="Disabled"
 				Padding="10,0">
+				<ScrollViewer.Style>
+					<Style TargetType="ScrollViewer">
+						<Style.Triggers>
+							<DataTrigger
+								Binding="{Binding DataContext.IsLoading, RelativeSource={RelativeSource AncestorType={x:Type view:MainWindow}}}"
+								Value="True">
+								<Setter
+									Property="Visibility"
+									Value="Collapsed" />
+							</DataTrigger>
+							<DataTrigger
+								Binding="{Binding DataContext.IsDetailLoaded, RelativeSource={RelativeSource AncestorType={x:Type view:MainWindow}}}"
+								Value="False">
+								<Setter
+									Property="Visibility"
+									Value="Collapsed" />
+							</DataTrigger>
+						</Style.Triggers>
+					</Style>
+				</ScrollViewer.Style>
 				<StackPanel
 					Orientation="Vertical">
 						

@@ -10,6 +10,7 @@
 
 		<BitmapImage x:Key="DefaultItemIcon" UriSource="/Assets/default_item.png" />
 		<view:ItemCountVisibilityConverter x:Key="ItemCountVisibilityConverter" />
+		<BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
 		<Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
 			<Setter Property="Height" Value="Auto" />
@@ -86,7 +87,8 @@
 				<StackPanel
 					Grid.Column="1"
 					Margin="5,0,0,0"
-					Orientation="Horizontal">
+					Orientation="Horizontal"
+					Visibility="{Binding DataContext.IsDetailLoaded, RelativeSource={RelativeSource AncestorType={x:Type view:MainWindow}}, Converter={StaticResource BooleanToVisibilityConverter}}">
 					<Image
 						Height="15"
 						Source="/Assets/item_usable.png">
