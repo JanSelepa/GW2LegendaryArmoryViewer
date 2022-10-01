@@ -2,7 +2,7 @@
 Windows Desktop application for viewing your Guild Wars 2 legendary items usage information. The application is distributed as single .exe file, no installation needed, just download and run. To view information from your account you need to add Guild Wars 2 Api Key with proper permissions in Settings.
 
 ## Download
-### [Download the latest release here](/../../releases)
+### [Download the latest version here](/../../releases)
 
 ## Screenshot
 <img src="screenshot.png" Height="300" >
