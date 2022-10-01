@@ -151,13 +151,13 @@ namespace gw2lav.ViewModel {
 					items.Sort((i1, i2) => { return i1.Id.CompareTo(i2.Id); });
 
 					// load legendary item counts from account
-					CountItem[] countItems = await apiHelper.GetLegendaryItemCountsAsync();
+					List<CountItem> countItems = await apiHelper.GetLegendaryItemCountsAsync();
 					cancelToken.ThrowIfCancellationRequested();
-					if (countItems == null) countItems = Array.Empty<CountItem>();
+					if (countItems == null) countItems = new List<CountItem>();
 
 					// sort items to groups
 					foreach (Item item in items) {
-						CountItem countItem = Array.Find(countItems, ci => ci.Id == item.Id);
+						CountItem countItem = countItems.FirstOrDefault(ci => ci.Id == item.Id);
 						LegendaryItem legendaryItem = new LegendaryItem(item, countItem != null ? countItem.Count : 0);
 						if (legendaryItem.Type != LegendaryItem.ItemType.Unknown) {
 							await Application.Current.Dispatcher.BeginInvoke(new Action(() => {
@@ -170,7 +170,7 @@ namespace gw2lav.ViewModel {
 					cancelToken.ThrowIfCancellationRequested();
 
 					// get info about items replacable by legendaries
-					Character[] characters = await apiHelper.GetCharactersAsync();
+					List<Character> characters = await apiHelper.GetCharactersAsync();
 					cancelToken.ThrowIfCancellationRequested();
 					if (characters != null) {
 						// get items that can be replaced by legendaries

@@ -54,7 +54,7 @@ namespace gw2lav.Model {
 				for (int i = 0; i <= ids.Count / MAX_ID_COUNT; i++) {
 					string idsCombined = string.Join(",", ids.Skip(i * MAX_ID_COUNT).Take(MAX_ID_COUNT));
 					string json = await RequestAsync(ApiCommand.Items + idsCombined);
-					items.AddRange(JsonConvert.DeserializeObject<Item[]>(json));
+					items.AddRange(JsonConvert.DeserializeObject<List<Item>>(json));
 				}
 				return items;
 			} catch (Exception) {
@@ -76,20 +76,20 @@ namespace gw2lav.Model {
 			}
 		}
 
-		public async Task<CountItem[]> GetLegendaryItemCountsAsync() {
+		public async Task<List<CountItem>> GetLegendaryItemCountsAsync() {
 			try {
 				string json = await RequestAsync(ApiCommand.LegendaryArmoryCounts);
-				CountItem[] legItemCounts = JsonConvert.DeserializeObject<CountItem[]>(json);
+				List<CountItem> legItemCounts = JsonConvert.DeserializeObject<List<CountItem>>(json);
 				return legItemCounts;
 			} catch (Exception) {
 				return null;
 			}
 		}
 
-		public async Task<Character[]> GetCharactersAsync() {
+		public async Task<List<Character>> GetCharactersAsync() {
 			try {
 				string json = await RequestAsync(ApiCommand.Characters);
-				Character[] characters = JsonConvert.DeserializeObject<Character[]>(json);
+				List<Character> characters = JsonConvert.DeserializeObject<List<Character>>(json);
 				return characters;
 			} catch (Exception) {
 				return null;
