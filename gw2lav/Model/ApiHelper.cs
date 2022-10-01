@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,6 +12,8 @@ namespace gw2lav.Model {
 
 		private const string API_URL = "https://api.guildwars2.com";
 		private const string HEADER_SCHEMA_VERSION = "2022-08-01T00:00:00Z";
+
+		private const int MAX_ID_COUNT = 200;
 
 		private static class ApiCommand {
 			public const string LegendaryArmory = "/v2/legendaryarmory";
@@ -43,10 +47,15 @@ namespace gw2lav.Model {
 			}
 		}
 
-		public async Task<Item[]> GetItemsAsync(string ids) {
+		public async Task<List<Item>> GetItemsAsync(List<int> ids) {
 			try {
-				string json = await RequestAsync(ApiCommand.Items + ids);
-				Item[] items = JsonConvert.DeserializeObject<Item[]>(json);
+				// need to split the ids to more requests due to API limitations
+				List<Item> items = new List<Item>();
+				for (int i = 0; i <= ids.Count / MAX_ID_COUNT; i++) {
+					string idsCombined = string.Join(",", ids.Skip(i * MAX_ID_COUNT).Take(MAX_ID_COUNT));
+					string json = await RequestAsync(ApiCommand.Items + idsCombined);
+					items.AddRange(JsonConvert.DeserializeObject<Item[]>(json));
+				}
 				return items;
 			} catch (Exception) {
 				return null;
@@ -54,15 +63,14 @@ namespace gw2lav.Model {
 
 		}
 
-		public async Task<Item[]> GetLegendaryItemsAsync() {
+		public async Task<List<Item>> GetLegendaryItemsAsync() {
 			try {
 				// get legendary id list
 				string json = await RequestAsync(ApiCommand.LegendaryArmory);
-				string[] legIds = JsonConvert.DeserializeObject<string[]>(json);
-				string legIdsCombined = string.Join(",", legIds);
+				List<int> legIds = JsonConvert.DeserializeObject<List<int>>(json);
 
 				// get details for each legendary id
-				return await GetItemsAsync(legIdsCombined);
+				return await GetItemsAsync(legIds);
 			} catch (Exception) {
 				return null;
 			}

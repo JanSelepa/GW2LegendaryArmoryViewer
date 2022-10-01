@@ -143,12 +143,12 @@ namespace gw2lav.ViewModel {
 				using (ApiHelper apiHelper = new ApiHelper(cancelToken)) {
 
 					// load legendary item list
-					Item[] items = await apiHelper.GetLegendaryItemsAsync();
+					List<Item> items = await apiHelper.GetLegendaryItemsAsync();
 					cancelToken.ThrowIfCancellationRequested();
 					if (items == null)
 						throw new Exception();
 
-					Array.Sort(items, (i1, i2) => { return i1.Id.CompareTo(i2.Id); });
+					items.Sort((i1, i2) => { return i1.Id.CompareTo(i2.Id); });
 
 					// load legendary item counts from account
 					CountItem[] countItems = await apiHelper.GetLegendaryItemCountsAsync();
@@ -199,9 +199,9 @@ namespace gw2lav.ViewModel {
 						cancelToken.ThrowIfCancellationRequested();
 						if (potentials.Count > 0) {
 							// get unique item ids to check for item type
-							string ids = string.Join(",", potentials.Select(p => p.ItemId).Distinct());
+							List<int> ids = potentials.Select(p => p.ItemId).Distinct().ToList();
 							// get item info about items replacable by legendaries to get the proper item type
-							Item[] equippedItems = await apiHelper.GetItemsAsync(ids);
+							List<Item> equippedItems = await apiHelper.GetItemsAsync(ids);
 							if (equippedItems != null) {
 								// count used legendary items
 								foreach (Item item in equippedItems) {
