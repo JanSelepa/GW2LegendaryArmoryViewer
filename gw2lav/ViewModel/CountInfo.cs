@@ -74,7 +74,7 @@ namespace gw2lav.ViewModel {
 					ch.Count++;
 					bool tabFound = false;
 					foreach (Tab tab in ch.Tabs) {
-						if (tabName == tab.Name) {
+						if (tabId == tab.Id) {
 							tabFound = true;
 							tab.Count++;
 							break;
