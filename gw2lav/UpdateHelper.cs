@@ -26,9 +26,9 @@ namespace gw2lav {
 
 		private IArgsHelper _ArgsHelper;
 
-		private static Regex _VersionRegex = new Regex(@"v\d+.\d+.\d+");
+		private readonly Regex _VersionRegex = new Regex(@"v\d+.\d+.\d+");
 
-		private static Task<AppInfo> _AppInfoTask = GetAppInfoAsync();
+		private Task<AppInfo> _AppInfoTask;
 
 		private class UpdateInfo {
 			[JsonProperty("tag_name")]
@@ -45,6 +45,8 @@ namespace gw2lav {
 		}
 
 		public UpdateHelper(IArgsHelper argsHelper) {
+			_AppInfoTask = GetAppInfoAsync();
+
 			_ArgsHelper = argsHelper;
 			if (argsHelper.HasArgCleanupUpdate())
 				CleanupBackup();
@@ -78,7 +80,7 @@ namespace gw2lav {
 			return true;
 		}
 
-		private static async Task<AppInfo> GetAppInfoAsync() {
+		private async Task<AppInfo> GetAppInfoAsync() {
 			UpdateInfo updateInfo = await GetUpdateInfoAsync();
 			if (updateInfo == null)
 				return new AppInfo(false, null);
@@ -102,7 +104,7 @@ namespace gw2lav {
 			}
 		}
 
-		private static async Task<UpdateInfo> GetUpdateInfoAsync() {
+		private async Task<UpdateInfo> GetUpdateInfoAsync() {
 			using (HttpClient httpClient = new HttpClient()) {
 				httpClient.DefaultRequestHeaders.Add("User-Agent", GITHUB_USER_AGENT);
 				using (var resp = await httpClient.GetAsync(GITHUB_API_URL)) {
