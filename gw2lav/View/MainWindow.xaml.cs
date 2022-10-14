@@ -19,10 +19,6 @@ namespace gw2lav.View {
 			InitializeComponent();
 		}
 
-		private async void OnLoaded(object sender, RoutedEventArgs e) {
-			await ((LegendaryViewModel)DataContext).LoadDataAsync();
-		}
-
 		private void onMinimizeClick(object sender, RoutedEventArgs e) {
 			WindowState = WindowState.Minimized;
 		}

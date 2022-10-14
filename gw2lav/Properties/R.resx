@@ -126,6 +126,9 @@
   <data name="btn_cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="btn_update" xml:space="preserve">
+    <value>Update</value>
+  </data>
   <data name="detail_error" xml:space="preserve">
     <value>Failed to load detail information. This probably means that your Guild Wars 2 Api Key is not set or that it has insufficient permissions. Please check Settings.</value>
   </data>
@@ -149,6 +152,12 @@
   </data>
   <data name="info_title" xml:space="preserve">
     <value>Info</value>
+  </data>
+  <data name="info_update_available" xml:space="preserve">
+    <value>Newer version {0} is available!</value>
+  </data>
+  <data name="info_updating" xml:space="preserve">
+    <value>Updating...</value>
   </data>
   <data name="info_version" xml:space="preserve">
     <value>Application version</value>

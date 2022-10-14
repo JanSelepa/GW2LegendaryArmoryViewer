@@ -75,6 +75,12 @@ namespace gw2lav.ViewModel {
 			set { SetProperty(ref _IsDetailLoaded, value); }
 		}
 
+		private bool _IsUpdateAvailable;
+		public bool IsUpdateAvailable {
+			get { return _IsUpdateAvailable; }
+			set { SetProperty(ref _IsUpdateAvailable, value); }
+		}
+
 		public RelayCommand ReloadCommand { get; set; }
 		public RelayCommand SettingsCommand { get; set; }
 		public RelayCommand InfoCommand { get; set; }
@@ -88,13 +94,21 @@ namespace gw2lav.ViewModel {
 			Error = null;
 			NoWater = RegistryHelper.GetNoWater();
 			IsDetailLoaded = false;
+			IsUpdateAvailable = false;
 			ReloadCommand = new RelayCommand(OnReloadAsync, CanReload);
 			SettingsCommand = new RelayCommand(OnSettings, null);
 			InfoCommand = new RelayCommand(OnInfo, null);
 			TypeSelectedCommand = new RelayCommand<LegendaryType>(OnTypeSelected, null);
+
+			_ = CheckForUpdateAsync();
+			_ = LoadDataAsync();
 		}
 
-		public async Task LoadDataAsync() {
+		private async Task CheckForUpdateAsync() {
+			IsUpdateAvailable = await UpdateHelper.IsUpdateAvailableAsync();
+		}
+
+		private async Task LoadDataAsync() {
 			if (_CancellationTokenSource != null) {
 				_CancellationTokenSource.Cancel();
 				return;

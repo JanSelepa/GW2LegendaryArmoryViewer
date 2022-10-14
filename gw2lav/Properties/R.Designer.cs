@@ -88,6 +88,15 @@ namespace gw2lav.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Update.
+        /// </summary>
+        public static string btn_update {
+            get {
+                return ResourceManager.GetString("btn_update", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to load detail information. This probably means that your Guild Wars 2 Api Key is not set or that it has insufficient permissions. Please check Settings..
         /// </summary>
         public static string detail_error {
@@ -156,6 +165,24 @@ namespace gw2lav.Properties {
         public static string info_title {
             get {
                 return ResourceManager.GetString("info_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Newer version {0} is available!.
+        /// </summary>
+        public static string info_update_available {
+            get {
+                return ResourceManager.GetString("info_update_available", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updating....
+        /// </summary>
+        public static string info_updating {
+            get {
+                return ResourceManager.GetString("info_updating", resourceCulture);
             }
         }
         

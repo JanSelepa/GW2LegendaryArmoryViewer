@@ -7,8 +7,7 @@
 	Width="1200" MinWidth="1200"
 	Height="770" MinHeight="770"
 	WindowStartupLocation="CenterScreen"
-	Style="{StaticResource MainWindow}"
-	Loaded="OnLoaded">
+	Style="{StaticResource MainWindow}">
 
 	<Window.Resources>
 		<BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -113,12 +112,23 @@
 					FontSize="15"
 					Content="&#xE713;"
 					Command="{Binding SettingsCommand}" />
-				<Button
-					Grid.Column="2" Grid.Row="1"
-					Style="{StaticResource WindowButton}"
-					FontSize="17"
-					Content="&#xE946;"
-					Command="{Binding InfoCommand}" />
+				<Grid
+					Grid.Column="2" Grid.Row="1">
+					<Button
+						Style="{StaticResource WindowButton}"
+						FontSize="17"
+						Content="&#xE946;"
+						Command="{Binding InfoCommand}" />
+					<Ellipse
+						Width="8"
+						Height="8"
+						Fill="Red"
+						IsHitTestVisible="False"
+						Visibility="{Binding IsUpdateAvailable, Converter={StaticResource BooleanToVisibilityConverter}}"
+						HorizontalAlignment="Right"
+						VerticalAlignment="Bottom"
+						Margin="0,0,12,5"/>
+				</Grid>
 			</Grid>
 		
 			<!--
