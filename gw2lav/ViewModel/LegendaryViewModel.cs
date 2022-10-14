@@ -26,7 +26,8 @@ namespace gw2lav.ViewModel {
 			}
 		}
 
-		private DialogService _DialogService;
+		private IDialogService _DialogService;
+		private IUpdateHelper _UpdateHelper;
 		private CancellationTokenSource _CancellationTokenSource = null;
 
 		private LegendaryType[] _LegendaryTypes;
@@ -87,8 +88,9 @@ namespace gw2lav.ViewModel {
 
 		public RelayCommand<LegendaryType> TypeSelectedCommand { get; set; }
 
-		public LegendaryViewModel(DialogService dialogService) {
+		public LegendaryViewModel(IDialogService dialogService, IUpdateHelper updateHelper) {
 			_DialogService = dialogService;
+			_UpdateHelper = updateHelper;
 			ShowContent = false;
 			IsLoading = false;
 			Error = null;
@@ -105,7 +107,7 @@ namespace gw2lav.ViewModel {
 		}
 
 		private async Task CheckForUpdateAsync() {
-			IsUpdateAvailable = await UpdateHelper.IsUpdateAvailableAsync();
+			IsUpdateAvailable = await _UpdateHelper.IsUpdateAvailableAsync();
 		}
 
 		private async Task LoadDataAsync() {
@@ -298,7 +300,7 @@ namespace gw2lav.ViewModel {
 		}
 
 		private void OnInfo() {
-			InfoViewModel infoVM = new InfoViewModel();
+			InfoViewModel infoVM = new InfoViewModel(_UpdateHelper);
 			_DialogService.ShowDialog(infoVM);
 		}
 

@@ -34,25 +34,28 @@ namespace gw2lav.ViewModel {
 
 		public RelayCommand UpdateCommand { get; set; }
 
-		public InfoViewModel() {
+		private IUpdateHelper _UpdateHelper;
+
+		public InfoViewModel(IUpdateHelper updateHelper) {
 			var version = Assembly.GetExecutingAssembly().GetName().Version;
 			Version = version.Major + "." + version.Minor + "." + version.Build;
 			IsUpdateInProgress = false;
 			AvailableVersion = null;
 			IsUpdateAvailable = false;
 			UpdateCommand = new RelayCommand(OnUpdateAsync, CanUpdate);
+			_UpdateHelper = updateHelper;
 
 			_ = RetrieveUpdateInfoAsync();
 		}
 
 		private async Task RetrieveUpdateInfoAsync() {
-			AvailableVersion = await UpdateHelper.GetAvailableVersionAsync();
-			IsUpdateAvailable = await UpdateHelper.IsUpdateAvailableAsync();
+			AvailableVersion = await _UpdateHelper.GetAvailableVersionAsync();
+			IsUpdateAvailable = await _UpdateHelper.IsUpdateAvailableAsync();
 		}
 
 		private async void OnUpdateAsync() {
 			IsUpdateInProgress = true;
-			if (!await UpdateHelper.UpdateAsync()) {
+			if (!await _UpdateHelper.UpdateAsync()) {
 				// TODO show error
 			}
 			IsUpdateInProgress = false;

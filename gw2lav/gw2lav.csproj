@@ -87,6 +87,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ArgsHelper.cs" />
     <Compile Include="DialogService.cs" />
     <Compile Include="RegistryHelper.cs" />
     <Compile Include="UpdateHelper.cs" />

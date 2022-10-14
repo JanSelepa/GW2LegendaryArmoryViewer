@@ -9,13 +9,17 @@ namespace gw2lav.View {
 	public partial class MainWindow : Window {
 
 		public MainWindow() {
-			DialogService dialogService = new DialogService(this);
+			IArgsHelper argsHelper = new ArgsHelper();
+
+			IDialogService dialogService = new DialogService(this);
 			dialogService.Register<SettingsViewModel, SettingsWindow>();
 			dialogService.Register<InfoViewModel, InfoWindow>();
 
-			StateChanged += onStateChangedWindow;
+			IUpdateHelper updateHelper = new UpdateHelper(argsHelper);
 
-			DataContext = new LegendaryViewModel(dialogService);
+			DataContext = new LegendaryViewModel(dialogService, updateHelper);
+
+			StateChanged += onStateChangedWindow;
 			InitializeComponent();
 		}
 
