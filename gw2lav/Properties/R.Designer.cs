@@ -88,6 +88,15 @@ namespace gw2lav.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ok.
+        /// </summary>
+        public static string btn_ok {
+            get {
+                return ResourceManager.GetString("btn_ok", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Update.
         /// </summary>
         public static string btn_update {
@@ -174,6 +183,45 @@ namespace gw2lav.Properties {
         public static string info_update_available {
             get {
                 return ResourceManager.GetString("info_update_available", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download error: .
+        /// </summary>
+        public static string info_update_error_download {
+            get {
+                return ResourceManager.GetString("info_update_error_download", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update failed with the following error:
+        ///{0}
+        ///
+        ///Please try again later. If the problems persist please get the newest version from the web..
+        /// </summary>
+        public static string info_update_error_message {
+            get {
+                return ResourceManager.GetString("info_update_error_message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replacement error: .
+        /// </summary>
+        public static string info_update_error_replace {
+            get {
+                return ResourceManager.GetString("info_update_error_replace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update Error.
+        /// </summary>
+        public static string info_update_error_title {
+            get {
+                return ResourceManager.GetString("info_update_error_title", resourceCulture);
             }
         }
         

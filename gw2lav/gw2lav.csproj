@@ -93,6 +93,7 @@
     <Compile Include="UpdateHelper.cs" />
     <Compile Include="ViewModel\BindableBase.cs" />
     <Compile Include="ViewModel\CountInfo.cs" />
+    <Compile Include="ViewModel\DialogViewModel.cs" />
     <Compile Include="ViewModel\InfoViewModel.cs" />
     <Compile Include="ViewModel\LegendaryItem.cs" />
     <Compile Include="ViewModel\LegendaryType.cs" />

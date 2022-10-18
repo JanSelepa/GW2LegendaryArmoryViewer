@@ -126,6 +126,9 @@
   <data name="btn_cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="btn_ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
   <data name="btn_update" xml:space="preserve">
     <value>Update</value>
   </data>
@@ -155,6 +158,21 @@
   </data>
   <data name="info_update_available" xml:space="preserve">
     <value>Newer version {0} is available!</value>
+  </data>
+  <data name="info_update_error_download" xml:space="preserve">
+    <value>Download error: </value>
+  </data>
+  <data name="info_update_error_message" xml:space="preserve">
+    <value>Update failed with the following error:
+{0}
+
+Please try again later. If the problems persist please get the newest version from the web.</value>
+  </data>
+  <data name="info_update_error_replace" xml:space="preserve">
+    <value>Replacement error: </value>
+  </data>
+  <data name="info_update_error_title" xml:space="preserve">
+    <value>Update Error</value>
   </data>
   <data name="info_updating" xml:space="preserve">
     <value>Updating...</value>

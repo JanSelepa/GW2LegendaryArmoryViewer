@@ -300,7 +300,7 @@ namespace gw2lav.ViewModel {
 		}
 
 		private void OnInfo() {
-			InfoViewModel infoVM = new InfoViewModel(_UpdateHelper);
+			InfoViewModel infoVM = new InfoViewModel(_DialogService, _UpdateHelper);
 			_DialogService.ShowDialog(infoVM);
 		}
 

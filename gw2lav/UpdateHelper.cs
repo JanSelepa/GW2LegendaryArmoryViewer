@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using gw2lav.Properties;
+using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Net;
@@ -12,7 +13,7 @@ namespace gw2lav {
 	interface IUpdateHelper {
 		Task<bool> IsUpdateAvailableAsync();
 		Task<string> GetAvailableVersionAsync();
-		Task<bool> UpdateAsync();
+		Task<string> UpdateAsync();
 	}
 
 	class UpdateHelper : IUpdateHelper {
@@ -60,10 +61,15 @@ namespace gw2lav {
 			return (await _AppInfoTask).AvailableVersion;
 		}
 
-		public async Task<bool> UpdateAsync() {
-			if (!await IsUpdateAvailableAsync()) return true;
+		/*
+		 * Updates this app with the latest version from Github, replaces currently running exe
+		 * Returns null if successfull, otherwise returns error messsage
+		 */
+		public async Task<string> UpdateAsync() {
+			if (!await IsUpdateAvailableAsync()) return null;
 
-			if (!await DownloadUpdateAsync()) return false;
+			string downloadError = await DownloadUpdateAsync();
+			if (downloadError != null) return downloadError;
 
 			string appFileName = AppDomain.CurrentDomain.FriendlyName;
 			try {
@@ -71,13 +77,13 @@ namespace gw2lav {
 					File.Delete(BACKUP_PATH);
 				File.Move(appFileName, BACKUP_PATH);
 				File.Move(UPDATE_PATH, appFileName);
-			} catch (Exception) {
-				return false;
+			} catch (Exception e) {
+				return R.info_update_error_replace + e.Message;
 			}
 
 			_ArgsHelper.RestartAfterUpdate(appFileName);
 
-			return true;
+			return null;
 		}
 
 		private async Task<AppInfo> GetAppInfoAsync() {
@@ -118,13 +124,26 @@ namespace gw2lav {
 			}
 		}
 
-		private async Task<bool> DownloadUpdateAsync() {
+		/*
+		 * Downloads latest version of this app from Github
+		 * Returns null if successful, otherwise returns error message
+		 */
+		private async Task<string> DownloadUpdateAsync() {
 			try {
 				WebClient webClient = new WebClient();
 				await webClient.DownloadFileTaskAsync(GITHUB_LATEST_DOWNLOAD_URL, UPDATE_PATH);
-				return true;
-			} catch (Exception) {
-				return false;
+				return null;
+			} catch (WebException we) {
+				if (we.Status == WebExceptionStatus.ProtocolError && we.Response != null) {
+					HttpWebResponse wr = (HttpWebResponse)we.Response;
+					return R.info_update_error_download + "(" + wr.StatusCode + ") " + wr.StatusDescription;
+				} else if (we.InnerException != null) {
+					return R.info_update_error_download + we.InnerException.Message;
+				} else {
+					return R.info_update_error_download + we.Message;
+				}
+			} catch (Exception e) {
+				return R.info_update_error_download + e.Message;
 			}
 		}
 

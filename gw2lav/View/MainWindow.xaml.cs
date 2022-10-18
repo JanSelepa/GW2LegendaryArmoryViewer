@@ -12,6 +12,7 @@ namespace gw2lav.View {
 			IArgsHelper argsHelper = new ArgsHelper();
 
 			IDialogService dialogService = new DialogService(this);
+			dialogService.Register<MessageViewModel, MessageWindow>();
 			dialogService.Register<SettingsViewModel, SettingsWindow>();
 			dialogService.Register<InfoViewModel, InfoWindow>();
 

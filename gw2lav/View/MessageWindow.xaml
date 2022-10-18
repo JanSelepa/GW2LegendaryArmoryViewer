@@ -1,0 +1,71 @@
+﻿<Window x:Class="gw2lav.View.MessageWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:view="clr-namespace:gw2lav.View"
+	WindowStartupLocation="CenterOwner"
+	Style="{StaticResource DialogWindow}"
+	Width="400"
+	FontSize="14"
+	Title="{Binding Title}">
+
+	<Window.Resources>
+		<view:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
+	</Window.Resources>
+
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
+
+		<TextBlock
+			Margin="20"
+			TextWrapping="Wrap"
+			Text="{Binding Message}" />
+
+		<StackPanel
+			Grid.Row="1"
+			Orientation="Horizontal"
+			Margin="10"
+			HorizontalAlignment="Right">
+			<StackPanel.Style>
+				<Style TargetType="StackPanel">
+					<Style.Triggers>
+						<MultiDataTrigger>
+							<MultiDataTrigger.Conditions>
+								<Condition
+									Binding="{Binding PositiveText}"
+									Value="{x:Null}" />
+								<Condition
+									Binding="{Binding NegativeText}"
+									Value="{x:Null}" />
+							</MultiDataTrigger.Conditions>
+							<Setter
+								Property="Visibility"
+								Value="Collapsed" />
+						</MultiDataTrigger>
+					</Style.Triggers>
+				</Style>
+			</StackPanel.Style>
+
+			<Button
+				MinWidth="64"
+				MinHeight="24"
+				IsDefault="True"
+				Content="{Binding PositiveText}"
+				Command="{Binding PositiveCommand}"
+				Visibility="{Binding PositiveText, Converter={StaticResource NullToVisibilityConverter}}" />
+
+			<Button
+				MinWidth="64"
+				MinHeight="24"
+				Margin="10,0,0,0"
+				Content="{Binding NegativeText}"
+				Command="{Binding NegativeCommand}"
+				Visibility="{Binding NegativeText, Converter={StaticResource NullToVisibilityConverter}}" />
+
+		</StackPanel>
+
+	</Grid>
+	
+</Window>
