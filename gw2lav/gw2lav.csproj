@@ -93,7 +93,7 @@
     <Compile Include="UpdateHelper.cs" />
     <Compile Include="ViewModel\BindableBase.cs" />
     <Compile Include="ViewModel\CountInfo.cs" />
-    <Compile Include="ViewModel\DialogViewModel.cs" />
+    <Compile Include="ViewModel\MessageViewModel.cs" />
     <Compile Include="ViewModel\InfoViewModel.cs" />
     <Compile Include="ViewModel\LegendaryItem.cs" />
     <Compile Include="ViewModel\LegendaryType.cs" />
@@ -101,8 +101,8 @@
     <Compile Include="ViewModel\RelayCommand.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="View\Converters.cs" />
-    <Compile Include="View\DialogWindow.xaml.cs">
-      <DependentUpon>DialogWindow.xaml</DependentUpon>
+    <Compile Include="View\MessageWindow.xaml.cs">
+      <DependentUpon>MessageWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\InfoWindow.xaml.cs">
       <DependentUpon>InfoWindow.xaml</DependentUpon>
@@ -177,7 +177,7 @@
     <Resource Include="Assets\item_used.png" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="View\DialogWindow.xaml">
+    <Page Include="View\MessageWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
