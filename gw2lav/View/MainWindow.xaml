@@ -127,7 +127,31 @@
 						Visibility="{Binding IsUpdateAvailable, Converter={StaticResource BooleanToVisibilityConverter}}"
 						HorizontalAlignment="Right"
 						VerticalAlignment="Bottom"
-						Margin="0,0,12,5"/>
+						Margin="0,0,12,5">
+						<Ellipse.Style>
+							<Style TargetType="Ellipse">
+								<Style.Triggers>
+									<DataTrigger
+										Binding="{Binding IsUpdateAvailable}"
+										Value="True">
+										<DataTrigger.EnterActions>
+											<BeginStoryboard>
+												<Storyboard
+													RepeatBehavior="5x"
+													Duration="0:0:0.8">
+													<DoubleAnimation
+														Storyboard.TargetProperty="Opacity"
+														AutoReverse="True"
+														To="0"
+														Duration="0:0:0.2" />
+												</Storyboard>
+											</BeginStoryboard>
+										</DataTrigger.EnterActions>
+									</DataTrigger>
+								</Style.Triggers>
+							</Style>
+						</Ellipse.Style>
+					</Ellipse>
 				</Grid>
 			</Grid>
 		
