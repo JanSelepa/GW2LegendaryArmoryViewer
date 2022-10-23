@@ -160,7 +160,7 @@
     <value>Newer version {0} is available!</value>
   </data>
   <data name="info_update_error_download" xml:space="preserve">
-    <value>Download error: </value>
+    <value>Download error: {0}</value>
   </data>
   <data name="info_update_error_message" xml:space="preserve">
     <value>Update failed with the following error:
@@ -169,7 +169,7 @@
 Please try again later. If the problems persist please get the newest version from the web.</value>
   </data>
   <data name="info_update_error_replace" xml:space="preserve">
-    <value>Replacement error: </value>
+    <value>Replacement error: {0}</value>
   </data>
   <data name="info_update_error_title" xml:space="preserve">
     <value>Update Error</value>

@@ -187,7 +187,7 @@ namespace gw2lav.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Download error: .
+        ///   Looks up a localized string similar to Download error: {0}.
         /// </summary>
         public static string info_update_error_download {
             get {
@@ -208,7 +208,7 @@ namespace gw2lav.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Replacement error: .
+        ///   Looks up a localized string similar to Replacement error: {0}.
         /// </summary>
         public static string info_update_error_replace {
             get {

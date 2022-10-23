@@ -78,7 +78,7 @@ namespace gw2lav {
 				File.Move(appFileName, BACKUP_PATH);
 				File.Move(UPDATE_PATH, appFileName);
 			} catch (Exception e) {
-				return R.info_update_error_replace + e.Message;
+				return string.Format(R.info_update_error_replace, e.Message);
 			}
 
 			_ArgsHelper.RestartAfterUpdate(appFileName);
@@ -136,14 +136,14 @@ namespace gw2lav {
 			} catch (WebException we) {
 				if (we.Status == WebExceptionStatus.ProtocolError && we.Response != null) {
 					HttpWebResponse wr = (HttpWebResponse)we.Response;
-					return R.info_update_error_download + "(" + wr.StatusCode + ") " + wr.StatusDescription;
+					return string.Format(R.info_update_error_download, "(" + wr.StatusCode + ") " + wr.StatusDescription);
 				} else if (we.InnerException != null) {
-					return R.info_update_error_download + we.InnerException.Message;
+					return string.Format(R.info_update_error_download, we.InnerException.Message);
 				} else {
-					return R.info_update_error_download + we.Message;
+					return string.Format(R.info_update_error_download, we.Message);
 				}
 			} catch (Exception e) {
-				return R.info_update_error_download + e.Message;
+				return string.Format(R.info_update_error_download, e.Message);
 			}
 		}
 
