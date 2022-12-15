@@ -5,7 +5,7 @@ namespace gw2lav.Model {
 	public class EquipmentTab {
 
 		[JsonProperty("tab")]
-		public int Tab;
+		public int Id;
 
 		[JsonProperty("name")]
 		public string Name;

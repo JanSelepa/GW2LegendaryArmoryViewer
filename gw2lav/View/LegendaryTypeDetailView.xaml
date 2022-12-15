@@ -21,7 +21,18 @@
 					Margin="10,0,0,0"
 					HorizontalAlignment="Right"
 					VerticalAlignment="Center"
-					Text="{Binding Id, StringFormat=({0})}" />
+					Text="{Binding Id, StringFormat=({0})}">
+					<TextBlock.Style>
+						<Style TargetType="TextBlock">
+							<Setter Property="Visibility" Value="Visible" />
+							<Style.Triggers>
+								<DataTrigger Binding="{Binding Id}" Value="0">
+									<Setter Property="Visibility" Value="Hidden" />
+								</DataTrigger>
+							</Style.Triggers>
+						</Style>
+					</TextBlock.Style>
+				</TextBlock>
 				<TextBlock
 					Grid.Column="1"
 					Margin="5,0,0,0"

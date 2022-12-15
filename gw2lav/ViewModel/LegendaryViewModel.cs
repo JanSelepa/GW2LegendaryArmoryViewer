@@ -17,12 +17,22 @@ namespace gw2lav.ViewModel {
 			public string TabName;
 			public int TabId;
 			public bool IsTerrestrial;
-			public ItemInfo(int itemId, string charName, string tabName, int tabId, bool isTerrestrial) {
+			public LegendaryItem.ItemType ItemType;
+			public Item.ItemRarity ItemRarity;
+			public int[] ItemUpgrades;
+			public ItemInfo(int itemId, string charName, int tabId, string tabName, bool isTerrestrial) {
 				ItemId = itemId;
 				CharName = charName;
 				TabName = tabName;
 				TabId = tabId;
 				IsTerrestrial = isTerrestrial;
+			}
+			public ItemInfo(int itemId, int[] itemUpgrades, string charName, int tabId, string tabName) {
+				ItemId = itemId;
+				CharName = charName;
+				TabName = tabName;
+				TabId = tabId;
+				ItemUpgrades = itemUpgrades;
 			}
 		}
 
@@ -189,6 +199,94 @@ namespace gw2lav.ViewModel {
 					List<Character> characters = await apiHelper.GetCharactersAsync();
 					cancelToken.ThrowIfCancellationRequested();
 					if (characters != null) {
+
+						List<ItemInfo> itemsAll = new List<ItemInfo>();
+
+						// make a list of all items on a character (no upgrades yet)
+						foreach (Character chr in characters) {
+							// ignore non max level characters
+							if (chr.Level != 80) continue;
+
+							// look through equipment templates
+							foreach (EquipmentTab tab in chr.EquipmentTabs) {
+								foreach (Equipment eqp in tab.Equipment) {
+									itemsAll.Add(new ItemInfo(eqp.Id, eqp.Upgrades, chr.Name, tab.Id, tab.Name));
+								}
+							}
+
+							// look through inventory
+							foreach (Bag bag in chr.Bags) {
+								foreach (InventorySlot isl in bag.Inventory) {
+									if (isl == null) continue;
+									for (int i = 0; i < isl.Count; i++)
+										itemsAll.Add(new ItemInfo(isl.Id, isl.Upgrades, chr.Name, 0, "Inventory"));	// TODO resource string
+								}
+							}
+
+						}
+
+						// get item info about items
+						List<int> idsAllUnique = itemsAll.Select(p => p.ItemId).Distinct().ToList();
+						List<Item> itemsAllUnique = await apiHelper.GetItemsAsync(idsAllUnique);
+						if (itemsAllUnique != null) {
+							foreach (Item item in itemsAllUnique) {
+								List<ItemInfo> itemsSameId = itemsAll.FindAll(p => p.ItemId == item.Id);
+								LegendaryItem.ItemType itemType = LegendaryItem.GetItemType(item);
+								bool isTerrestrial = LegendaryItem.GetIsTerrestrial(item);
+								foreach (ItemInfo ii in itemsSameId) {
+									ii.ItemRarity = item.Rarity;
+									ii.ItemType = itemType;
+									ii.IsTerrestrial = isTerrestrial;
+								}
+							}
+						}
+
+						// get a complete list of upgrades
+						List<ItemInfo> itemsUpgradesAll = new List<ItemInfo>();
+						foreach (ItemInfo itemInfo in itemsAll) {
+							if (itemInfo.ItemUpgrades == null) continue;
+							foreach (int upgrade in itemInfo.ItemUpgrades) {
+								itemsUpgradesAll.Add(new ItemInfo(upgrade, itemInfo.CharName, itemInfo.TabId, itemInfo.TabName, itemInfo.IsTerrestrial));
+							}
+						}
+
+						// get info about upgrades
+						List<int> idsUpgradesUnique = itemsUpgradesAll.Select(p => p.ItemId).Distinct().ToList();
+						List<Item> itemsUpgradesUnique = await apiHelper.GetItemsAsync(idsUpgradesUnique);
+						if (itemsUpgradesUnique != null) {
+							foreach (Item item in itemsUpgradesUnique) {
+								List<ItemInfo> itemsSameId = itemsUpgradesAll.FindAll(p => p.ItemId == item.Id);
+								LegendaryItem.ItemType itemType = LegendaryItem.GetItemType(item);
+								foreach (ItemInfo ii in itemsSameId) {
+									ii.ItemRarity = item.Rarity;
+									ii.ItemType = itemType;
+								}
+							}
+						}
+
+						// add upgrades to the rest of the items
+						itemsAll.AddRange(itemsUpgradesAll);
+
+						// sort list for proper counting
+						itemsAll.Sort((i1, i2) => {
+							if (i1.ItemRarity != i2.ItemRarity) {
+								if (i1.ItemRarity == Item.ItemRarity.Legendary) return -1;
+								if (i2.ItemRarity == Item.ItemRarity.Legendary) return 1;
+							}
+							return i2.IsTerrestrial.CompareTo(i1.IsTerrestrial);
+						});
+
+						// count items
+						foreach (ItemInfo itemInfo in itemsAll) {
+							// skip unknown types
+							if (itemInfo.ItemType == LegendaryItem.ItemType.Unknown)
+								continue;
+							LegendaryTypes[(int)itemInfo.ItemType].AddItem(itemInfo.ItemRarity == Item.ItemRarity.Legendary, itemInfo.CharName, itemInfo.TabId, itemInfo.TabName, itemInfo.IsTerrestrial);
+						}
+
+						IsDetailLoaded = true;
+					}
+/*					if (characters != null) {
 						// get items that can be replaced by legendaries
 						List<ItemInfo> potentials = new List<ItemInfo>();
 						foreach (Character ch in characters) {
@@ -271,7 +369,7 @@ namespace gw2lav.ViewModel {
 								IsDetailLoaded = true;
 							}
 						}
-					}
+					}*/
 				}
 
 			}, cancelToken);

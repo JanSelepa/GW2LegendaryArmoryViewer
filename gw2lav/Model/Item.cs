@@ -7,6 +7,7 @@ namespace gw2lav.Model {
 
 		[JsonConverter(typeof(StringEnumConverter))]
 		public enum ItemType {
+			Unknown,
 			Armor,
 			Back,
 			Bag,
@@ -25,8 +26,9 @@ namespace gw2lav.Model {
 			Weapon
 		}
 
-		[JsonConverter(typeof(StringEnumConverter))]
+		[JsonConverter(typeof(TolerantStringEnumConverter))]
 		public enum ItemSubType {
+			Unknown,
 			HelmAquatic,
 			Boots, Coat, Gloves, Helm, Leggings, Shoulders,
 			Accessory, Amulet, Ring,
@@ -37,11 +39,13 @@ namespace gw2lav.Model {
 
 		[JsonConverter(typeof(StringEnumConverter))]
 		public enum ItemWeightClass {
+			Unknown,
 			Light, Medium, Heavy
 		}
 
 		[JsonConverter(typeof(StringEnumConverter))]
 		public enum ItemRarity {
+			Unknown,
 			Junk, Basic, Fine, Masterwork, Rare, Exotic, Ascended, Legendary
 		}
 

@@ -171,6 +171,19 @@ namespace gw2lav.ViewModel {
 			return itemType;
 		}
 
+		public static bool GetIsTerrestrial(Item item) {
+			if (item == null || item.Details == null)
+				return true;
+			// Aquatic Helm
+			if (item.Type == Item.ItemType.Armor && item.Details.Type == Item.ItemSubType.HelmAquatic)
+				return false;
+			// Aquatic Weapons
+			if (item.Type == Item.ItemType.Weapon && (item.Details.Type == Item.ItemSubType.Harpoon || item.Details.Type == Item.ItemSubType.Speargun || item.Details.Type == Item.ItemSubType.Trident))
+				return false;
+
+			return true;
+		}
+
 	}
 
 }

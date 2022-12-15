@@ -13,6 +13,9 @@ namespace gw2lav.Model {
 		[JsonProperty("equipment_tabs")]
 		public EquipmentTab[] EquipmentTabs;
 
+		[JsonProperty("bags")]
+		public Bag[] Bags;
+
 	}
 
 }

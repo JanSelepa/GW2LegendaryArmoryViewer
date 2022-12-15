@@ -43,6 +43,28 @@ namespace gw2lav.ViewModel {
 			Count = count;
 		}
 
+		public void AddItem(bool isLegendary, string charName, int tabId, string tabName, bool isTerrestrial) {
+			// inventory items
+			if (tabId == 0) {
+				if (isLegendary) return;
+				NeededInfo.Add(charName, tabName, tabId, isTerrestrial);
+				return;
+			}
+			// equipment tabs items
+			if (isLegendary) {
+				UsedInfo.Add(charName, tabName, tabId, isTerrestrial);
+			} else {
+				// get number of legendary items of this type used in the same template
+				int used = UsedInfo.GetCountFromTab(charName, tabId);
+				int usable = UsableInfo.GetCountFromTab(charName, tabId);
+				// add to usable or needed items
+				if (used + usable < Count)
+					UsableInfo.Add(charName, tabName, tabId, isTerrestrial);
+				else
+					NeededInfo.Add(charName, tabName, tabId, isTerrestrial);
+			}
+		}
+
 		private void setNames(ItemType type) {
 			switch (type) {
 				// Armor

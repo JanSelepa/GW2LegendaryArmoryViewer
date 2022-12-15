@@ -89,6 +89,9 @@
     </Compile>
     <Compile Include="ArgsHelper.cs" />
     <Compile Include="DialogService.cs" />
+    <Compile Include="Model\Bag.cs" />
+    <Compile Include="Model\InventorySlot.cs" />
+    <Compile Include="Model\TolerantStringEnumConverter.cs" />
     <Compile Include="RegistryHelper.cs" />
     <Compile Include="UpdateHelper.cs" />
     <Compile Include="ViewModel\BindableBase.cs" />
