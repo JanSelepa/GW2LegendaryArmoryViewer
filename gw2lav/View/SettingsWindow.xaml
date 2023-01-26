@@ -52,6 +52,15 @@
 			IsChecked="{Binding NoWater, Mode=TwoWay}" />
 
 		<!--
+			No Inventory
+		-->
+
+		<CheckBox
+			Content="{x:Static p:R.settings_noinventory_message}"
+			VerticalContentAlignment="Center"
+			IsChecked="{Binding NoInventory, Mode=TwoWay}" />
+
+		<!--
 			Buttons
 		-->
 		

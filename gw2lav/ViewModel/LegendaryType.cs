@@ -23,6 +23,7 @@ namespace gw2lav.ViewModel {
 		public CountInfo UsedInfo { get; set; }
 		public CountInfo UsableInfo { get; set; }
 		public CountInfo NeededInfo { get; set; }
+		public CountInfo InventoryInfo { get; set; }
 
 		public LegendaryType(ItemType type) {
 			Type = type;
@@ -33,6 +34,7 @@ namespace gw2lav.ViewModel {
 			UsedInfo = new CountInfo();
 			UsableInfo = new CountInfo();
 			NeededInfo = new CountInfo();
+			InventoryInfo = new CountInfo();
 		}
 
 		public void recountItems() {
@@ -47,7 +49,7 @@ namespace gw2lav.ViewModel {
 			// inventory items
 			if (tabId == 0) {
 				if (isLegendary) return;
-				NeededInfo.Add(charName, tabName, tabId, isTerrestrial);
+				InventoryInfo.Add(charName, tabName, tabId, isTerrestrial);
 				return;
 			}
 			// equipment tabs items

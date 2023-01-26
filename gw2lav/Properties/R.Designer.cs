@@ -115,6 +115,15 @@ namespace gw2lav.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Inventory non-legendaries.
+        /// </summary>
+        public static string detail_inventory {
+            get {
+                return ResourceManager.GetString("detail_inventory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select any Legendary item to view details here.
         /// </summary>
         public static string detail_message {
@@ -276,6 +285,15 @@ namespace gw2lav.Properties {
         public static string settings_apikey_title {
             get {
                 return ResourceManager.GetString("settings_apikey_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Don&apos;t show info about items in inventory.
+        /// </summary>
+        public static string settings_noinventory_message {
+            get {
+                return ResourceManager.GetString("settings_noinventory_message", resourceCulture);
             }
         }
         

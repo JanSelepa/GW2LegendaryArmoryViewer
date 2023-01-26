@@ -80,6 +80,12 @@ namespace gw2lav.ViewModel {
 			set { SetProperty(ref _NoWater, value); }
 		}
 
+		private bool _NoInventory;
+		public bool NoInventory {
+			get { return _NoInventory; }
+			set { SetProperty(ref _NoInventory, value); }
+		}
+
 		private bool _IsDetailLoaded;
 		public bool IsDetailLoaded {
 			get { return _IsDetailLoaded; }
@@ -105,6 +111,7 @@ namespace gw2lav.ViewModel {
 			IsLoading = false;
 			Error = null;
 			NoWater = RegistryHelper.GetNoWater();
+			NoInventory = RegistryHelper.GetNoInventory();
 			IsDetailLoaded = false;
 			IsUpdateAvailable = false;
 			ReloadCommand = new RelayCommand(OnReloadAsync, CanReload);
@@ -225,6 +232,8 @@ namespace gw2lav.ViewModel {
 
 						}
 
+						cancelToken.ThrowIfCancellationRequested();
+
 						// get item info about items
 						List<int> idsAllUnique = itemsAll.Select(p => p.ItemId).Distinct().ToList();
 						List<Item> itemsAllUnique = await apiHelper.GetItemsAsync(idsAllUnique);
@@ -241,6 +250,8 @@ namespace gw2lav.ViewModel {
 							}
 						}
 
+						cancelToken.ThrowIfCancellationRequested();
+
 						// get a complete list of upgrades
 						List<ItemInfo> itemsUpgradesAll = new List<ItemInfo>();
 						foreach (ItemInfo itemInfo in itemsAll) {
@@ -249,6 +260,8 @@ namespace gw2lav.ViewModel {
 								itemsUpgradesAll.Add(new ItemInfo(upgrade, itemInfo.CharName, itemInfo.TabId, itemInfo.TabName, itemInfo.IsTerrestrial));
 							}
 						}
+
+						cancelToken.ThrowIfCancellationRequested();
 
 						// get info about upgrades
 						List<int> idsUpgradesUnique = itemsUpgradesAll.Select(p => p.ItemId).Distinct().ToList();
@@ -263,6 +276,8 @@ namespace gw2lav.ViewModel {
 								}
 							}
 						}
+
+						cancelToken.ThrowIfCancellationRequested();
 
 						// add upgrades to the rest of the items
 						itemsAll.AddRange(itemsUpgradesAll);
@@ -286,90 +301,7 @@ namespace gw2lav.ViewModel {
 
 						IsDetailLoaded = true;
 					}
-/*					if (characters != null) {
-						// get items that can be replaced by legendaries
-						List<ItemInfo> potentials = new List<ItemInfo>();
-						foreach (Character ch in characters) {
-							if (ch.Level != 80) continue;
-							foreach (EquipmentTab et in ch.EquipmentTabs) {
-								foreach (Equipment eq in et.Equipment) {
-									// check upgrade component
-									bool isAquatic = eq.Slot == Equipment.SlotType.HelmAquatic || eq.Slot == Equipment.SlotType.WeaponAquaticA || eq.Slot == Equipment.SlotType.WeaponAquaticB;
-									bool isArmor = eq.Slot == Equipment.SlotType.Helm || eq.Slot == Equipment.SlotType.Shoulders || eq.Slot == Equipment.SlotType.Gloves || eq.Slot == Equipment.SlotType.Coat || eq.Slot == Equipment.SlotType.Leggings || eq.Slot == Equipment.SlotType.Boots;
-									bool isWeapon = eq.Slot == Equipment.SlotType.WeaponA1 || eq.Slot == Equipment.SlotType.WeaponA2 || eq.Slot == Equipment.SlotType.WeaponB1 || eq.Slot == Equipment.SlotType.WeaponB2;
-									if ((isAquatic || isArmor || isWeapon) && eq.Upgrades != null) {
-										foreach (int upgradeId in eq.Upgrades) {
-											potentials.Add(new ItemInfo(upgradeId, ch.Name, et.Name, et.Tab, !isAquatic));
-										}
-									}
-									// skip aquatic helm
-									if (eq.Slot == Equipment.SlotType.HelmAquatic)
-										continue;
-									// add item to potentially wanted items
-									potentials.Add(new ItemInfo(eq.Id, ch.Name, et.Name, et.Tab, !isAquatic));
-								}
-							}
-						}
-						cancelToken.ThrowIfCancellationRequested();
-						if (potentials.Count > 0) {
-							// get unique item ids to check for item type
-							List<int> ids = potentials.Select(p => p.ItemId).Distinct().ToList();
-							// get item info about items replacable by legendaries to get the proper item type
-							List<Item> equippedItems = await apiHelper.GetItemsAsync(ids);
-							if (equippedItems != null) {
-								// count used legendary items
-								foreach (Item item in equippedItems) {
-									if (item.Rarity != Item.ItemRarity.Legendary)
-										continue;
-									// skip unknown types
-									LegendaryItem.ItemType itemType = LegendaryItem.GetItemType(item);
-									if (itemType == LegendaryItem.ItemType.Unknown)
-										continue;
-									// get all potentials with the same Id
-									List<ItemInfo> potentialsWithSameId = potentials.FindAll(p => p.ItemId == item.Id);
-									// add legendary items to used info
-									foreach (ItemInfo p in potentialsWithSameId) {
-										LegendaryTypes[(int)itemType].UsedInfo.Add(p.CharName, p.TabName, p.TabId, p.IsTerrestrial);
-									}
-								}
-								// sort replacable items according to ItemType
-								Dictionary<LegendaryItem.ItemType, List<ItemInfo>> replacableItems = new Dictionary<LegendaryItem.ItemType, List<ItemInfo>>();
-								foreach (Item item in equippedItems) {
-									if (item.Rarity == Item.ItemRarity.Legendary)
-										continue;
-									// skip unknown types
-									LegendaryItem.ItemType itemType = LegendaryItem.GetItemType(item);
-									if (itemType == LegendaryItem.ItemType.Unknown)
-										continue;
-									// get item list for the ItemType and add to it
-									List<ItemInfo> itemList;
-									if (!replacableItems.TryGetValue(itemType, out itemList)) {
-										itemList = new List<ItemInfo>();
-										replacableItems.Add(itemType, itemList);
-									}
-									itemList.AddRange(potentials.FindAll(p => p.ItemId == item.Id));
-								}
-								// count replacable items
-								foreach (LegendaryItem.ItemType itemType in replacableItems.Keys) {
-									List<ItemInfo> list = replacableItems[itemType];
-									// sort items so that terrestrial items are first
-									list.Sort((i1, i2) => { return i2.IsTerrestrial.CompareTo(i1.IsTerrestrial); });
-									// split items to Usable and Needed lists
-									foreach (ItemInfo ri in list) {
-										// get number of legendary items of this type used in the same template
-										int used = LegendaryTypes[(int)itemType].UsedInfo.GetCountFromTab(ri.CharName, ri.TabId);
-										int usable = LegendaryTypes[(int)itemType].UsableInfo.GetCountFromTab(ri.CharName, ri.TabId);
-										// add to usable or needed items
-										if (used + usable < LegendaryTypes[(int)itemType].Count)
-											LegendaryTypes[(int)itemType].UsableInfo.Add(ri.CharName, ri.TabName, ri.TabId, ri.IsTerrestrial);
-										else
-											LegendaryTypes[(int)itemType].NeededInfo.Add(ri.CharName, ri.TabName, ri.TabId, ri.IsTerrestrial);
-									}
-								}
-								IsDetailLoaded = true;
-							}
-						}
-					}*/
+
 				}
 
 			}, cancelToken);
@@ -393,6 +325,7 @@ namespace gw2lav.ViewModel {
 				}
 				// other settings
 				NoWater = settingsVM.NoWater;
+				NoInventory = settingsVM.NoInventory;
 			}
 
 		}

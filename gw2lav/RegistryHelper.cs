@@ -7,6 +7,7 @@ namespace gw2lav {
 
 		private const string KEY_API_KEY = "api_key";
 		private const string KEY_NO_WATER = "no_water";
+		private const string KEY_NO_INVENTORY = "no_inventory";
 
 		private const string REG_PATH = "Software\\GW2LegendaryArmoryViewer\\";
 
@@ -55,6 +56,20 @@ namespace gw2lav {
 
 		public static bool SetNoWater(bool noWater) {
 			return SetValue(KEY_NO_WATER, noWater ? 1 : 0);
+		}
+
+		// No Inventory
+
+		public static bool GetNoInventory() {
+			int? noInventory = (int?)GetValue(KEY_NO_INVENTORY);
+			if (noInventory.HasValue)
+				return noInventory.Value != 0;
+			else
+				return false;
+		}
+
+		public static bool SetNoInventory(bool noInventory) {
+			return SetValue(KEY_NO_INVENTORY, noInventory ? 1 : 0);
 		}
 
 	}

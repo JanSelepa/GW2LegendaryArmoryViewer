@@ -36,6 +36,17 @@ namespace gw2lav.ViewModel {
 			}
 		}
 
+		private bool _NoInventory;
+
+		private bool _StoredNoInventory;
+		public bool NoInventory {
+			get { return _NoInventory; }
+			set {
+				if (SetProperty(ref _NoInventory, value))
+					ApplyCommand.RaiseCanExecuteChanged();
+			}
+		}
+
 		public SettingsViewModel() {
 			ApplyCommand = new RelayCommand(OnApply, CanApply);
 			CancelCommand = new RelayCommand(OnCancel);
@@ -45,6 +56,9 @@ namespace gw2lav.ViewModel {
 
 			_StoredNoWater = RegistryHelper.GetNoWater();
 			NoWater = _StoredNoWater;
+
+			_StoredNoInventory = RegistryHelper.GetNoInventory();
+			NoInventory = _StoredNoInventory;
 		}
 
 		private void OnApply() {
@@ -54,6 +68,10 @@ namespace gw2lav.ViewModel {
 
 			if (_StoredNoWater != NoWater) {
 				RegistryHelper.SetNoWater(NoWater);
+			}
+
+			if (_StoredNoInventory != NoInventory) {
+				RegistryHelper.SetNoInventory(NoInventory);
 			}
 
 			// close dialog
@@ -70,6 +88,10 @@ namespace gw2lav.ViewModel {
 			}
 
 			if (NoWater != _StoredNoWater) {
+				canApply = true;
+			}
+
+			if (NoInventory != _StoredNoInventory) {
 				canApply = true;
 			}
 

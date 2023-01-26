@@ -206,6 +206,49 @@
 							</Style>
 						</Image.Style>
 					</Image>
+					<Image
+						Height="15"
+						Source="/Assets/item_inventory.png">
+						<Image.Style>
+							<Style TargetType="Image">
+								<Style.Triggers>
+									<DataTrigger
+										Binding="{Binding DataContext.NoInventory, RelativeSource={RelativeSource AncestorType={x:Type view:MainWindow}}}"
+										Value="True">
+										<Setter
+											Property="Visibility"
+											Value="Collapsed" />
+									</DataTrigger>
+									<MultiDataTrigger>
+										<MultiDataTrigger.Conditions>
+											<Condition
+												Binding="{Binding DataContext.NoWater, RelativeSource={RelativeSource AncestorType={x:Type view:MainWindow}}}"
+												Value="False" />
+											<Condition
+												Binding="{Binding InventoryInfo.TotalCount}"
+												Value="0" />
+										</MultiDataTrigger.Conditions>
+										<Setter
+											Property="Visibility"
+											Value="Collapsed" />
+									</MultiDataTrigger>
+									<MultiDataTrigger>
+										<MultiDataTrigger.Conditions>
+											<Condition
+												Binding="{Binding DataContext.NoWater, RelativeSource={RelativeSource AncestorType={x:Type view:MainWindow}}}"
+												Value="True" />
+											<Condition
+												Binding="{Binding InventoryInfo.TerrestrialCount}"
+												Value="0" />
+										</MultiDataTrigger.Conditions>
+										<Setter
+											Property="Visibility"
+											Value="Collapsed" />
+									</MultiDataTrigger>
+								</Style.Triggers>
+							</Style>
+						</Image.Style>
+					</Image>
 				</StackPanel>
 
 			</Grid>
