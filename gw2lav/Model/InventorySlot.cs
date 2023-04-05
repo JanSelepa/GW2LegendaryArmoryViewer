@@ -7,6 +7,9 @@ namespace gw2lav.Model {
 		[JsonProperty("id")]
 		public int Id;
 
+		[JsonProperty("binding")]
+		public string Binding;
+
 		[JsonProperty("count")]
 		public int Count;
 

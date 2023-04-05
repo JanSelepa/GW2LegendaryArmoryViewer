@@ -224,9 +224,10 @@ namespace gw2lav.ViewModel {
 							// look through inventory
 							foreach (Bag bag in chr.Bags) {
 								foreach (InventorySlot isl in bag.Inventory) {
-									if (isl == null) continue;
+									// ignore empty inventory slots and unbound items
+									if (isl == null || isl.Binding == null) continue;
 									for (int i = 0; i < isl.Count; i++)
-										itemsAll.Add(new ItemInfo(isl.Id, isl.Upgrades, chr.Name, 0, "Inventory"));	// TODO resource string
+										itemsAll.Add(new ItemInfo(isl.Id, isl.Upgrades, chr.Name, 0, null));
 								}
 							}
 
