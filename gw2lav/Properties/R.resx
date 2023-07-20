@@ -136,19 +136,23 @@
     <value>Failed to load detail information. This probably means that your Guild Wars 2 Api Key is not set or that it has insufficient permissions. Please check Settings.</value>
   </data>
   <data name="detail_inventory" xml:space="preserve">
-    <value>Inventory non-legendaries</value>
+    <value>Inventory
+Non-legendary</value>
   </data>
   <data name="detail_message" xml:space="preserve">
     <value>Select any Legendary item to view details here</value>
   </data>
   <data name="detail_needed" xml:space="preserve">
-    <value>Acquire for</value>
+    <value>Equipment
+Acquire</value>
   </data>
   <data name="detail_usable" xml:space="preserve">
-    <value>Available for</value>
+    <value>Equipment
+Available</value>
   </data>
   <data name="detail_used" xml:space="preserve">
-    <value>Used on</value>
+    <value>Equipment
+Used</value>
   </data>
   <data name="info_legal" xml:space="preserve">
     <value>Legal notice</value>

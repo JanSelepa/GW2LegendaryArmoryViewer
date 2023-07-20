@@ -351,7 +351,7 @@
 							Grid.Column="0"
 							Height="20"
 							Margin="0,0,5,0"
-							Source="/Assets/item_usable.png" />
+							Source="/Assets/equipment_upgrade.png" />
 						<TextBlock
 							Grid.Column="1"
 							VerticalAlignment="Center"
@@ -399,7 +399,7 @@
 							Grid.Column="0"
 							Height="20"
 							Margin="0,0,5,0"
-							Source="/Assets/item_needed.png" />
+							Source="/Assets/equipment_locked.png" />
 						<TextBlock
 							Grid.Column="1"
 							VerticalAlignment="Center"
@@ -447,7 +447,7 @@
 							Grid.Column="0"
 							Height="20"
 							Margin="0,0,5,0"
-							Source="/Assets/item_used.png" />
+							Source="/Assets/equipment.png" />
 						<TextBlock
 							Grid.Column="1"
 							VerticalAlignment="Center"
@@ -508,7 +508,7 @@
 							Grid.Column="0"
 							Height="20"
 							Margin="0,0,5,0"
-							Source="/Assets/item_inventory.png" />
+							Source="/Assets/inventory.png" />
 						<TextBlock
 							Grid.Column="1"
 							VerticalAlignment="Center"

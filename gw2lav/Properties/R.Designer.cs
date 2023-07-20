@@ -115,7 +115,8 @@ namespace gw2lav.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Inventory non-legendaries.
+        ///   Looks up a localized string similar to Inventory
+        ///Non-legendary.
         /// </summary>
         public static string detail_inventory {
             get {
@@ -133,7 +134,8 @@ namespace gw2lav.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Acquire for.
+        ///   Looks up a localized string similar to Equipment
+        ///Acquire.
         /// </summary>
         public static string detail_needed {
             get {
@@ -142,7 +144,8 @@ namespace gw2lav.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Available for.
+        ///   Looks up a localized string similar to Equipment
+        ///Available.
         /// </summary>
         public static string detail_usable {
             get {
@@ -151,7 +154,8 @@ namespace gw2lav.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Used on.
+        ///   Looks up a localized string similar to Equipment
+        ///Used.
         /// </summary>
         public static string detail_used {
             get {
