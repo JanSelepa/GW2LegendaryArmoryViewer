@@ -104,6 +104,9 @@
     <Compile Include="ViewModel\RelayCommand.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="View\Converters.cs" />
+    <Compile Include="View\CountInfoView.xaml.cs">
+      <DependentUpon>CountInfoView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MessageWindow.xaml.cs">
       <DependentUpon>MessageWindow.xaml</DependentUpon>
     </Compile>
@@ -180,6 +183,10 @@
     <Resource Include="Assets\equipment.png" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="View\CountInfoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MessageWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

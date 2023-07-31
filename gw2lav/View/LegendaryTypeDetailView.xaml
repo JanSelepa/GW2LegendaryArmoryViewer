@@ -2,204 +2,8 @@
 	x:Class="gw2lav.View.LegendaryTypeDetailView"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
 	xmlns:p="clr-namespace:gw2lav.Properties"
-	xmlns:view="clr-namespace:gw2lav.View"
-	xmlns:viewModel="clr-namespace:gw2lav.ViewModel">
-
-	<UserControl.Resources>
-
-		<DataTemplate x:Key="WantedTabTemplate">
-			<Grid>
-				<Grid.Style>
-					<Style TargetType="Grid">
-						<Setter Property="Visibility" Value="Visible" />
-						<Style.Triggers>
-							<DataTrigger Binding="{Binding Id}" Value="0">
-								<Setter Property="Visibility" Value="Collapsed" />
-							</DataTrigger>
-						</Style.Triggers>
-					</Style>
-				</Grid.Style>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="Auto" />
-					<ColumnDefinition Width="*" />
-					<ColumnDefinition Width="Auto" />
-				</Grid.ColumnDefinitions>
-				<TextBlock
-					Grid.Column="0"
-					Margin="10,0,0,0"
-					HorizontalAlignment="Right"
-					VerticalAlignment="Center"
-					Text="{Binding Id, StringFormat=({0})}">
-				</TextBlock>
-				<TextBlock
-					Grid.Column="1"
-					Margin="5,0,0,0"
-					Text="{Binding Name}"
-					TextWrapping="Wrap" />
-				<TextBlock
-					Grid.Column="2"
-					HorizontalAlignment="Right"
-					VerticalAlignment="Center"
-					Margin="10,0,0,0"
-					Text="{Binding Count}" />
-			</Grid>
-		</DataTemplate>
-
-		<DataTemplate x:Key="WantedCharacterTemplate">
-			<Grid
-				Margin="0,5">
-				<Grid.Resources>
-					<CollectionViewSource
-						x:Key="TabsViewSource"
-						Source="{Binding Tabs}">
-						<CollectionViewSource.SortDescriptions>
-							<scm:SortDescription PropertyName="Id" />
-						</CollectionViewSource.SortDescriptions>
-					</CollectionViewSource>
-				</Grid.Resources>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="*" />
-					<ColumnDefinition Width="Auto" />
-				</Grid.ColumnDefinitions>
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="Auto" />
-				</Grid.RowDefinitions>
-				<TextBlock
-					Grid.Column="0" Grid.Row="0"
-					FontFamily="{StaticResource BoldFontFamily}"
-					Text="{Binding Name}" />
-				<TextBlock
-					Grid.Column="1" Grid.Row="0"
-					HorizontalAlignment="Right"
-					Margin="10,0,0,0"
-					FontFamily="{StaticResource BoldFontFamily}"
-					Text="{Binding Count}" />
-				<ItemsControl
-					Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1"
-					ItemTemplate="{StaticResource WantedTabTemplate}"
-					ItemsSource="{Binding Source={StaticResource TabsViewSource}}"/>
-			</Grid>
-		</DataTemplate>
-
-		<DataTemplate DataType="{x:Type viewModel:CountInfo}">
-			<StackPanel
-				Orientation="Vertical">
-				<Grid
-					Margin="0,5,0,0">
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="*" />
-						<ColumnDefinition Width="Auto" />
-					</Grid.ColumnDefinitions>
-					<Grid.Style>
-						<Style TargetType="Grid">
-							<Setter Property="Visibility" Value="Collapsed" />
-							<Style.Triggers>
-								<MultiDataTrigger>
-									<MultiDataTrigger.Conditions>
-										<Condition
-											Binding="{Binding DataContext.ShowSections, RelativeSource={RelativeSource AncestorType={x:Type view:LegendaryTypeDetailView}}}"
-											Value="True"/>
-										<Condition
-											Binding="{Binding DataContext.NoWater, RelativeSource={RelativeSource AncestorType={x:Type view:MainWindow}}}"
-											Value="False"/>
-									</MultiDataTrigger.Conditions>
-									<Setter
-										Property="Visibility"
-										Value="Visible" />
-								</MultiDataTrigger>
-								<DataTrigger
-									Binding="{Binding TerrestrialCount}"
-									Value="0">
-									<Setter
-										Property="Visibility"
-										Value="Collapsed" />
-								</DataTrigger>
-							</Style.Triggers>
-						</Style>
-					</Grid.Style>
-					<TextBlock
-						Grid.Column="0"
-						FontSize="14"
-						FontFamily="{StaticResource ItalicFontFamily}"
-						Text="{x:Static p:R.type_terrestrial}" />
-					<TextBlock
-						Grid.Column="1"
-						FontSize="14"
-						FontFamily="{StaticResource ItalicFontFamily}"
-						Text="{Binding TerrestrialCount}" />
-				</Grid>
-				
-				<ItemsControl
-					ItemTemplate="{StaticResource WantedCharacterTemplate}"
-					ItemsSource="{Binding TerrestrialCharacters}" />
-				<Grid
-					Margin="0,5,0,0">
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="*" />
-						<ColumnDefinition Width="Auto" />
-					</Grid.ColumnDefinitions>
-					<Grid.Style>
-						<Style TargetType="Grid">
-							<Setter Property="Visibility" Value="Collapsed" />
-							<Style.Triggers>
-								<MultiDataTrigger>
-									<MultiDataTrigger.Conditions>
-										<Condition
-											Binding="{Binding DataContext.ShowSections, RelativeSource={RelativeSource AncestorType={x:Type view:LegendaryTypeDetailView}}}"
-											Value="True"/>
-										<Condition
-											Binding="{Binding DataContext.NoWater, RelativeSource={RelativeSource AncestorType={x:Type view:MainWindow}}}"
-											Value="False"/>
-									</MultiDataTrigger.Conditions>
-									<Setter
-										Property="Visibility"
-										Value="Visible" />
-								</MultiDataTrigger>
-								<DataTrigger
-									Binding="{Binding AquaticCount}"
-									Value="0">
-									<Setter
-										Property="Visibility"
-										Value="Collapsed" />
-								</DataTrigger>
-							</Style.Triggers>
-						</Style>
-					</Grid.Style>
-					<TextBlock
-						Grid.Column="0"
-						FontSize="14"
-						FontFamily="{StaticResource ItalicFontFamily}"
-						Text="{x:Static p:R.type_aquatic}" />
-					<TextBlock
-						Grid.Column="1"
-						FontSize="14"
-						FontFamily="{StaticResource ItalicFontFamily}"
-						Text="{Binding AquaticCount}" />
-				</Grid>
-				<ItemsControl
-					ItemTemplate="{StaticResource WantedCharacterTemplate}"
-					ItemsSource="{Binding AquaticCharacters}">
-					<ItemsControl.Style>
-						<Style TargetType="ItemsControl">
-							<Style.Triggers>
-								<DataTrigger
-									Binding="{Binding DataContext.NoWater, RelativeSource={RelativeSource AncestorType={x:Type view:MainWindow}}}"
-									Value="True">
-									<Setter
-										Property="Visibility"
-										Value="Collapsed" />
-								</DataTrigger>
-							</Style.Triggers>
-						</Style>
-					</ItemsControl.Style>
-				</ItemsControl>
-			</StackPanel>
-		</DataTemplate>
-
-	</UserControl.Resources>
+	xmlns:view="clr-namespace:gw2lav.View">
 
 	<Grid>
 			
@@ -311,8 +115,7 @@
 			<ScrollViewer
 				Grid.Row="1"
 				VerticalScrollBarVisibility="Auto"
-				HorizontalScrollBarVisibility="Disabled"
-				Padding="10,0">
+				HorizontalScrollBarVisibility="Disabled">
 				<ScrollViewer.Style>
 					<Style TargetType="ScrollViewer">
 						<Style.Triggers>
@@ -335,159 +138,44 @@
 				</ScrollViewer.Style>
 				<StackPanel
 					Orientation="Vertical">
-						
-					<!--
-						Usable info
-					-->
 
-					<Grid
-						Margin="0,0,0,5">
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="Auto" />
-							<ColumnDefinition Width="*" />
-							<ColumnDefinition Width="Auto" />
-						</Grid.ColumnDefinitions>
-						<Image
-							Grid.Column="0"
-							Height="20"
-							Margin="0,0,5,0"
-							Source="/Assets/equipment_upgrade.png" />
-						<TextBlock
-							Grid.Column="1"
-							VerticalAlignment="Center"
-							FontSize="15"
-							Text="{x:Static p:R.detail_usable}" />
-						<TextBlock
-							Grid.Column="2"
-							HorizontalAlignment="Right"
-							VerticalAlignment="Center"
-							FontSize="15">
-							<TextBlock.Style>
-								<Style TargetType="TextBlock">
-									<Setter
-										Property="Text"
-										Value="{Binding UsableInfo.TotalCount}" />
-									<Style.Triggers>
-										<DataTrigger
-											Binding="{Binding DataContext.NoWater, RelativeSource={RelativeSource AncestorType={x:Type view:MainWindow}}}"
-											Value="True">
-											<Setter
-												Property="Text"
-												Value="{Binding UsableInfo.TerrestrialCount}" />
-										</DataTrigger>
-									</Style.Triggers>
-								</Style>
-							</TextBlock.Style>
-						</TextBlock>
-					</Grid>
+					<view:CountInfoView
+						CountInfo="{Binding UsableInfo}"
+						Title="{x:Static p:R.detail_usable}"
+						Description="{x:Static p:R.detail_usable_desc}"
+						IconSource="/Assets/equipment_upgrade.png"
+						AccentBrush="DarkOrange"
+						IsExpanded="{Binding DataContext.IsEquipUsableExpanded, RelativeSource={RelativeSource AncestorType={x:Type view:MainWindow}}, Mode=TwoWay}"
+						Margin="0,0,0,5" />
 
-					<ContentControl
-						Content="{Binding UsableInfo}" />
-						
-					<!--
-						Needed info
-					-->
+					<view:CountInfoView
+						CountInfo="{Binding NeededInfo}"
+						Title="{x:Static p:R.detail_needed}"
+						Description="{x:Static p:R.detail_needed_desc}"
+						IconSource="/Assets/equipment_locked.png"
+						AccentBrush="DarkRed"
+						IsExpanded="{Binding DataContext.IsEquipNeededExpanded, RelativeSource={RelativeSource AncestorType={x:Type view:MainWindow}}, Mode=TwoWay}"
+						Margin="0,15,0,5" />
 
-					<Grid
+					<view:CountInfoView
+						CountInfo="{Binding UsedInfo}"
+						Title="{x:Static p:R.detail_used}"
+						Description="{x:Static p:R.detail_used_desc}"
+						IconSource="/Assets/equipment.png"
+						AccentBrush="DarkGreen"
+						IsExpanded="{Binding DataContext.IsEquipUsedExpanded, RelativeSource={RelativeSource AncestorType={x:Type view:MainWindow}}, Mode=TwoWay}"
+						Margin="0,15,0,5" />
+
+					<view:CountInfoView
+						CountInfo="{Binding InventoryInfo}"
+						Title="{x:Static p:R.detail_inventory}"
+						Description="{x:Static p:R.detail_inventory_desc}"
+						IconSource="/Assets/inventory.png"
+						AccentBrush="DarkGray"
+						IsExpanded="{Binding DataContext.IsInventoryExpanded, RelativeSource={RelativeSource AncestorType={x:Type view:MainWindow}}, Mode=TwoWay}"
 						Margin="0,15,0,5">
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="Auto" />
-							<ColumnDefinition Width="*" />
-							<ColumnDefinition Width="Auto" />
-						</Grid.ColumnDefinitions>
-						<Image
-							Grid.Column="0"
-							Height="20"
-							Margin="0,0,5,0"
-							Source="/Assets/equipment_locked.png" />
-						<TextBlock
-							Grid.Column="1"
-							VerticalAlignment="Center"
-							FontSize="15"
-							Text="{x:Static p:R.detail_needed}" />
-						<TextBlock
-							Grid.Column="2"
-							HorizontalAlignment="Right"
-							VerticalAlignment="Center"
-							FontSize="15">
-							<TextBlock.Style>
-								<Style TargetType="TextBlock">
-									<Setter
-										Property="Text"
-										Value="{Binding NeededInfo.TotalCount}" />
-									<Style.Triggers>
-										<DataTrigger
-											Binding="{Binding DataContext.NoWater, RelativeSource={RelativeSource AncestorType={x:Type view:MainWindow}}}"
-											Value="True">
-											<Setter
-												Property="Text"
-												Value="{Binding NeededInfo.TerrestrialCount}" />
-										</DataTrigger>
-									</Style.Triggers>
-								</Style>
-							</TextBlock.Style>
-						</TextBlock>
-					</Grid>
-
-					<ContentControl
-						Content="{Binding NeededInfo}"/>
-						
-					<!--
-						Used info
-					-->
-
-					<Grid
-						Margin="0,15,0,5">
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="Auto" />
-							<ColumnDefinition Width="*" />
-							<ColumnDefinition Width="Auto" />
-						</Grid.ColumnDefinitions>
-						<Image
-							Grid.Column="0"
-							Height="20"
-							Margin="0,0,5,0"
-							Source="/Assets/equipment.png" />
-						<TextBlock
-							Grid.Column="1"
-							VerticalAlignment="Center"
-							FontSize="15"
-							Text="{x:Static p:R.detail_used}" />
-						<TextBlock
-							Grid.Column="2"
-							HorizontalAlignment="Right"
-							VerticalAlignment="Center"
-							FontSize="15">
-							<TextBlock.Style>
-								<Style TargetType="TextBlock">
-									<Setter
-										Property="Text"
-										Value="{Binding UsedInfo.TotalCount}" />
-									<Style.Triggers>
-										<DataTrigger
-											Binding="{Binding DataContext.NoWater, RelativeSource={RelativeSource AncestorType={x:Type view:MainWindow}}}"
-											Value="True">
-											<Setter
-												Property="Text"
-												Value="{Binding UsedInfo.TerrestrialCount}" />
-										</DataTrigger>
-									</Style.Triggers>
-								</Style>
-							</TextBlock.Style>
-						</TextBlock>
-					</Grid>
-
-					<ContentControl
-						Content="{Binding UsedInfo}" />
-
-					<!--
-						Inventory info
-					-->
-
-					<Grid
-						Margin="0,15,0,5">
-						<Grid.Style>
-							<Style TargetType="Grid">
+						<view:CountInfoView.Style>
+							<Style TargetType="view:CountInfoView">
 								<Style.Triggers>
 									<DataTrigger
 										Binding="{Binding DataContext.NoInventory, RelativeSource={RelativeSource AncestorType={x:Type view:MainWindow}}}"
@@ -498,63 +186,8 @@
 									</DataTrigger>
 								</Style.Triggers>
 							</Style>
-						</Grid.Style>
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="Auto" />
-							<ColumnDefinition Width="*" />
-							<ColumnDefinition Width="Auto" />
-						</Grid.ColumnDefinitions>
-						<Image
-							Grid.Column="0"
-							Height="20"
-							Margin="0,0,5,0"
-							Source="/Assets/inventory.png" />
-						<TextBlock
-							Grid.Column="1"
-							VerticalAlignment="Center"
-							FontSize="15"
-							TextWrapping="Wrap"
-							Text="{x:Static p:R.detail_inventory}" />
-						<TextBlock
-							Grid.Column="2"
-							HorizontalAlignment="Right"
-							VerticalAlignment="Center"
-							FontSize="15">
-							<TextBlock.Style>
-								<Style TargetType="TextBlock">
-									<Setter
-										Property="Text"
-										Value="{Binding InventoryInfo.TotalCount}" />
-									<Style.Triggers>
-										<DataTrigger
-											Binding="{Binding DataContext.NoWater, RelativeSource={RelativeSource AncestorType={x:Type view:MainWindow}}}"
-											Value="True">
-											<Setter
-												Property="Text"
-												Value="{Binding InventoryInfo.TerrestrialCount}" />
-										</DataTrigger>
-									</Style.Triggers>
-								</Style>
-							</TextBlock.Style>
-						</TextBlock>
-					</Grid>
-
-					<ContentControl
-						Content="{Binding InventoryInfo}">
-						<ContentControl.Style>
-							<Style TargetType="ContentControl">
-								<Style.Triggers>
-									<DataTrigger
-										Binding="{Binding DataContext.NoInventory, RelativeSource={RelativeSource AncestorType={x:Type view:MainWindow}}}"
-										Value="True">
-										<Setter
-											Property="Visibility"
-											Value="Collapsed" />
-									</DataTrigger>
-								</Style.Triggers>
-							</Style>
-						</ContentControl.Style>
-					</ContentControl>
+						</view:CountInfoView.Style>
+					</view:CountInfoView>
 
 				</StackPanel>
 			</ScrollViewer>

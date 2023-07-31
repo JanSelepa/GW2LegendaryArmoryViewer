@@ -125,6 +125,15 @@ namespace gw2lav.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Shows the number of non-legendary bound items in inventories.
+        /// </summary>
+        public static string detail_inventory_desc {
+            get {
+                return ResourceManager.GetString("detail_inventory_desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select any Legendary item to view details here.
         /// </summary>
         public static string detail_message {
@@ -144,6 +153,15 @@ namespace gw2lav.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Shows the number of non-legendary equipped items for which you don&apos;t currently own a legendary replacement.
+        /// </summary>
+        public static string detail_needed_desc {
+            get {
+                return ResourceManager.GetString("detail_needed_desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Equipment
         ///Available.
         /// </summary>
@@ -154,12 +172,30 @@ namespace gw2lav.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Shows the number of non-legendary equipped items which you can replace with a legendary item you already own.
+        /// </summary>
+        public static string detail_usable_desc {
+            get {
+                return ResourceManager.GetString("detail_usable_desc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Equipment
         ///Used.
         /// </summary>
         public static string detail_used {
             get {
                 return ResourceManager.GetString("detail_used", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shows the number of times legendary items are currently equipped.
+        /// </summary>
+        public static string detail_used_desc {
+            get {
+                return ResourceManager.GetString("detail_used_desc", resourceCulture);
             }
         }
         

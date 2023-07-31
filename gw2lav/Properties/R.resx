@@ -139,6 +139,9 @@
     <value>Inventory
 Non-legendary</value>
   </data>
+  <data name="detail_inventory_desc" xml:space="preserve">
+    <value>Shows the number of non-legendary bound items in inventories</value>
+  </data>
   <data name="detail_message" xml:space="preserve">
     <value>Select any Legendary item to view details here</value>
   </data>
@@ -146,13 +149,22 @@ Non-legendary</value>
     <value>Equipment
 Acquire</value>
   </data>
+  <data name="detail_needed_desc" xml:space="preserve">
+    <value>Shows the number of non-legendary equipped items for which you don't currently own a legendary replacement</value>
+  </data>
   <data name="detail_usable" xml:space="preserve">
     <value>Equipment
 Available</value>
   </data>
+  <data name="detail_usable_desc" xml:space="preserve">
+    <value>Shows the number of non-legendary equipped items which you can replace with a legendary item you already own</value>
+  </data>
   <data name="detail_used" xml:space="preserve">
     <value>Equipment
 Used</value>
+  </data>
+  <data name="detail_used_desc" xml:space="preserve">
+    <value>Shows the number of times legendary items are currently equipped</value>
   </data>
   <data name="info_legal" xml:space="preserve">
     <value>Legal notice</value>

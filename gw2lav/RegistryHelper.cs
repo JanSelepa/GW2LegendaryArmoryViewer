@@ -8,6 +8,10 @@ namespace gw2lav {
 		private const string KEY_API_KEY = "api_key";
 		private const string KEY_NO_WATER = "no_water";
 		private const string KEY_NO_INVENTORY = "no_inventory";
+		private const string KEY_EXPAND_EQUIPNEEDED = "expand_equipneeded";
+		private const string KEY_EXPAND_EQUIPUSABLE = "expand_equipusable";
+		private const string KEY_EXPAND_EQUIPUSED = "expand_equipused";
+		private const string KEY_EXPAND_INVENTORY = "expand_inventory";
 
 		private const string REG_PATH = "Software\\GW2LegendaryArmoryViewer\\";
 
@@ -34,6 +38,14 @@ namespace gw2lav {
 			}
 		}
 
+		private static bool GetBoolValue(string keyName, bool defaultValue) {
+			int? keyValue = (int?)GetValue(keyName);
+			if (keyValue.HasValue)
+				return keyValue.Value != 0;
+			else
+				return defaultValue;
+		}
+
 		// Api Key
 
 		public static string GetApiKey() {
@@ -47,11 +59,7 @@ namespace gw2lav {
 		// No Water
 
 		public static bool GetNoWater() {
-			int? noWater = (int?)GetValue(KEY_NO_WATER);
-			if (noWater.HasValue)
-				return noWater.Value != 0;
-			else
-				return false;
+			return GetBoolValue(KEY_NO_WATER, true);
 		}
 
 		public static bool SetNoWater(bool noWater) {
@@ -61,15 +69,45 @@ namespace gw2lav {
 		// No Inventory
 
 		public static bool GetNoInventory() {
-			int? noInventory = (int?)GetValue(KEY_NO_INVENTORY);
-			if (noInventory.HasValue)
-				return noInventory.Value != 0;
-			else
-				return false;
+			return GetBoolValue(KEY_NO_INVENTORY, false);
 		}
 
 		public static bool SetNoInventory(bool noInventory) {
 			return SetValue(KEY_NO_INVENTORY, noInventory ? 1 : 0);
+		}
+
+		// Expand statuses for Detail View
+
+		public static bool GetExpandEquipNeeded() {
+			return GetBoolValue(KEY_EXPAND_EQUIPNEEDED, true);
+		}
+
+		public static bool SetExpandEquipNeeded(bool value) {
+			return SetValue(KEY_EXPAND_EQUIPNEEDED, value ? 1 : 0);
+		}
+
+		public static bool GetExpandEquipUsable() {
+			return GetBoolValue(KEY_EXPAND_EQUIPUSABLE, true);
+		}
+
+		public static bool SetExpandEquipUsable(bool value) {
+			return SetValue(KEY_EXPAND_EQUIPUSABLE, value ? 1 : 0);
+		}
+
+		public static bool GetExpandEquipUsed() {
+			return GetBoolValue(KEY_EXPAND_EQUIPUSED, false);
+		}
+
+		public static bool SetExpandEquipUsed(bool value) {
+			return SetValue(KEY_EXPAND_EQUIPUSED, value ? 1 : 0);
+		}
+
+		public static bool GetExpandInventory() {
+			return GetBoolValue(KEY_EXPAND_INVENTORY, true);
+		}
+
+		public static bool SetExpandInventory(bool value) {
+			return SetValue(KEY_EXPAND_INVENTORY, value ? 1 : 0);
 		}
 
 	}

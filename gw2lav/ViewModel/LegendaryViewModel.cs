@@ -92,6 +92,27 @@ namespace gw2lav.ViewModel {
 			set { SetProperty(ref _IsDetailLoaded, value); }
 		}
 
+		private bool _IsEquipNeededExpanded;
+		public bool IsEquipNeededExpanded {
+			get { return _IsEquipNeededExpanded; }
+			set { if (SetProperty(ref _IsEquipNeededExpanded, value)) RegistryHelper.SetExpandEquipNeeded(value); }
+		}
+		private bool _IsEquipUsableExpanded;
+		public bool IsEquipUsableExpanded {
+			get { return _IsEquipUsableExpanded; }
+			set { if (SetProperty(ref _IsEquipUsableExpanded, value)) RegistryHelper.SetExpandEquipUsable(value); }
+		}
+		private bool _IsEquipUsedExpanded;
+		public bool IsEquipUsedExpanded {
+			get { return _IsEquipUsedExpanded; }
+			set { if (SetProperty(ref _IsEquipUsedExpanded, value)) RegistryHelper.SetExpandEquipUsed(value); }
+		}
+		private bool _IsInventoryExpanded;
+		public bool IsInventoryExpanded {
+			get { return _IsInventoryExpanded; }
+			set { if (SetProperty(ref _IsInventoryExpanded, value)) RegistryHelper.SetExpandInventory(value); }
+		}
+
 		private bool _IsUpdateAvailable;
 		public bool IsUpdateAvailable {
 			get { return _IsUpdateAvailable; }
@@ -113,6 +134,10 @@ namespace gw2lav.ViewModel {
 			NoWater = RegistryHelper.GetNoWater();
 			NoInventory = RegistryHelper.GetNoInventory();
 			IsDetailLoaded = false;
+			_IsEquipNeededExpanded = RegistryHelper.GetExpandEquipNeeded();
+			_IsEquipUsableExpanded = RegistryHelper.GetExpandEquipUsable();
+			_IsEquipUsedExpanded = RegistryHelper.GetExpandEquipUsed();
+			_IsInventoryExpanded = RegistryHelper.GetExpandInventory();
 			IsUpdateAvailable = false;
 			ReloadCommand = new RelayCommand(OnReloadAsync, CanReload);
 			SettingsCommand = new RelayCommand(OnSettings, null);
