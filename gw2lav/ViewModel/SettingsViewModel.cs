@@ -1,9 +1,12 @@
-﻿using System;
+﻿using gw2lav.Service;
+using System;
 using System.Text.RegularExpressions;
 
 namespace gw2lav.ViewModel {
 
 	class SettingsViewModel : BindableBase, IDialogViewModel {
+
+		private IRegistryService _RegistryService;
 
 		public event EventHandler<DialogCloseRequestedEventArgs> CloseRequested;
 
@@ -47,31 +50,33 @@ namespace gw2lav.ViewModel {
 			}
 		}
 
-		public SettingsViewModel() {
+		public SettingsViewModel(IRegistryService registryService) {
+			_RegistryService = registryService;
+
 			ApplyCommand = new RelayCommand(OnApply, CanApply);
 			CancelCommand = new RelayCommand(OnCancel);
 
-			_StoredApiKey = RegistryHelper.GetApiKey();
+			_StoredApiKey = _RegistryService.GetApiKey();
 			ApiKey = _StoredApiKey;
 
-			_StoredNoWater = RegistryHelper.GetNoWater();
+			_StoredNoWater = _RegistryService.GetNoWater();
 			NoWater = _StoredNoWater;
 
-			_StoredNoInventory = RegistryHelper.GetNoInventory();
+			_StoredNoInventory = _RegistryService.GetNoInventory();
 			NoInventory = _StoredNoInventory;
 		}
 
 		private void OnApply() {
 			if (_StoredApiKey != ApiKey) {
-				RegistryHelper.SetApiKey(ApiKey);
+				_RegistryService.SetApiKey(ApiKey);
 			}
 
 			if (_StoredNoWater != NoWater) {
-				RegistryHelper.SetNoWater(NoWater);
+				_RegistryService.SetNoWater(NoWater);
 			}
 
 			if (_StoredNoInventory != NoInventory) {
-				RegistryHelper.SetNoInventory(NoInventory);
+				_RegistryService.SetNoInventory(NoInventory);
 			}
 
 			// close dialog

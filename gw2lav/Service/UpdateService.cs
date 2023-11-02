@@ -8,15 +8,15 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace gw2lav {
+namespace gw2lav.Service {
 
-	interface IUpdateHelper {
+	interface IUpdateService {
 		Task<bool> IsUpdateAvailableAsync();
 		Task<string> GetAvailableVersionAsync();
 		Task<string> UpdateAsync();
 	}
 
-	class UpdateHelper : IUpdateHelper {
+	class UpdateService : IUpdateService {
 
 		private const string GITHUB_LATEST_DOWNLOAD_URL = "https://github.com/JanSelepa/GW2LegendaryArmoryViewer/releases/latest/download/gw2lav.exe";
 		private const string GITHUB_API_URL = "https://api.github.com/repos/JanSelepa/GW2LegendaryArmoryViewer/releases/latest";
@@ -25,7 +25,7 @@ namespace gw2lav {
 		private const string BACKUP_PATH = "gw2lav.old";
 		private const string UPDATE_PATH = "gw2lav.new";
 
-		private IArgsHelper _ArgsHelper;
+		private IArgsService _ArgsService;
 
 		private readonly Regex _VersionRegex = new Regex(@"v\d+.\d+.\d+");
 
@@ -45,11 +45,11 @@ namespace gw2lav {
 			}
 		}
 
-		public UpdateHelper(IArgsHelper argsHelper) {
+		public UpdateService(IArgsService argsService) {
 			_AppInfoTask = GetAppInfoAsync();
 
-			_ArgsHelper = argsHelper;
-			if (argsHelper.HasArgCleanupUpdate())
+			_ArgsService = argsService;
+			if (argsService.HasArgCleanupUpdate())
 				CleanupBackup();
 		}
 
@@ -81,7 +81,7 @@ namespace gw2lav {
 				return string.Format(R.info_update_error_replace, e.Message);
 			}
 
-			_ArgsHelper.RestartAfterUpdate(appFileName);
+			_ArgsService.RestartAfterUpdate(appFileName);
 
 			return null;
 		}

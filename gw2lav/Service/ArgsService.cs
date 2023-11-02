@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
 
-namespace gw2lav {
+namespace gw2lav.Service {
 
-	interface IArgsHelper {
+	interface IArgsService {
 		bool RestartAfterUpdate(string appFileName);
 		bool HasArgCleanupUpdate();
 	}
 
-	class ArgsHelper : IArgsHelper {
+	class ArgsService : IArgsService {
 
 		private const string ARG_CLEANUP_UPDATE = "-cleanup-update";
 
 		private Dictionary<string, string> _Args;
 
-		public ArgsHelper() {
+		public ArgsService() {
 			LoadAppArguments();
 		}
 

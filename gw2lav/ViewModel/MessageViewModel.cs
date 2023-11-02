@@ -1,4 +1,5 @@
-﻿using System;
+﻿using gw2lav.Service;
+using System;
 
 namespace gw2lav.ViewModel {
 

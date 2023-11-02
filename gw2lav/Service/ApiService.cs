@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using gw2lav.Model;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,9 +7,34 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace gw2lav.Model {
+namespace gw2lav.Service {
 
-	public class ApiHelper : IDisposable {
+	interface IApiService {
+		IApiHelper GetApiHelper(CancellationToken cancelToken);
+	}
+
+	interface IApiHelper : IDisposable {
+		Task<List<Item>> GetItemsAsync(List<int> ids);
+		Task<List<Item>> GetLegendaryItemsAsync();
+		Task<List<CountItem>> GetLegendaryItemCountsAsync();
+		Task<List<Character>> GetCharactersAsync();
+	}
+
+	class ApiService : IApiService {
+
+		IRegistryService _RegistryService;
+
+		public ApiService(IRegistryService registryService) {
+			_RegistryService = registryService;
+		}
+
+		public IApiHelper GetApiHelper(CancellationToken cancelToken) {
+			return new ApiHelper(_RegistryService, cancelToken);
+		}
+
+	}
+
+	class ApiHelper : IApiHelper {
 
 		private const string API_URL = "https://api.guildwars2.com";
 		private const string HEADER_SCHEMA_VERSION = "2022-08-01T00:00:00Z";
@@ -25,8 +51,8 @@ namespace gw2lav.Model {
 		private HttpClient _HttpClient;
 		private CancellationToken _CancelToken;
 
-		public ApiHelper(CancellationToken cancelToken) {
-			string apiKey = RegistryHelper.GetApiKey();
+		public ApiHelper(IRegistryService registryService, CancellationToken cancelToken) {
+			string apiKey = registryService.GetApiKey();
 
 			_HttpClient = new HttpClient();
 			_HttpClient.DefaultRequestHeaders.Add("X-Schema-Version", HEADER_SCHEMA_VERSION);

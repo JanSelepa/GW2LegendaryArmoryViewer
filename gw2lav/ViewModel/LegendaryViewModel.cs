@@ -1,5 +1,6 @@
 ﻿using gw2lav.Model;
 using gw2lav.Properties;
+using gw2lav.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,8 +37,10 @@ namespace gw2lav.ViewModel {
 			}
 		}
 
+		private IApiService _ApiService;
 		private IDialogService _DialogService;
-		private IUpdateHelper _UpdateHelper;
+		private IUpdateService _UpdateService;
+		private IRegistryService _RegistryService;
 		private CancellationTokenSource _CancellationTokenSource = null;
 
 		private LegendaryType[] _LegendaryTypes;
@@ -95,22 +98,22 @@ namespace gw2lav.ViewModel {
 		private bool _IsEquipNeededExpanded;
 		public bool IsEquipNeededExpanded {
 			get { return _IsEquipNeededExpanded; }
-			set { if (SetProperty(ref _IsEquipNeededExpanded, value)) RegistryHelper.SetExpandEquipNeeded(value); }
+			set { if (SetProperty(ref _IsEquipNeededExpanded, value)) _RegistryService.SetExpandEquipNeeded(value); }
 		}
 		private bool _IsEquipUsableExpanded;
 		public bool IsEquipUsableExpanded {
 			get { return _IsEquipUsableExpanded; }
-			set { if (SetProperty(ref _IsEquipUsableExpanded, value)) RegistryHelper.SetExpandEquipUsable(value); }
+			set { if (SetProperty(ref _IsEquipUsableExpanded, value)) _RegistryService.SetExpandEquipUsable(value); }
 		}
 		private bool _IsEquipUsedExpanded;
 		public bool IsEquipUsedExpanded {
 			get { return _IsEquipUsedExpanded; }
-			set { if (SetProperty(ref _IsEquipUsedExpanded, value)) RegistryHelper.SetExpandEquipUsed(value); }
+			set { if (SetProperty(ref _IsEquipUsedExpanded, value)) _RegistryService.SetExpandEquipUsed(value); }
 		}
 		private bool _IsInventoryExpanded;
 		public bool IsInventoryExpanded {
 			get { return _IsInventoryExpanded; }
-			set { if (SetProperty(ref _IsInventoryExpanded, value)) RegistryHelper.SetExpandInventory(value); }
+			set { if (SetProperty(ref _IsInventoryExpanded, value)) _RegistryService.SetExpandInventory(value); }
 		}
 
 		private bool _IsUpdateAvailable;
@@ -125,19 +128,21 @@ namespace gw2lav.ViewModel {
 
 		public RelayCommand<LegendaryType> TypeSelectedCommand { get; set; }
 
-		public LegendaryViewModel(IDialogService dialogService, IUpdateHelper updateHelper) {
+		public LegendaryViewModel(IApiService apiService, IDialogService dialogService, IUpdateService updateService, IRegistryService registryService) {
+			_ApiService = apiService;
 			_DialogService = dialogService;
-			_UpdateHelper = updateHelper;
+			_UpdateService = updateService;
+			_RegistryService = registryService;
 			ShowContent = false;
 			IsLoading = false;
 			Error = null;
-			NoWater = RegistryHelper.GetNoWater();
-			NoInventory = RegistryHelper.GetNoInventory();
+			NoWater = _RegistryService.GetNoWater();
+			NoInventory = _RegistryService.GetNoInventory();
 			IsDetailLoaded = false;
-			_IsEquipNeededExpanded = RegistryHelper.GetExpandEquipNeeded();
-			_IsEquipUsableExpanded = RegistryHelper.GetExpandEquipUsable();
-			_IsEquipUsedExpanded = RegistryHelper.GetExpandEquipUsed();
-			_IsInventoryExpanded = RegistryHelper.GetExpandInventory();
+			_IsEquipNeededExpanded = _RegistryService.GetExpandEquipNeeded();
+			_IsEquipUsableExpanded = _RegistryService.GetExpandEquipUsable();
+			_IsEquipUsedExpanded = _RegistryService.GetExpandEquipUsed();
+			_IsInventoryExpanded = _RegistryService.GetExpandInventory();
 			IsUpdateAvailable = false;
 			ReloadCommand = new RelayCommand(OnReloadAsync, CanReload);
 			SettingsCommand = new RelayCommand(OnSettings, null);
@@ -149,7 +154,7 @@ namespace gw2lav.ViewModel {
 		}
 
 		private async Task CheckForUpdateAsync() {
-			IsUpdateAvailable = await _UpdateHelper.IsUpdateAvailableAsync();
+			IsUpdateAvailable = await _UpdateService.IsUpdateAvailableAsync();
 		}
 
 		private async Task LoadDataAsync() {
@@ -198,7 +203,7 @@ namespace gw2lav.ViewModel {
 					types[i] = new LegendaryType((LegendaryItem.ItemType)i);
 				LegendaryTypes = types;
 
-				using (ApiHelper apiHelper = new ApiHelper(cancelToken)) {
+				using (IApiHelper apiHelper = _ApiService.GetApiHelper(cancelToken)) {
 
 					// load legendary item list
 					List<Item> items = await apiHelper.GetLegendaryItemsAsync();
@@ -342,7 +347,7 @@ namespace gw2lav.ViewModel {
 		}
 
 		private void OnSettings() {
-			SettingsViewModel settingsVM = new SettingsViewModel();
+			SettingsViewModel settingsVM = new SettingsViewModel(_RegistryService);
 			bool? result = _DialogService.ShowDialog(settingsVM);
 			if (result.HasValue && result.Value) {
 				// reload data when Api Key changed
@@ -357,7 +362,7 @@ namespace gw2lav.ViewModel {
 		}
 
 		private void OnInfo() {
-			InfoViewModel infoVM = new InfoViewModel(_DialogService, _UpdateHelper);
+			InfoViewModel infoVM = new InfoViewModel(_DialogService, _UpdateService);
 			_DialogService.ShowDialog(infoVM);
 		}
 

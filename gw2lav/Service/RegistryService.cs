@@ -1,9 +1,26 @@
 ﻿using Microsoft.Win32;
 using System;
 
-namespace gw2lav {
+namespace gw2lav.Service {
 
-	public class RegistryHelper {
+	interface IRegistryService {
+		string GetApiKey();
+		bool SetApiKey(string apiKey);
+		bool GetNoWater();
+		bool SetNoWater(bool noWater);
+		bool GetNoInventory();
+		bool SetNoInventory(bool noInventory);
+		bool GetExpandEquipNeeded();
+		bool SetExpandEquipNeeded(bool value);
+		bool GetExpandEquipUsable();
+		bool SetExpandEquipUsable(bool value);
+		bool GetExpandEquipUsed();
+		bool SetExpandEquipUsed(bool value);
+		bool GetExpandInventory();
+		bool SetExpandInventory(bool value);
+	}
+
+	class RegistryService : IRegistryService {
 
 		private const string KEY_API_KEY = "api_key";
 		private const string KEY_NO_WATER = "no_water";
@@ -17,7 +34,7 @@ namespace gw2lav {
 
 		private static RegistryKey _HKCU = Registry.CurrentUser;
 
-		private static object GetValue(string keyName) {
+		private object GetValue(string keyName) {
 			try {
 				RegistryKey rk = _HKCU.OpenSubKey(REG_PATH);
 				if (rk == null) return null;
@@ -27,7 +44,7 @@ namespace gw2lav {
 			}
 		}
 
-		private static bool SetValue(string keyName, object keyValue) {
+		private bool SetValue(string keyName, object keyValue) {
 			try {
 				RegistryKey rk = _HKCU.CreateSubKey(REG_PATH);
 				if (rk == null) return false;
@@ -38,7 +55,7 @@ namespace gw2lav {
 			}
 		}
 
-		private static bool GetBoolValue(string keyName, bool defaultValue) {
+		private bool GetBoolValue(string keyName, bool defaultValue) {
 			int? keyValue = (int?)GetValue(keyName);
 			if (keyValue.HasValue)
 				return keyValue.Value != 0;
@@ -48,65 +65,65 @@ namespace gw2lav {
 
 		// Api Key
 
-		public static string GetApiKey() {
+		public string GetApiKey() {
 			return (string)GetValue(KEY_API_KEY);
 		}
 
-		public static bool SetApiKey(string apiKey) {
+		public bool SetApiKey(string apiKey) {
 			return SetValue(KEY_API_KEY, apiKey);
 		}
 
 		// No Water
 
-		public static bool GetNoWater() {
+		public bool GetNoWater() {
 			return GetBoolValue(KEY_NO_WATER, true);
 		}
 
-		public static bool SetNoWater(bool noWater) {
+		public bool SetNoWater(bool noWater) {
 			return SetValue(KEY_NO_WATER, noWater ? 1 : 0);
 		}
 
 		// No Inventory
 
-		public static bool GetNoInventory() {
+		public bool GetNoInventory() {
 			return GetBoolValue(KEY_NO_INVENTORY, false);
 		}
 
-		public static bool SetNoInventory(bool noInventory) {
+		public bool SetNoInventory(bool noInventory) {
 			return SetValue(KEY_NO_INVENTORY, noInventory ? 1 : 0);
 		}
 
 		// Expand statuses for Detail View
 
-		public static bool GetExpandEquipNeeded() {
+		public bool GetExpandEquipNeeded() {
 			return GetBoolValue(KEY_EXPAND_EQUIPNEEDED, true);
 		}
 
-		public static bool SetExpandEquipNeeded(bool value) {
+		public bool SetExpandEquipNeeded(bool value) {
 			return SetValue(KEY_EXPAND_EQUIPNEEDED, value ? 1 : 0);
 		}
 
-		public static bool GetExpandEquipUsable() {
+		public bool GetExpandEquipUsable() {
 			return GetBoolValue(KEY_EXPAND_EQUIPUSABLE, true);
 		}
 
-		public static bool SetExpandEquipUsable(bool value) {
+		public bool SetExpandEquipUsable(bool value) {
 			return SetValue(KEY_EXPAND_EQUIPUSABLE, value ? 1 : 0);
 		}
 
-		public static bool GetExpandEquipUsed() {
+		public bool GetExpandEquipUsed() {
 			return GetBoolValue(KEY_EXPAND_EQUIPUSED, false);
 		}
 
-		public static bool SetExpandEquipUsed(bool value) {
+		public bool SetExpandEquipUsed(bool value) {
 			return SetValue(KEY_EXPAND_EQUIPUSED, value ? 1 : 0);
 		}
 
-		public static bool GetExpandInventory() {
+		public bool GetExpandInventory() {
 			return GetBoolValue(KEY_EXPAND_INVENTORY, true);
 		}
 
-		public static bool SetExpandInventory(bool value) {
+		public bool SetExpandInventory(bool value) {
 			return SetValue(KEY_EXPAND_INVENTORY, value ? 1 : 0);
 		}
 

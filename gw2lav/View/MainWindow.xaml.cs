@@ -1,5 +1,4 @@
-﻿using gw2lav.ViewModel;
-using System;
+﻿using System;
 using System.Windows;
 
 namespace gw2lav.View {
@@ -9,17 +8,6 @@ namespace gw2lav.View {
 	public partial class MainWindow : Window {
 
 		public MainWindow() {
-			IArgsHelper argsHelper = new ArgsHelper();
-
-			IDialogService dialogService = new DialogService(this);
-			dialogService.Register<MessageViewModel, MessageWindow>();
-			dialogService.Register<SettingsViewModel, SettingsWindow>();
-			dialogService.Register<InfoViewModel, InfoWindow>();
-
-			IUpdateHelper updateHelper = new UpdateHelper(argsHelper);
-
-			DataContext = new LegendaryViewModel(dialogService, updateHelper);
-
 			StateChanged += onStateChangedWindow;
 			InitializeComponent();
 		}

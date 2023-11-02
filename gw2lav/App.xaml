@@ -6,11 +6,15 @@
 	
 	<Application.Resources>
 		<ResourceDictionary>
+			
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceDictionary Source="View/Style/Fonts.xaml" />
 				<ResourceDictionary Source="View/Style/Windows.xaml" />
 				<ResourceDictionary Source="View/Style/Buttons.xaml" />
 			</ResourceDictionary.MergedDictionaries>
+			
+			<local:ViewModelLocator x:Key="VMLocator" />
+			
 		</ResourceDictionary>
 	</Application.Resources>
 	

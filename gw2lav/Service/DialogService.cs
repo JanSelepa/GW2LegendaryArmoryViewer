@@ -1,8 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Globalization;
+using System.Reflection;
 using System.Windows;
 
-namespace gw2lav {
+namespace gw2lav.Service {
 
 	public interface IDialogWindow {
 		Window Owner { get; set; }
@@ -24,31 +25,14 @@ namespace gw2lav {
 	}
 
 	public interface IDialogService {
-		void Register<TViewModel, TView>()
-			where TViewModel : IDialogViewModel
-			where TView : IDialogWindow;
-
 		bool? ShowDialog<TViewModel>(TViewModel viewModel)
 			where TViewModel : IDialogViewModel;
 	}
 
 	class DialogService : IDialogService {
 
-		private Dictionary<Type, Type> _Mappings;
-
-		private Window _Owner;
-
-		public DialogService(Window owner) {
-			_Owner = owner;
-			_Mappings = new Dictionary<Type, Type>();
-		}
-
-		public void Register<TViewModel, TView>() where TViewModel : IDialogViewModel where TView : IDialogWindow {
-			_Mappings.Add(typeof(TViewModel), typeof(TView));
-		}
-
 		public bool? ShowDialog<TViewModel>(TViewModel viewModel) where TViewModel : IDialogViewModel {
-			Type viewType = _Mappings[typeof(TViewModel)];
+			Type viewType = ResolveViewType(typeof(TViewModel));
 
 			IDialogWindow dialog = (IDialogWindow)Activator.CreateInstance(viewType);
 
@@ -63,9 +47,16 @@ namespace gw2lav {
 			viewModel.CloseRequested += handler;
 
 			dialog.DataContext = viewModel;
-			dialog.Owner = _Owner;
+			dialog.Owner = Application.Current.MainWindow;
 
 			return dialog.ShowDialog();
+		}
+
+		private Type ResolveViewType(Type viewModelType) {
+			string viewName = viewModelType.FullName.Replace(".ViewModel.", ".View.");
+			viewName = viewName.Substring(0, viewName.Length - "ViewModel".Length);
+			string viewType = string.Format(CultureInfo.InvariantCulture, "{0}{1}, {2}", viewName, "Window", viewModelType.GetTypeInfo().Assembly.FullName);
+			return Type.GetType(viewType);
 		}
 
 	}

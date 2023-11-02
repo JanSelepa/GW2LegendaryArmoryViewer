@@ -1,4 +1,5 @@
 ﻿using gw2lav.Properties;
+using gw2lav.Service;
 using System;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -36,11 +37,11 @@ namespace gw2lav.ViewModel {
 		public RelayCommand UpdateCommand { get; set; }
 
 		private IDialogService _DialogService;
-		private IUpdateHelper _UpdateHelper;
+		private IUpdateService _UpdateService;
 
-		public InfoViewModel(IDialogService dialogService, IUpdateHelper updateHelper) {
+		public InfoViewModel(IDialogService dialogService, IUpdateService updateService) {
 			_DialogService = dialogService;
-			_UpdateHelper = updateHelper;
+			_UpdateService = updateService;
 			var version = Assembly.GetExecutingAssembly().GetName().Version;
 			Version = version.Major + "." + version.Minor + "." + version.Build;
 			IsUpdateInProgress = false;
@@ -52,13 +53,13 @@ namespace gw2lav.ViewModel {
 		}
 
 		private async Task RetrieveUpdateInfoAsync() {
-			AvailableVersion = await _UpdateHelper.GetAvailableVersionAsync();
-			IsUpdateAvailable = await _UpdateHelper.IsUpdateAvailableAsync();
+			AvailableVersion = await _UpdateService.GetAvailableVersionAsync();
+			IsUpdateAvailable = await _UpdateService.IsUpdateAvailableAsync();
 		}
 
 		private async void OnUpdateAsync() {
 			IsUpdateInProgress = true;
-			string updateError = await _UpdateHelper.UpdateAsync();
+			string updateError = await _UpdateService.UpdateAsync();
 			if (updateError != null) {
 				MessageViewModel dialogVM = new MessageViewModel(R.info_update_error_title, string.Format(R.info_update_error_message, updateError), R.btn_ok, null);
 				_DialogService.ShowDialog(dialogVM);

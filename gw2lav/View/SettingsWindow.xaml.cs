@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using gw2lav.Service;
+using System.Windows;
 
 namespace gw2lav.View {
 

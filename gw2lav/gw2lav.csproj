@@ -87,13 +87,15 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ArgsHelper.cs" />
-    <Compile Include="DialogService.cs" />
+    <Compile Include="Service\ArgsService.cs" />
+    <Compile Include="Service\DialogService.cs" />
+    <Compile Include="IocContainer.cs" />
     <Compile Include="Model\Bag.cs" />
     <Compile Include="Model\InventorySlot.cs" />
     <Compile Include="Model\TolerantStringEnumConverter.cs" />
-    <Compile Include="RegistryHelper.cs" />
-    <Compile Include="UpdateHelper.cs" />
+    <Compile Include="Service\RegistryService.cs" />
+    <Compile Include="Service\UpdateService.cs" />
+    <Compile Include="ViewModelLocator.cs" />
     <Compile Include="ViewModel\BindableBase.cs" />
     <Compile Include="ViewModel\CountInfo.cs" />
     <Compile Include="ViewModel\MessageViewModel.cs" />
@@ -127,7 +129,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\ApiHelper.cs" />
+    <Compile Include="Service\ApiService.cs" />
     <Compile Include="Model\Character.cs" />
     <Compile Include="Model\CountItem.cs" />
     <Compile Include="Model\Equipment.cs" />
@@ -239,6 +241,7 @@
   <ItemGroup>
     <Resource Include="Assets\checkmark.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="AfterResolveReferences">
     <ItemGroup>
