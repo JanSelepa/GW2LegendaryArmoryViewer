@@ -7,6 +7,8 @@
 
 	<Style TargetType="Window">
 		<Setter Property="FontFamily" Value="{StaticResource RegularFontFamily}" />
+		<Setter Property="SnapsToDevicePixels" Value="True" />
+		<Setter Property="UseLayoutRounding" Value="True" />
 	</Style>
 
 	<Style TargetType="Window" x:Key="MainWindow" BasedOn="{StaticResource {x:Type Window}}">
@@ -43,7 +45,6 @@
 						Name="buttonBorder"
 						Background="Transparent"
 						BorderThickness="0"
-						SnapsToDevicePixels="True"
 						RenderOptions.EdgeMode="Aliased"
 						Padding="{TemplateBinding Padding}">
 						<TextBlock

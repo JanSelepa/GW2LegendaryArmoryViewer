@@ -21,12 +21,15 @@
 		<DataTemplate DataType="{x:Type viewModel:LegendaryItem}">
 			
 			<Grid
+				Width="30"
+				Height="30"
+				ClipToBounds="True"
+				Margin="1"
 				ToolTip="{Binding Name}"
 				ToolTipService.InitialShowDelay="0">
 				
 				<Image
-					Width="32"
-					Height="32"
+					Stretch="Uniform"
 					Source="{Binding LocalIcon, TargetNullValue={StaticResource DefaultItemIcon}, IsAsync=True}">
 					<Image.Style>
 						<Style TargetType="Image">

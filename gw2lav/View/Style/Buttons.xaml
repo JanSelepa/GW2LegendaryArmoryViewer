@@ -21,7 +21,6 @@
 						Background="{TemplateBinding Background}"
 						BorderThickness="{TemplateBinding BorderThickness}"
 						BorderBrush="{TemplateBinding BorderBrush}"
-						SnapsToDevicePixels="True"
 						RenderOptions.EdgeMode="Aliased"
 						Padding="{TemplateBinding Padding}">
 						<ContentPresenter

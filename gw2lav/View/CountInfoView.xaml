@@ -252,8 +252,7 @@
 
 	<Border
 		BorderBrush="{Binding AccentBrush, ElementName=RootView}"
-		BorderThickness="5,0,0,0"
-		UseLayoutRounding="False">
+		BorderThickness="5,0,0,0">
 		<StackPanel
 			Orientation="Vertical">
 
