@@ -3,6 +3,7 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:p="clr-namespace:gw2lav.Properties"
 	xmlns:view="clr-namespace:gw2lav.View"
+	xmlns:vm="clr-namespace:gw2lav.ViewModel"
 	Title="{x:Static p:R.app_title}"
 	Width="1200" MinWidth="1200"
 	Height="770" MinHeight="770"
@@ -331,12 +332,14 @@
 									DataContext="{Binding LegendaryTypes[19]}" />
 							</Grid>
 							<!--
-								Back & Trinkets
+								Relic, Back, Trinkets
 							-->
 							<Grid
 								Grid.Column="2"
 								HorizontalAlignment="Center">
 								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="Auto" />
+									<ColumnDefinition Width="10" />
 									<ColumnDefinition Width="Auto" />
 									<ColumnDefinition Width="10" />
 									<ColumnDefinition Width="Auto" />
@@ -365,6 +368,9 @@
 								<view:LegendaryTypeView
 									Grid.Column="6" Grid.Row="1"
 									DataContext="{Binding LegendaryTypes[23]}" />
+								<view:LegendaryTypeView
+									Grid.Column="8" Grid.Row="1"
+									DataContext="{Binding LegendaryTypes[24]}" />
 							</Grid>
 						</Grid>
 
@@ -401,19 +407,19 @@
 									Text="{x:Static p:R.type_weapon_onehand_each}" />
 								<view:LegendaryTypeView
 									Grid.Column="0" Grid.Row="1"
-									DataContext="{Binding LegendaryTypes[24]}" />
-								<view:LegendaryTypeView
-									Grid.Column="2" Grid.Row="1"
 									DataContext="{Binding LegendaryTypes[25]}" />
 								<view:LegendaryTypeView
-									Grid.Column="0" Grid.Row="2"
+									Grid.Column="2" Grid.Row="1"
 									DataContext="{Binding LegendaryTypes[26]}" />
 								<view:LegendaryTypeView
-									Grid.Column="2" Grid.Row="2"
+									Grid.Column="0" Grid.Row="2"
 									DataContext="{Binding LegendaryTypes[27]}" />
 								<view:LegendaryTypeView
-									Grid.Column="0" Grid.Row="3"
+									Grid.Column="2" Grid.Row="2"
 									DataContext="{Binding LegendaryTypes[28]}" />
+								<view:LegendaryTypeView
+									Grid.Column="0" Grid.Row="3"
+									DataContext="{Binding LegendaryTypes[29]}" />
 							</Grid>
 							<!--
 								One-handed single hand weapons
@@ -438,19 +444,19 @@
 									Text="{x:Static p:R.type_weapon_onehand_single}" />
 								<view:LegendaryTypeView
 									Grid.Column="0" Grid.Row="1"
-									DataContext="{Binding LegendaryTypes[29]}" />
-								<view:LegendaryTypeView
-									Grid.Column="0" Grid.Row="2"
 									DataContext="{Binding LegendaryTypes[30]}" />
 								<view:LegendaryTypeView
-									Grid.Column="2" Grid.Row="2"
+									Grid.Column="0" Grid.Row="2"
 									DataContext="{Binding LegendaryTypes[31]}" />
 								<view:LegendaryTypeView
-									Grid.Column="0" Grid.Row="3"
+									Grid.Column="2" Grid.Row="2"
 									DataContext="{Binding LegendaryTypes[32]}" />
 								<view:LegendaryTypeView
-									Grid.Column="2" Grid.Row="3"
+									Grid.Column="0" Grid.Row="3"
 									DataContext="{Binding LegendaryTypes[33]}" />
+								<view:LegendaryTypeView
+									Grid.Column="2" Grid.Row="3"
+									DataContext="{Binding LegendaryTypes[34]}" />
 							</Grid>
 							<!--
 								Two-handed weapons
@@ -475,22 +481,22 @@
 									Text="{x:Static p:R.type_weapon_twohand}" />
 								<view:LegendaryTypeView
 									Grid.Column="0" Grid.Row="1"
-									DataContext="{Binding LegendaryTypes[34]}" />
-								<view:LegendaryTypeView
-									Grid.Column="2" Grid.Row="1"
 									DataContext="{Binding LegendaryTypes[35]}" />
 								<view:LegendaryTypeView
-									Grid.Column="0" Grid.Row="2"
+									Grid.Column="2" Grid.Row="1"
 									DataContext="{Binding LegendaryTypes[36]}" />
 								<view:LegendaryTypeView
-									Grid.Column="2" Grid.Row="2"
+									Grid.Column="0" Grid.Row="2"
 									DataContext="{Binding LegendaryTypes[37]}" />
 								<view:LegendaryTypeView
-									Grid.Column="0" Grid.Row="3"
+									Grid.Column="2" Grid.Row="2"
 									DataContext="{Binding LegendaryTypes[38]}" />
 								<view:LegendaryTypeView
-									Grid.Column="2" Grid.Row="3"
+									Grid.Column="0" Grid.Row="3"
 									DataContext="{Binding LegendaryTypes[39]}" />
+								<view:LegendaryTypeView
+									Grid.Column="2" Grid.Row="3"
+									DataContext="{Binding LegendaryTypes[40]}" />
 							</Grid>
 							<!--
 								Underwater weapons
@@ -511,13 +517,13 @@
 									Text="{x:Static p:R.type_weapon_aquatic}" />
 								<view:LegendaryTypeView
 									Grid.Row="1"
-									DataContext="{Binding LegendaryTypes[40]}" />
-								<view:LegendaryTypeView
-									Grid.Row="2"
 									DataContext="{Binding LegendaryTypes[41]}" />
 								<view:LegendaryTypeView
-									Grid.Row="3"
+									Grid.Row="2"
 									DataContext="{Binding LegendaryTypes[42]}" />
+								<view:LegendaryTypeView
+									Grid.Row="3"
+									DataContext="{Binding LegendaryTypes[43]}" />
 							</Grid>
 						</Grid>
 

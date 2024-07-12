@@ -37,7 +37,7 @@ namespace gw2lav.Service {
 	class ApiHelper : IApiHelper {
 
 		private const string API_URL = "https://api.guildwars2.com";
-		private const string HEADER_SCHEMA_VERSION = "2022-08-01T00:00:00Z";
+		private const string HEADER_SCHEMA_VERSION = "2024-03-01T00:00:00Z";
 
 		private const int MAX_ID_COUNT = 200;
 

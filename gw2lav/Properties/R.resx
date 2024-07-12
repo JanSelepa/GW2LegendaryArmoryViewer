@@ -316,6 +316,9 @@ Please try again later. If the problems persist please get the newest version fr
   <data name="type_back" xml:space="preserve">
     <value>Back Item</value>
   </data>
+  <data name="type_relic" xml:space="preserve">
+    <value>Relic</value>
+  </data>
   <data name="type_ring" xml:space="preserve">
     <value>Ring</value>
   </data>

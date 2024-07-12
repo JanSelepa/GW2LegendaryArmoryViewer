@@ -644,6 +644,15 @@ namespace gw2lav.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Relic.
+        /// </summary>
+        public static string type_relic {
+            get {
+                return ResourceManager.GetString("type_relic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ring.
         /// </summary>
         public static string type_ring {

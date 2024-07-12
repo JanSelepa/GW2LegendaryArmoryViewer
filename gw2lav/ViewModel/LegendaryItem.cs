@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace gw2lav.ViewModel {
 
-	class LegendaryItem : BindableBase {
+	public class LegendaryItem : BindableBase {
 
 		private static readonly string CACHE_DIR = "GW2LegendaryArmoryViewer";
 		private static readonly string CACHE_PATH = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), CACHE_DIR, "Images");
@@ -17,7 +17,7 @@ namespace gw2lav.ViewModel {
 			MediumHead, MediumShoulders, MediumHands, MediumBody, MediumLegs, MediumFeet,
 			HeavyHead, HeavyShoulders, HeavyHands, HeavyBody, HeavyLegs, HeavyFeet,
 			Rune, Sigil,
-			Back, Accessory, Amulet, Ring,
+			Relic, Back, Accessory, Amulet, Ring,
 			Axe, Dagger, Mace, Pistol, Sword,
 			Scepter,
 			Focus, Shield, Torch, Warhorn,
@@ -135,6 +135,10 @@ namespace gw2lav.ViewModel {
 						case Item.ItemSubType.Accessory: itemType = ItemType.Accessory; break;
 						case Item.ItemSubType.Ring: itemType = ItemType.Ring; break;
 					}
+					break;
+				// Relic
+				case Item.ItemType.Relic:
+					itemType = ItemType.Relic;
 					break;
 				// Runes & Sigils
 				case Item.ItemType.UpgradeComponent:

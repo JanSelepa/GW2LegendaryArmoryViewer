@@ -43,8 +43,8 @@ namespace gw2lav.ViewModel {
 		private IRegistryService _RegistryService;
 		private CancellationTokenSource _CancellationTokenSource = null;
 
-		private LegendaryType[] _LegendaryTypes;
-		public LegendaryType[] LegendaryTypes {
+		private Dictionary<LegendaryItem.ItemType, LegendaryType> _LegendaryTypes;
+		public Dictionary<LegendaryItem.ItemType, LegendaryType> LegendaryTypes {
 			get { return _LegendaryTypes; }
 			set { SetProperty(ref _LegendaryTypes, value); }
 		}
@@ -198,9 +198,9 @@ namespace gw2lav.ViewModel {
 			await Task.Run(async () => {
 
 				int size = Enum.GetNames(typeof(LegendaryItem.ItemType)).Length - 1;    // "-1" for ItemType.Unknown
-				LegendaryType[] types = new LegendaryType[size];
-				for (int i = 0; i < size; i++)
-					types[i] = new LegendaryType((LegendaryItem.ItemType)i);
+				Dictionary<LegendaryItem.ItemType, LegendaryType> types = new Dictionary<LegendaryItem.ItemType, LegendaryType>();
+				foreach (LegendaryItem.ItemType type in Enum.GetValues(typeof(LegendaryItem.ItemType)))
+					types.Add(type, new LegendaryType(type));
 				LegendaryTypes = types;
 
 				using (IApiHelper apiHelper = _ApiService.GetApiHelper(cancelToken)) {
@@ -224,9 +224,9 @@ namespace gw2lav.ViewModel {
 						LegendaryItem legendaryItem = new LegendaryItem(item, countItem != null ? countItem.Count : 0);
 						if (legendaryItem.Type != LegendaryItem.ItemType.Unknown) {
 							await Application.Current.Dispatcher.BeginInvoke(new Action(() => {
-								LegendaryTypes[(int)legendaryItem.Type].Items.Add(legendaryItem);
+								LegendaryTypes[legendaryItem.Type].Items.Add(legendaryItem);
 							}));
-							LegendaryTypes[(int)legendaryItem.Type].recountItems();
+							LegendaryTypes[legendaryItem.Type].recountItems();
 						}
 					}
 
@@ -327,7 +327,7 @@ namespace gw2lav.ViewModel {
 							// skip unknown types
 							if (itemInfo.ItemType == LegendaryItem.ItemType.Unknown)
 								continue;
-							LegendaryTypes[(int)itemInfo.ItemType].AddItem(itemInfo.ItemRarity == Item.ItemRarity.Legendary, itemInfo.CharName, itemInfo.TabId, itemInfo.TabName, itemInfo.IsTerrestrial);
+							LegendaryTypes[itemInfo.ItemType].AddItem(itemInfo.ItemRarity == Item.ItemRarity.Legendary, itemInfo.CharName, itemInfo.TabId, itemInfo.TabName, itemInfo.IsTerrestrial);
 						}
 
 						IsDetailLoaded = true;

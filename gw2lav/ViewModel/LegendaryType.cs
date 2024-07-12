@@ -91,7 +91,8 @@ namespace gw2lav.ViewModel {
 				// Runes & Sigils
 				case ItemType.Rune: Name = FullName = R.type_rune; break;
 				case ItemType.Sigil: Name = FullName = R.type_sigil; break;
-				// Back & Trinkets
+				// Relic, Back, Trinkets
+				case ItemType.Relic: Name = FullName = R.type_relic; break;
 				case ItemType.Back: Name = FullName = R.type_back; break;
 				case ItemType.Accessory: Name = FullName = R.type_accessory; break;
 				case ItemType.Amulet: Name = FullName = R.type_amulet; break;

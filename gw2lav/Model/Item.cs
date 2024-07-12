@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 
 namespace gw2lav.Model {
 
@@ -18,6 +17,7 @@ namespace gw2lav.Model {
 			Gizmo,
 			Key,
 			MiniPet,
+			Relic,
 			Tool,
 			Trait,
 			Trinket,
